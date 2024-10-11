@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Melodic API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ffef14a0dd0ef195a12f9d27cc0f2595b8d59e78")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b416af3d0908a962241329222c67a405d6cf4a27")]
 [assembly: System.Reflection.AssemblyProductAttribute("Melodic API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Melodic API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
