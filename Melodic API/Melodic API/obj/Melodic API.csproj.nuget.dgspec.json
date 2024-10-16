@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Melodic API.csproj": {}
+    "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\melodicapp\\Melodic API\\Melodic API\\Melodic API.csproj": {}
   },
   "projects": {
-    "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Melodic API.csproj": {
+    "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\melodicapp\\Melodic API\\Melodic API\\Melodic API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Melodic API.csproj",
+        "projectUniqueName": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\melodicapp\\Melodic API\\Melodic API\\Melodic API.csproj",
         "projectName": "Melodic API",
-        "projectPath": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Melodic API.csproj",
+        "projectPath": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\melodicapp\\Melodic API\\Melodic API\\Melodic API.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\obj\\",
+        "outputPath": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\melodicapp\\Melodic API\\Melodic API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
