@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "WDXOg5z8JkE=",
+  "dgSpecHash": "mEnTkR53ZEI=",
   "success": true,
-  "projectFilePath": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Melodic API.csproj",
+  "projectFilePath": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\melodicapp\\Melodic API\\Melodic API\\Melodic API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\HP\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",

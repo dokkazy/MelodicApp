@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{FA7E0DFD-D985-43CA-ADB3-31BCC8836F8E}|Melodic API\\Melodic API.csproj|d:\\0_learn_to_code\\reactjs\\projectmaker\\melodicapp\\melodic api\\melodic api\\models\\domain\\refreshtoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FA7E0DFD-D985-43CA-ADB3-31BCC8836F8E}|Melodic API\\Melodic API.csproj|solutionrelative:melodic api\\models\\domain\\refreshtoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FA7E0DFD-D985-43CA-ADB3-31BCC8836F8E}|Melodic API\\Melodic API.csproj|d:\\0_learn_to_code\\reactjs\\projectmaker\\melodicapp\\melodic api\\melodic api\\models\\domain\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FA7E0DFD-D985-43CA-ADB3-31BCC8836F8E}|Melodic API\\Melodic API.csproj|solutionrelative:melodic api\\models\\domain\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FA7E0DFD-D985-43CA-ADB3-31BCC8836F8E}|Melodic API\\Melodic API.csproj|d:\\0_learn_to_code\\reactjs\\projectmaker\\melodicapp\\melodic api\\melodic api\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FA7E0DFD-D985-43CA-ADB3-31BCC8836F8E}|Melodic API\\Melodic API.csproj|solutionrelative:melodic api\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{FA7E0DFD-D985-43CA-ADB3-31BCC8836F8E}|Melodic API\\Melodic API.csproj|d:\\0_learn_to_code\\reactjs\\projectmaker\\melodicapp\\melodic api\\melodic api\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{FA7E0DFD-D985-43CA-ADB3-31BCC8836F8E}|Melodic API\\Melodic API.csproj|solutionrelative:melodic api\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
@@ -29,10 +41,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{FA7E0DFD-D985-43CA-ADB3-31BCC8836F8E}|Melodic API\\Melodic API.csproj|d:\\0_learn_to_code\\reactjs\\projectmaker\\melodicapp\\melodic api\\melodic api\\models\\apiresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FA7E0DFD-D985-43CA-ADB3-31BCC8836F8E}|Melodic API\\Melodic API.csproj|solutionrelative:melodic api\\models\\apiresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FA7E0DFD-D985-43CA-ADB3-31BCC8836F8E}|Melodic API\\Melodic API.csproj|d:\\0_learn_to_code\\reactjs\\projectmaker\\melodicapp\\melodic api\\melodic api\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FA7E0DFD-D985-43CA-ADB3-31BCC8836F8E}|Melodic API\\Melodic API.csproj|solutionrelative:melodic api\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FA7E0DFD-D985-43CA-ADB3-31BCC8836F8E}|Melodic API\\Melodic API.csproj|d:\\0_learn_to_code\\reactjs\\projectmaker\\melodicapp\\melodic api\\melodic api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -62,151 +70,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": ".gitignore",
-              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\.gitignore",
-              "RelativeDocumentMoniker": "Melodic API\\.gitignore",
-              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\.gitignore",
-              "RelativeToolTip": "Melodic API\\.gitignore",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAAAYAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-10-11T08:12:28.506Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "IAuthRepository.cs",
-              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Service\\IAuthRepository.cs",
-              "RelativeDocumentMoniker": "Melodic API\\Service\\IAuthRepository.cs",
-              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Service\\IAuthRepository.cs",
-              "RelativeToolTip": "Melodic API\\Service\\IAuthRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-11T08:10:59.761Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Token.cs",
-              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Models\\Token.cs",
-              "RelativeDocumentMoniker": "Melodic API\\Models\\Token.cs",
-              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Models\\Token.cs",
-              "RelativeToolTip": "Melodic API\\Models\\Token.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-11T08:10:55.181Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "JwtSetting.cs",
-              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Models\\JwtSetting.cs",
-              "RelativeDocumentMoniker": "Melodic API\\Models\\JwtSetting.cs",
-              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Models\\JwtSetting.cs",
-              "RelativeToolTip": "Melodic API\\Models\\JwtSetting.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-11T08:10:53.417Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "APIResponse.cs",
-              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Models\\APIResponse.cs",
-              "RelativeDocumentMoniker": "Melodic API\\Models\\APIResponse.cs",
-              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Models\\APIResponse.cs",
-              "RelativeToolTip": "Melodic API\\Models\\APIResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-11T08:10:50.07Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Program.cs",
-              "RelativeDocumentMoniker": "Melodic API\\Program.cs",
-              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Program.cs",
-              "RelativeToolTip": "Melodic API\\Program.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAADYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-11T04:06:36.147Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\appsettings.json",
-              "RelativeDocumentMoniker": "Melodic API\\appsettings.json",
-              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\appsettings.json",
-              "RelativeToolTip": "Melodic API\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAACPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-10-11T04:07:00.475Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Melodic API.http",
-              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Melodic API.http",
-              "RelativeDocumentMoniker": "Melodic API\\Melodic API.http",
-              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Melodic API.http",
-              "RelativeToolTip": "Melodic API\\Melodic API.http",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2024-10-11T04:06:59.766Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "AuthenticationController.cs",
-              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Controllers\\AuthenticationController.cs",
-              "RelativeDocumentMoniker": "Melodic API\\Controllers\\AuthenticationController.cs",
-              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Controllers\\AuthenticationController.cs",
-              "RelativeToolTip": "Melodic API\\Controllers\\AuthenticationController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAB4AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-11T04:06:20.572Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Data\\ApplicationDbContext.cs",
-              "RelativeDocumentMoniker": "Melodic API\\Data\\ApplicationDbContext.cs",
-              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Data\\ApplicationDbContext.cs",
-              "RelativeToolTip": "Melodic API\\Data\\ApplicationDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAA4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-11T04:03:30.039Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AuthRepository.cs",
-              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Service\\AuthRepository.cs",
-              "RelativeDocumentMoniker": "Melodic API\\Service\\AuthRepository.cs",
-              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Service\\AuthRepository.cs",
-              "RelativeToolTip": "Melodic API\\Service\\AuthRepository.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-11T04:03:16.152Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
@@ -221,7 +86,167 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "RefreshToken.cs",
+              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Models\\Domain\\RefreshToken.cs",
+              "RelativeDocumentMoniker": "Melodic API\\Models\\Domain\\RefreshToken.cs",
+              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Models\\Domain\\RefreshToken.cs",
+              "RelativeToolTip": "Melodic API\\Models\\Domain\\RefreshToken.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-12T05:54:21.863Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Customer.cs",
+              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Models\\Domain\\Customer.cs",
+              "RelativeDocumentMoniker": "Melodic API\\Models\\Domain\\Customer.cs",
+              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Models\\Domain\\Customer.cs",
+              "RelativeToolTip": "Melodic API\\Models\\Domain\\Customer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-12T05:54:20.283Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": ".gitignore",
+              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\.gitignore",
+              "RelativeDocumentMoniker": "Melodic API\\.gitignore",
+              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\.gitignore",
+              "RelativeToolTip": "Melodic API\\.gitignore",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAAAYAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-10-11T08:12:28.506Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IAuthRepository.cs",
+              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Service\\IAuthRepository.cs",
+              "RelativeDocumentMoniker": "Melodic API\\Service\\IAuthRepository.cs",
+              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Service\\IAuthRepository.cs",
+              "RelativeToolTip": "Melodic API\\Service\\IAuthRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-11T08:10:59.761Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Token.cs",
+              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Models\\Token.cs",
+              "RelativeDocumentMoniker": "Melodic API\\Models\\Token.cs",
+              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Models\\Token.cs",
+              "RelativeToolTip": "Melodic API\\Models\\Token.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-11T08:10:55.181Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "JwtSetting.cs",
+              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Models\\JwtSetting.cs",
+              "RelativeDocumentMoniker": "Melodic API\\Models\\JwtSetting.cs",
+              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Models\\JwtSetting.cs",
+              "RelativeToolTip": "Melodic API\\Models\\JwtSetting.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-11T08:10:53.417Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "APIResponse.cs",
+              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Models\\APIResponse.cs",
+              "RelativeDocumentMoniker": "Melodic API\\Models\\APIResponse.cs",
+              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Models\\APIResponse.cs",
+              "RelativeToolTip": "Melodic API\\Models\\APIResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-11T08:10:50.07Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Program.cs",
+              "RelativeDocumentMoniker": "Melodic API\\Program.cs",
+              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Program.cs",
+              "RelativeToolTip": "Melodic API\\Program.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAADYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-11T04:06:36.147Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\appsettings.json",
+              "RelativeDocumentMoniker": "Melodic API\\appsettings.json",
+              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\appsettings.json",
+              "RelativeToolTip": "Melodic API\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAACPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-10-11T04:07:00.475Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Melodic API.http",
+              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Melodic API.http",
+              "RelativeDocumentMoniker": "Melodic API\\Melodic API.http",
+              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Melodic API.http",
+              "RelativeToolTip": "Melodic API\\Melodic API.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2024-10-11T04:06:59.766Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AuthenticationController.cs",
+              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Controllers\\AuthenticationController.cs",
+              "RelativeDocumentMoniker": "Melodic API\\Controllers\\AuthenticationController.cs",
+              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Controllers\\AuthenticationController.cs",
+              "RelativeToolTip": "Melodic API\\Controllers\\AuthenticationController.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAAAB4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-11T04:06:20.572Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 12,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Melodic API\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Melodic API\\Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-11T04:03:30.039Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AuthRepository.cs",
+              "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Service\\AuthRepository.cs",
+              "RelativeDocumentMoniker": "Melodic API\\Service\\AuthRepository.cs",
+              "ToolTip": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Service\\AuthRepository.cs",
+              "RelativeToolTip": "Melodic API\\Service\\AuthRepository.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-11T04:03:16.152Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "PaginatedList.cs",
               "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Application\\Pagination\\PaginatedList.cs",
               "RelativeDocumentMoniker": "Melodic API\\Application\\Pagination\\PaginatedList.cs",
@@ -229,12 +254,11 @@
               "RelativeToolTip": "Melodic API\\Application\\Pagination\\PaginatedList.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-11T04:00:16.86Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-11T04:00:16.86Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "PagingExtensions.cs",
               "DocumentMoniker": "D:\\0_LEARN_TO_CODE\\ReactJS\\ProjectMaker\\MelodicApp\\Melodic API\\Melodic API\\Application\\Common\\ExtensionMethods\\PagingExtensions.cs",
               "RelativeDocumentMoniker": "Melodic API\\Application\\Common\\ExtensionMethods\\PagingExtensions.cs",
@@ -242,8 +266,7 @@
               "RelativeToolTip": "Melodic API\\Application\\Common\\ExtensionMethods\\PagingExtensions.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-11T04:00:10.251Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-11T04:00:10.251Z"
             }
           ]
         }
