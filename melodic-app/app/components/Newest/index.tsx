@@ -6,6 +6,7 @@ import images from "@/assets/pictures/heroImage";
 import { simplifiedProduct } from "@/app/interface";
 import { client } from "@/app/lib/sanity";
 import { links } from "@/configs/routes";
+import { formatPrice } from "@/app/lib/utils";
 
 async function fetchData() {
   const queryHeroImage = "*[_type=='heroImage'][0]";
@@ -61,10 +62,7 @@ export default async function Newest() {
                     </p>
                   </div>
                   <p className="text-xl sm:text-sm font-medium text-gray-900">
-                    {product.price.toLocaleString("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    })}
+                    {formatPrice(product.price)}
                   </p>
                 </div>
               </Link>

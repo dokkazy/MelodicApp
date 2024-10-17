@@ -1,5 +1,6 @@
 import { simplifiedProduct } from "@/app/interface";
 import { client } from "@/app/lib/sanity";
+import { formatPrice } from "@/app/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -45,10 +46,7 @@ export default async function ShopPage() {
                     </p>
                   </div>
                   <p className="text-sm font-medium text-gray-900">
-                    {product.price.toLocaleString("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    })}
+                    {formatPrice(product.price)}
                   </p>
                 </div>
               </Link>
