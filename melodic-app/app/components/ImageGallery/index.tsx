@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { urlFor } from "../lib/sanity";
+import { urlFor } from "@/app/lib/sanity";
 
 interface ImageGalleryProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

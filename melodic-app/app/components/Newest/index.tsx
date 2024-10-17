@@ -1,10 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 
-import { simplifiedProduct } from "../interface";
-import { client } from "../lib/sanity";
 import images from "@/assets/pictures/heroImage";
+import { simplifiedProduct } from "@/app/interface";
+import { client } from "@/app/lib/sanity";
+import { links } from "@/configs/routes";
 
 async function fetchData() {
   const queryHeroImage = "*[_type=='heroImage'][0]";
@@ -38,7 +39,7 @@ export default async function Newest() {
           </Link>
         </div>
         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {data.newestProduct.map((product, index) => (
+          {data?.newestProduct.map((product, index) => (
             <div key={index} className="group relative">
               <Link href={`/product/${product.slug}`}>
                 <div className="aspect-square w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-80">
@@ -59,7 +60,7 @@ export default async function Newest() {
                       {product.categoryName}
                     </p>
                   </div>
-                  <p className="text-sm font-medium text-gray-900">
+                  <p className="text-xl sm:text-sm font-medium text-gray-900">
                     {product.price.toLocaleString("vi-VN", {
                       style: "currency",
                       currency: "VND",
@@ -70,8 +71,8 @@ export default async function Newest() {
             </div>
           ))}
         </div>
-        <div className="bg-gray w-full h-[470px] p-3 mt-16 sm:mt-32 sm:p-14">
-          <div>
+        <div className="md:flex md:items-center bg-gray-100 rounded-md w-full max-h-[520px] p-4 mt-12 sm:mt-24 sm:px-14 sm:py-12">
+          <div className="w-full md:w-2/4">
             <Image
               src={images.hero3}
               alt="https://placehold.co/500x500"
@@ -79,6 +80,26 @@ export default async function Newest() {
               height={500}
               className="object-cover object-center"
             />
+          </div>
+          <div className="md:w-2/4">
+            <h2 className="text-2xl md:text-5xl font-semibold tracking-tighter">
+              PORTABLE SPEAKER
+            </h2>
+            <p className="mt-2 md:mt-4 text-wrap max-md:text-sm">
+              Take sound everywhere with this portable speaker and keep your
+              music going for hours on end.
+            </p>
+            <Link
+              href={links.shop.href}
+              className="mt-2 md:mt-4 px-4 py-3 flex items-center space-x-2 max-w-32 bg-black text-white rounded-lg"
+            >
+              <span className="text-sm md:text-sm font-semibold">
+                View more
+              </span>
+              <span>
+                <ChevronRight size={18} />
+              </span>
+            </Link>
           </div>
         </div>
       </div>

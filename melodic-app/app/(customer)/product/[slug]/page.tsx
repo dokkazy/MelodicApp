@@ -1,8 +1,9 @@
+import { Star, Truck } from "lucide-react";
+
 import ImageGallery from "@/app/components/ImageGallery";
 import { fullProduct } from "@/app/interface";
 import { client } from "@/app/lib/sanity";
 import { Button } from "@/components/ui/button";
-import { Star, Truck } from "lucide-react";
 
 async function fetchData(slug: string) {
   const query = `*[_type == "product" && slug.current=="${slug}"][0]{

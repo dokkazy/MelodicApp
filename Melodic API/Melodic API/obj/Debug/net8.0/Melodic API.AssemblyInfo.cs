@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Melodic API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c575b5e865afcda41bbbefd2ca5f05c65741fb19")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+57412556479fb20e996dd7ff41d09faa44dcbc5d")]
 [assembly: System.Reflection.AssemblyProductAttribute("Melodic API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Melodic API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
