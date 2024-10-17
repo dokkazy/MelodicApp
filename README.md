@@ -135,6 +135,7 @@ Don't forget to give the project a star! Thanks again!
     <td align="center"><a href="https://github.com/dokkazy"><img src="https://avatars.githubusercontent.com/u/87236537?v=4" width="100px;" alt="Donavon West"/><br /><sub><b>Võ Công Huy</b></sub></a><br />💻</a></td>
     </td>
     <td align="center"><a href="https://github.com/ya3k"><img src="https://avatars.githubusercontent.com/u/98958049?v=4" width="100px;" alt="Donavon West"/><br /><sub><b>ya3k</b></sub></a><br />💻</a></td>
+    <td align="center"><a href="https://github.com/william-le1004"><img src="https://avatars.githubusercontent.com/u/87595769?v=4" width="100px;" alt="Donavon West"/><br /><sub><b>william-le1004</b></sub></a><br />💻</a></td>
    
   </tr>
 </table>
