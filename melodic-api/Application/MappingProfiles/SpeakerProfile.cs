@@ -1,4 +1,6 @@
-﻿using Application.Feature.Speakers.Queries.GetAllSpeakers;
+﻿using Application.Feature.Brand.Commands.CreateBrand;
+using Application.Feature.Speakers.Commands.CreateSpeaker;
+using Application.Feature.Speakers.Queries.GetAllSpeakers;
 using AutoMapper;
 using Domain.Entities;
 using System;
@@ -15,6 +17,9 @@ namespace Application.MappingProfiles
         {
             //getall
             CreateMap<SpeakerDto, Speaker>().ReverseMap();
+
+            CreateMap<CreateSpeakerCommand, Speaker>();
+
         }
     }
 }
