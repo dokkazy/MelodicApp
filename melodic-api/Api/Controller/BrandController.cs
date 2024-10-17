@@ -11,51 +11,46 @@ namespace Api.Controller
 {
     [Route("api/brand")]
     [ApiController]
-    public class BrandContrloller : ControllerBase
+    public class BrandController : ControllerBase
     {
         private readonly IMediator _mediator;
         private readonly MelodicDbContext _dbContext;
 
-        public BrandContrloller(IMediator mediator, MelodicDbContext dbContext)
+        public BrandController(IMediator mediator, MelodicDbContext dbContext)
         {
             _mediator = mediator;
             _dbContext = dbContext;
         }
 
-        // GET: api/<BrandContrloller>
-        [HttpGet]
+        [HttpGet("get-all/{pageIndex:int}")]
         public async Task<List<BrandDto>> GetAllBrands(int pageIndex)
         {
             var students = await _mediator.Send(new GetAllBrandQuery(pageIndex));
             return students;
         }
 
-        // GET api/<BrandContrloller>/5
-        [HttpGet("{id:guid}")]
+        [HttpGet("get-brand/{id:guid}")]
         public async Task<BrandDetailsDto> GetBrandDetails(Guid id)
         {
             var student = await _mediator.Send(new GetBrandDetailsQuery(id));
             return student;
         }
 
-        // POST api/<BrandContrloller>
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateBrand([FromBody] CreateBrandCommand command)
         {
             var result = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetBrandDetails), new { id = result }, result);
+            return Created("GetStudent", command);
         }
 
-        // PUT api/<BrandContrloller>/5
-        [HttpPut("{id:guid}")]
+        [HttpPut("update/{id:guid}")]
         public async Task<IActionResult> UpdateBrand(Guid id, [FromBody] UpdateBrandCommand command)
         {
             await _mediator.Send(command);
             return NoContent();
         }
 
-        // DELETE api/<BrandContrloller>/5
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("delete/{id:guid}")]
         public async Task<IActionResult> DeleteBrand(Guid id)
         {
             var result = new DeleteBrandCommand { Id = id };
