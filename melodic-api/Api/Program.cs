@@ -1,4 +1,6 @@
+using Api.Middleware;
 using Application;
+using Identity;
 using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +11,8 @@ builder.Services.AddControllers();
 
 builder.Services
     .AddApplicationService()
-    .AddInfrastructureService(builder.Configuration);
+    .AddInfrastructureService(builder.Configuration)
+    .AddIdentityService(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {
@@ -21,6 +24,8 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -28,7 +33,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.MapControllers();
 app.UseCors("all");
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
 
 app.Run();

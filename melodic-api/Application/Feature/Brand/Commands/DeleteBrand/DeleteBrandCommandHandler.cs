@@ -1,3 +1,4 @@
+using Application.Exception;
 using Infrastructure.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -15,9 +16,13 @@ public class DeleteBrandCommandHandler : IRequestHandler<DeleteBrandCommand, Uni
 
     public async Task<Unit> Handle(DeleteBrandCommand request, CancellationToken cancellationToken)
     {
-        var brand = await _dbContext.Brands.AsNoTracking().FirstOrDefaultAsync(x => x.BrandId == request.Id);
+        var brand = await _dbContext.Brands.AsNoTracking().FirstOrDefaultAsync(x => x.BrandId == request.Id, cancellationToken: cancellationToken);
         if (brand != null) brand.DelFlg = 0;
-        await _dbContext.SaveChangesAsync();
+        else
+        {
+            throw new NotFoundException(nameof(Brand), request.Id);
+        }
+        await _dbContext.SaveChangesAsync(cancellationToken);
         return Unit.Value;
     }
 }
