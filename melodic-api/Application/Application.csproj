@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Feature\Cart\Commands\CreateCart\" />
+      <Folder Include="Feature\Cart\Commands\DeleteCart\" />
+      <Folder Include="Feature\Cart\Commands\UpdateCart\" />
+      <Folder Include="Feature\Cart\Queries\GetAllCarts\" />
+      <Folder Include="Feature\Cart\Queries\GetCartDetails\" />
+      <Folder Include="Feature\EVoucher\Commands\CreateEVoucher\" />
+      <Folder Include="Feature\EVoucher\Commands\DeleteEVoucher\" />
+      <Folder Include="Feature\EVoucher\Commands\UpdateEVoucher\" />
+      <Folder Include="Feature\EVoucher\Queries\GetAllEVouchers\" />
+      <Folder Include="Feature\EVoucher\Queries\GetEVoucherDetails\" />
+      <Folder Include="Feature\OrderDetail\Commands\CreateOrderDetail\" />
+      <Folder Include="Feature\OrderDetail\Commands\DeleteOrderDetail\" />
+      <Folder Include="Feature\OrderDetail\Commands\UpdateOrderDetail\" />
+      <Folder Include="Feature\OrderDetail\Queries\GetAllOrderDetails\" />
+      <Folder Include="Feature\OrderDetail\Queries\GetOrderDetails\" />
+      <Folder Include="Feature\Order\Commands\CreateOrder\" />
+      <Folder Include="Feature\Order\Commands\DeleteOrder\" />
+      <Folder Include="Feature\Order\Commands\UpdateOrder\" />
+      <Folder Include="Feature\Order\Queries\GetAllOrders\" />
+      <Folder Include="Feature\Order\Queries\GetOrderDetails\" />
+      <Folder Include="Feature\Speaker\Commands\CreateSpeaker\" />
+      <Folder Include="Feature\Speaker\Commands\DeleteSpeaker\" />
+      <Folder Include="Feature\Speaker\Commands\UpdateSpeaker\" />
+      <Folder Include="Feature\Speaker\Queries\GetAllSpeakers\" />
+      <Folder Include="Feature\Speaker\Queries\GetSpeakerDetails\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="12.0.1" />
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+      <PackageReference Include="FluentValidation" Version="11.10.0" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.10.0" />
+      <PackageReference Include="MediatR" Version="12.4.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
+      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Domain\Domain.csproj" />
+      <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>
