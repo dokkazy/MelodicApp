@@ -19,8 +19,15 @@ public class GetAllBrandQueryHandler : IRequestHandler<GetAllBrandQuery, List<Br
 
     public async Task<List<BrandDto>> Handle(GetAllBrandQuery request, CancellationToken cancellationToken)
     {
-        var query = _dbContext.Brands.AsQueryable().AsNoTracking();
-        var pagination = await query.PaginatedListAsync(request.pageIndex, 2);
+        var query = _dbContext.Brands
+            .AsNoTracking()
+            .AsQueryable()
+            .Where(x => x.DelFlg == 0)
+            .OrderBy(x => x.CreatedAt);
+
+        var pageIndex = request.PageIndex == 0 ? 1 : request.PageIndex ?? 1;
+        var pagination = await query.PaginatedListAsync(pageIndex, 5);
+
         var data = _mapper.Map<List<BrandDto>>(pagination.Items);
         return data;
     }

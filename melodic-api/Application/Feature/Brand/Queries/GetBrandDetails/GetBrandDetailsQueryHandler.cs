@@ -1,3 +1,4 @@
+using Application.Exception;
 using AutoMapper;
 using Infrastructure.Database;
 using MediatR;
@@ -18,7 +19,13 @@ public class GetBrandDetailsQueryHandler : IRequestHandler<GetBrandDetailsQuery,
 
     public async Task<BrandDetailsDto> Handle(GetBrandDetailsQuery request, CancellationToken cancellationToken)
     {
-        var brand = await _dbContext.Brands.AsNoTracking().FirstOrDefaultAsync(x => x.BrandId == request.Id);
+        var brand = await _dbContext.Brands
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.BrandId == request.Id && x.DelFlg == 0, cancellationToken: cancellationToken);
+        
+        if (brand is null)
+            throw new NotFoundException(nameof(Brand), request.Id);
+        
         var data = _mapper.Map<BrandDetailsDto>(brand);
         return data;
     }
