@@ -27,11 +27,10 @@
       <Folder Include="Feature\Order\Commands\UpdateOrder\" />
       <Folder Include="Feature\Order\Queries\GetAllOrders\" />
       <Folder Include="Feature\Order\Queries\GetOrderDetails\" />
-      <Folder Include="Feature\Speaker\Commands\CreateSpeaker\" />
-      <Folder Include="Feature\Speaker\Commands\DeleteSpeaker\" />
-      <Folder Include="Feature\Speaker\Commands\UpdateSpeaker\" />
-      <Folder Include="Feature\Speaker\Queries\GetAllSpeakers\" />
-      <Folder Include="Feature\Speaker\Queries\GetSpeakerDetails\" />
+      <Folder Include="Feature\Speakers\Commands\CreateSpeaker\" />
+      <Folder Include="Feature\Speakers\Commands\DeleteSpeaker\" />
+      <Folder Include="Feature\Speakers\Commands\UpdateSpeaker\" />
+      <Folder Include="Feature\Speakers\Queries\GetSpeakerDetails\" />
     </ItemGroup>
 
     <ItemGroup>
