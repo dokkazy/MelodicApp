@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Feature.Speakers.Queries.GetAllSpeakers
 {
-    public record GetAllSpeakerQuery(int? PageIndex) : IRequest<List<SpeakerDto>>
+    public record GetAllSpeakerQuery(int? PageIndex) : IRequest<PaginatedList<SpeakerDto>>
     {
     }
 }

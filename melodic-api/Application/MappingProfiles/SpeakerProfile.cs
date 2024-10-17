@@ -13,8 +13,9 @@ namespace Application.MappingProfiles
     {
         public SpeakerProfile()
         {
-            //getall
             CreateMap<SpeakerDto, Speaker>().ReverseMap();
+
+            CreateMap(typeof(PaginatedList<>), typeof(PaginatedList<>)).ConvertUsing(typeof(PaginatedListConverter<,>));
         }
     }
 }
