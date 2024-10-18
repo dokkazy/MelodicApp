@@ -83,6 +83,14 @@ This project is a ecommerce web app using nextjs as client and aspnet as server
 
 <!-- GETTING STARTED -->
 ## Start Project
+- BE :
+  Create Migration
+    CLI: dotnet ef migrations add InitialCreate --context (This is the first DbContext)
+    PM: Add-Migration InitialCreate -Context (This is the first DbContext)
+  Update Migration
+    CLI: dotnet ef update database --context (This is the first DbContext)
+    PM: Update-Database -Context (This is the first DbContext)
+
   
 
 ## Applications URLs
