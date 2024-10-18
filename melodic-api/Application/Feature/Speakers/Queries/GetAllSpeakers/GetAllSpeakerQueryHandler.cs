@@ -1,5 +1,6 @@
 ﻿using Application.ExtensionMethods;
 using AutoMapper;
+using Domain.Entities;
 using Infrastructure.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Feature.Speakers.Queries.GetAllSpeakers
 {
-    public class GetAllSpeakerQueryHandler : IRequestHandler<GetAllSpeakerQuery, List<SpeakerDto>>
+    public class GetAllSpeakerQueryHandler : IRequestHandler<GetAllSpeakerQuery, PaginatedList<SpeakerDto>>
     {
         private readonly IMapper _mapper;
         private readonly MelodicDbContext _dbContext;
@@ -22,20 +23,19 @@ namespace Application.Feature.Speakers.Queries.GetAllSpeakers
             _dbContext = dbContext;
         }
 
-        public async Task<List<SpeakerDto>> Handle(GetAllSpeakerQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedList<SpeakerDto>> Handle(GetAllSpeakerQuery request, CancellationToken cancellationToken)
         {
             var query = _dbContext.Speakers
-                 .AsNoTracking()
-                 .AsQueryable()
-                 .Where(x => x.DelFlg == 0)
-                 .OrderBy(x => x.CreatedAt);
+                .AsNoTracking()
+                .Where(x => x.DelFlg == 0)
+                .OrderBy(x => x.CreatedAt);
 
             var pageIndex = request.PageIndex == 0 ? 1 : request.PageIndex ?? 1;
-            var pagination = await query.PaginatedListAsync(pageIndex, 5);
+            var pagination = await PaginatedList<Speaker>.CreateAsync(query, pageIndex, 5);
+            
+            var data = _mapper.Map<PaginatedList<SpeakerDto>>(pagination);
 
-            var data = _mapper.Map<List<SpeakerDto>>(pagination.Items);
             return data;
-
         }
     }
 }
