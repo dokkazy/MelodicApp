@@ -21,7 +21,6 @@ namespace Api.Controller
             _dbContext = dbContext;
         }
 
-
         [HttpGet]
         public async Task<PaginatedList<SpeakerDto>> GetAllBrands(int pageIndex)
         {
