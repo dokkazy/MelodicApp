@@ -22,7 +22,7 @@ namespace Api.Controller
         }
 
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<PaginatedList<SpeakerDto>> GetAllBrands(int pageIndex)
         {
             var speakers = await _mediator.Send(new GetAllSpeakerQuery(pageIndex));

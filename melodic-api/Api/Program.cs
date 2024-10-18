@@ -22,6 +22,8 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod());
 });
 
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();

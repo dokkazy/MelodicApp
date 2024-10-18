@@ -32,8 +32,7 @@ namespace Application.Feature.Speakers.Queries.GetAllSpeakers
 
             var pageIndex = request.PageIndex == 0 ? 1 : request.PageIndex ?? 1;
             var pagination = await PaginatedList<Speaker>.CreateAsync(query, pageIndex, 5);
-
-            // Ánh xạ từ PaginatedList<Speaker> sang PaginatedList<SpeakerDto>
+            
             var data = _mapper.Map<PaginatedList<SpeakerDto>>(pagination);
 
             return data;
