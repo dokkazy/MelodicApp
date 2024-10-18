@@ -8,12 +8,14 @@ import { Button } from "@/components/ui/button";
 import { links } from "@/configs/routes";
 import MobileNav from "./MobileNav";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import LoginDialog from "../LoginDialog";
+import AuthDialog from "../AuthDialog";
+import AuthMenu from "../AuthMenu";
 
 const navLink = [links.home, links.shop, links.contact];
 
 export default function NavBar() {
   const pathname = usePathname();
+  const [openDialog, setOpenDialog] = React.useState(false);
 
   return (
     <header className="mb-8 border-b sticky top-0 bg-white z-20">
@@ -44,9 +46,11 @@ export default function NavBar() {
               fill="#FFBC7D"
             ></path>{" "}
           </svg>
-          <h1 className="hidden md:block text-2xl font-bold text-primary">Melodic</h1>
+          <h1 className="hidden md:block text-2xl font-bold text-primary">
+            Melodic
+          </h1>
         </Link>
-        <nav className="hidden gap-12 md:flex"> 
+        <nav className="hidden gap-12 md:flex">
           {navLink.map((link, index) => (
             <div key={index}>
               {pathname === link.href ? (
@@ -67,7 +71,7 @@ export default function NavBar() {
         </nav>
         <div className="flex items-center justify-center gap-3 mr-16 h-12 w-12 sm:mr-12 sm:h-12 sm:w-12 md:h-16 md:w-16">
           <Button
-            className="flex flex-col gap-y-1.5 h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14"
+            className="flex flex-col gap-y-1.5 h-10 w-10 hover:scale-105 sm:h-12 sm:w-12 md:h-14 md:w-14"
             variant="outline"
           >
             <ShoppingBag />
@@ -75,20 +79,20 @@ export default function NavBar() {
               Cart
             </span>
           </Button>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                className="flex flex-col gap-y-1.5 h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14"
-                variant="outline"
-              >
-                <CircleUser />
-                <span className="hidden text-xs font-semibold text-gray-500 md:block">
-                  Login
-                </span>
-              </Button>
-            </DialogTrigger>
+          <AuthMenu />
+          <Button
+            className="flex flex-col gap-y-1.5 h-10 w-10 hover:scale-105 sm:h-12 sm:w-12 md:h-14 md:w-14"
+            variant="outline"
+            onClick={() => setOpenDialog(true)}
+          >
+            <CircleUser />
+            <span className="hidden text-xs font-semibold text-gray-500 md:block">
+              Login
+            </span>
+          </Button>
+          <Dialog open={openDialog} onOpenChange={() => setOpenDialog(false)}>
             <DialogContent className="sm:max-w-[425px]">
-              <LoginDialog />
+              <AuthDialog />
             </DialogContent>
           </Dialog>
           <MobileNav navLink={navLink} />
