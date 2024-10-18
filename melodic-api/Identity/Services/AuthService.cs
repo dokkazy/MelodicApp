@@ -16,6 +16,7 @@ public class AuthService : IAuthService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signinManager;
     private readonly JwtSettings _jwtSettings;
+
     public AuthService(UserManager<ApplicationUser> userManager
         , SignInManager<ApplicationUser> signinManager
         , IOptions<JwtSettings> jwtSettings)
@@ -24,6 +25,7 @@ public class AuthService : IAuthService
         _signinManager = signinManager;
         _jwtSettings = jwtSettings.Value;
     }
+
     public async Task<AuthResponse> Login(AuthRequest request)
     {
         var user = await _userManager.FindByEmailAsync(request.Email);
@@ -31,6 +33,7 @@ public class AuthService : IAuthService
         {
             throw new NotFoundException($"User with {request.Email} not found", request.Email);
         }
+
         var result = await _signinManager.CheckPasswordSignInAsync(user, request.Password, false);
         if (!result.Succeeded)
         {
@@ -58,13 +61,13 @@ public class AuthService : IAuthService
             LastName = request.LastName,
             EmailConfirmed = true
         };
-        
+
         var result = await _userManager.CreateAsync(user, request.Password);
 
         if (result.Succeeded)
         {
             await _userManager.AddToRoleAsync(user, "User");
-            return new RegistrationResponse() { UserId = user.Id};
+            return new RegistrationResponse() { UserId = user.Id };
         }
         else
         {
@@ -73,8 +76,14 @@ public class AuthService : IAuthService
             {
                 errors.AppendFormat("•{0}\n", err.Description);
             }
+
             throw new BadRequestException($"{errors}");
         }
+    }
+
+    public async Task Logout()
+    {
+        await _signinManager.SignOutAsync();
     }
 
     private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)

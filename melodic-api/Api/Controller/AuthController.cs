@@ -27,5 +27,12 @@ namespace Api.Controller
         {
             return Ok(await _authService.Register(request));
         }
+        
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _authService.Logout();
+            return Ok();
+        }
     }
 }
