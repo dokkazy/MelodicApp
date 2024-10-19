@@ -83,14 +83,32 @@ This project is a ecommerce web app using nextjs as client and aspnet as server
 
 <!-- GETTING STARTED -->
 ## Start Project
-  
+  - BE :
+  - Create Migration
+    - CLI:
+      ```
+      dotnet ef migrations add InitialCreate --context (This is the first DbContext)
+      ```
+    - PM:
+      ```
+      Add-Migration InitialCreate -Context (This is the first DbContext)
+      ```
+  - Update Migration
+    - CLI:
+      ```
+      dotnet ef update database --context (This is the first DbContext)
+      ```
+    - PM:
+      ```
+      Update-Database -Context (This is the first DbContext)
+      ```
 
 ## Applications URLs
 
 | Application       | URL                                   | Credentials                           |
 |-------------------|---------------------------------------|---------------------------------------|
-| Melodic API       | http://localhost:                     |                                       |
-| melodic-app       | http://localhost:5173                 |                                       |
+| Melodic API       | http://localhost:7149                 |                                       |
+| melodic-app       | http://localhost:3000                 |                                       |
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

@@ -18,10 +18,9 @@ import {
 } from "@/app/schemaValidations/auth.schema";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import envConfig from "@/configs/config";
-import { apiLinks } from "@/configs/routes";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+import authApiRequest from "@/api/auth";
 
 export default function RegisterDialog() {
   const { toast } = useToast();
@@ -62,37 +61,22 @@ export default function RegisterDialog() {
     const { confirmPassword, ...submitData } = data;
     try {
       setLoading(true);
-      const response = await fetch(
-        `${envConfig.NEXT_PUBLIC_API_ENDPOINT}${apiLinks.register}`,
-        {
-          method: "POST",
-          body: JSON.stringify(submitData),
-          headers: {
-            "Content-Type": "application/json",
-          },
+      const response = await authApiRequest.register(submitData);
+      switch (response.status) {
+        case 200: {
+          toast({
+            title: "Account created successfully",
+            description: "You can now login to your account.",
+          });
+          break;
         }
-      ).then(async (res) => {
-        const payload = await res.json();
-        const data = {
-          status: res.status,
-          payload: payload,
-        };
-        if (!res.ok) {
+        case 400: {
+          const title: string[] = response.payload.title.split("\n");
           toast({
             variant: "destructive",
-            description: payload?.title
-              .split("\n")
-              .map((err: string) => <p key={err}>{err}</p>),
+            description: title.map((err: string) => <p key={err}>{err}</p>),
           });
         }
-        return data;
-      });
-      console.log("Response", response);
-      if(response.status == 200){
-        toast({
-          title: "Account created successfully",
-          description: "You can now login to your account.",
-        });
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {

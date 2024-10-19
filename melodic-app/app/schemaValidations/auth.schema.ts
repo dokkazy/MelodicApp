@@ -36,6 +36,12 @@ export const registerSchema = z
 
 export type RegisterSchemaType = z.TypeOf<typeof registerSchema>;
 
+export const RegisterResponseSchema = z.object({
+  userId: z.string(),
+}).strict();
+
+export type RegisterResponseSchemaType = z.TypeOf<typeof RegisterResponseSchema>;
+
 export const loginSchema = z
   .object({
     email: z.string().email(),

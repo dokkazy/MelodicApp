@@ -7,15 +7,17 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { links } from "@/configs/routes";
 import MobileNav from "./MobileNav";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import AuthDialog from "../AuthDialog";
 import AuthMenu from "../AuthMenu";
+import { DialogTrigger } from "@radix-ui/react-dialog";
+import { useAppContext } from "@/app/_context/AppProvider";
 
 const navLink = [links.home, links.shop, links.contact];
 
 export default function NavBar() {
   const pathname = usePathname();
-  const [openDialog, setOpenDialog] = React.useState(false);
+  const { sessionToken } = useAppContext();
 
   return (
     <header className="mb-8 border-b sticky top-0 bg-white z-20">
@@ -79,22 +81,27 @@ export default function NavBar() {
               Cart
             </span>
           </Button>
-          <AuthMenu />
-          <Button
-            className="flex flex-col gap-y-1.5 h-10 w-10 hover:scale-105 sm:h-12 sm:w-12 md:h-14 md:w-14"
-            variant="outline"
-            onClick={() => setOpenDialog(true)}
-          >
-            <CircleUser />
-            <span className="hidden text-xs font-semibold text-gray-500 md:block">
-              Login
-            </span>
-          </Button>
-          <Dialog open={openDialog} onOpenChange={() => setOpenDialog(false)}>
-            <DialogContent className="sm:max-w-[425px]">
-              <AuthDialog />
-            </DialogContent>
-          </Dialog>
+          {!!sessionToken ? (
+            <AuthMenu />
+          ) : (
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  className="flex flex-col gap-y-1.5 h-10 w-10 hover:scale-105 sm:h-12 sm:w-12 md:h-14 md:w-14"
+                  variant="outline"
+                >
+                  <CircleUser />
+                  <span className="hidden text-xs font-semibold text-gray-500 md:block">
+                    Login
+                  </span>
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <AuthDialog />
+              </DialogContent>
+            </Dialog>
+          )}
+
           <MobileNav navLink={navLink} />
         </div>
       </div>

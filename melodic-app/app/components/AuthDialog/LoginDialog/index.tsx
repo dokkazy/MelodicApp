@@ -18,13 +18,14 @@ import {
   loginSchema,
   LoginSchemaType,
 } from "@/app/schemaValidations/auth.schema";
-import envConfig from "@/configs/config";
-import { apiLinks } from "@/configs/routes";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+import { useAppContext } from "@/app/_context/AppProvider";
+import authApiRequest from "@/api/auth";
 
 export default function LoginDialog() {
   const { toast } = useToast();
+  const { setSessionToken } = useAppContext();
   const [loading, setLoading] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const loginForm = useForm<LoginSchemaType>({
@@ -43,35 +44,26 @@ export default function LoginDialog() {
   const onSubmit = async (data: LoginSchemaType) => {
     try {
       setLoading(true);
-      const response = await fetch(
-        `${envConfig.NEXT_PUBLIC_API_ENDPOINT}${apiLinks.login}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          body: JSON.stringify(data),
+      const response = await authApiRequest.login(data);
+      console.log(response);
+
+      switch (response.status) {
+        case 200: {
+          toast({
+            title: "Login successfully",
+            description: "You have successfully logged in.",
+          });
+          const responseFromNextServer = await authApiRequest.setToken({sessionToken: response.payload?.token});
+          setSessionToken(responseFromNextServer.payload?.sessionToken);
+          break;
         }
-      ).then(async (res) => {
-        const payload = await res.json();
-        const data = {
-          status: res.status,
-          payload: payload,
-        };
-        if (!res.ok) {
+        case 400: {
           toast({
             variant: "destructive",
-            title: `${payload?.title}`,
+            title: `${response.payload?.title}`,
           });
+          break;
         }
-        return data;
-      });
-      console.log("Response", response);
-      if (response.status == 200) {
-        toast({
-          title: "Login successfully",
-          description: "You have successfully logged in.",
-        });
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
