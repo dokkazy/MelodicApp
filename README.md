@@ -83,7 +83,7 @@ This project is a ecommerce web app using nextjs as client and aspnet as server
 
 <!-- GETTING STARTED -->
 ## Start Project
-  - BE :
+- BE :
   - Create Migration
     - CLI:
       ```
