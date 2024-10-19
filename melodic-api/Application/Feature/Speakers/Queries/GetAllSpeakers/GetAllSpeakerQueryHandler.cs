@@ -1,41 +1,49 @@
-﻿using Application.ExtensionMethods;
-using AutoMapper;
-using Domain.Entities;
+﻿using AutoMapper;
 using Infrastructure.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Feature.Speakers.Queries.GetAllSpeakers
 {
     public class GetAllSpeakerQueryHandler : IRequestHandler<GetAllSpeakerQuery, PaginatedList<SpeakerDto>>
     {
-        private readonly IMapper _mapper;
         private readonly MelodicDbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public GetAllSpeakerQueryHandler(IMapper mapper, MelodicDbContext dbContext)
+        public GetAllSpeakerQueryHandler(MelodicDbContext dbContext, IMapper mapper)
         {
-            _mapper = mapper;
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         public async Task<PaginatedList<SpeakerDto>> Handle(GetAllSpeakerQuery request, CancellationToken cancellationToken)
         {
-            var query = _dbContext.Speakers
-                .AsNoTracking()
-                .Where(x => x.DelFlg == 0)
-                .OrderBy(x => x.CreatedAt);
+            var query = _dbContext.Speakers.AsQueryable();
 
+            if (!string.IsNullOrEmpty(request.speakerName))
+            {
+                query = query.Where(s => s.Name.Contains(request.speakerName));
+            }
+
+            query = request.sortBy switch
+            {
+                "name" => request.sortDirection == "asc"
+                    ? query.OrderBy(s => s.Name)
+                    : query.OrderByDescending(s => s.Name),
+                "price" => request.sortDirection == "asc"
+                    ? query.OrderBy(s => s.Price)
+                    : query.OrderByDescending(s => s.Price),
+                _ => query.OrderBy(s => s.Name)
+            };
             var pageIndex = request.PageIndex == 0 ? 1 : request.PageIndex ?? 1;
-            var pagination = await PaginatedList<Speaker>.CreateAsync(query, pageIndex, 5);
-            
-            var data = _mapper.Map<PaginatedList<SpeakerDto>>(pagination);
 
-            return data;
+            var paginatedList = await PaginatedList<SpeakerDto>.CreateAsync(
+                _mapper.ProjectTo<SpeakerDto>(query),
+                pageIndex,
+                pageSize: 10
+            );
+
+            return paginatedList;
         }
     }
 }
