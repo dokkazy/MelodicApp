@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Feature.Brand.Queries.GetAllBrands;
 
-public class GetAllBrandQueryHandler : IRequestHandler<GetAllBrandQuery, List<BrandDto>>
+public class GetAllBrandQueryHandler : IRequestHandler<GetAllBrandQuery, PaginatedList<BrandDto>>
 {
     private readonly IMapper _mapper;
     private readonly MelodicDbContext _dbContext;
@@ -17,7 +17,7 @@ public class GetAllBrandQueryHandler : IRequestHandler<GetAllBrandQuery, List<Br
         _dbContext = dbContext;
     }
 
-    public async Task<List<BrandDto>> Handle(GetAllBrandQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedList<BrandDto>> Handle(GetAllBrandQuery request, CancellationToken cancellationToken)
     {
         var query = _dbContext.Brands
             .AsNoTracking()
@@ -28,7 +28,7 @@ public class GetAllBrandQueryHandler : IRequestHandler<GetAllBrandQuery, List<Br
         var pageIndex = request.PageIndex == 0 ? 1 : request.PageIndex ?? 1;
         var pagination = await query.PaginatedListAsync(pageIndex, 5);
 
-        var data = _mapper.Map<List<BrandDto>>(pagination.Items);
+        var data = _mapper.Map<PaginatedList<BrandDto>>(pagination);
         return data;
     }
 }

@@ -535,3 +535,4 @@ obj/
 # End of https://www.toptal.com/developers/gitignore/api/csharp,aspnetcore,dotnetcore
 .idea
 .Migrations/
+.Identity/Migrations

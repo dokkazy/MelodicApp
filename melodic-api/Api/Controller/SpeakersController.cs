@@ -26,9 +26,8 @@ namespace Api.Controller
             _dbContext = dbContext;
         }
 
-
-        [HttpGet()]
-        public async Task<List<SpeakerDto>> GetAllBrands(int pageIndex)
+        [HttpGet]
+        public async Task<PaginatedList<SpeakerDto>> GetAllBrands(int pageIndex)
         {
             var speakers = await _mediator.Send(new GetAllSpeakerQuery(pageIndex));
             return speakers;

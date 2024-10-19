@@ -13,6 +13,7 @@ public class BrandProfile : Profile
     {
         CreateMap<BrandDto, Brand>().ReverseMap();
         CreateMap<Brand, BrandDetailsDto>().ReverseMap();
+        CreateMap(typeof(PaginatedList<>), typeof(PaginatedList<>)).ConvertUsing(typeof(PaginatedListConverter<,>));
         CreateMap<CreateBrandCommand, Brand>();
         CreateMap<UpdateBrandCommand, Brand>();
     }
