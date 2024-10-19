@@ -28,7 +28,7 @@ public class UserService : IUserService
 
     public async Task<List<User>> GetUsers()
     {
-        var employees = await _userManager.GetUsersInRoleAsync("Employee");
+        var employees = await _userManager.GetUsersInRoleAsync("User");
         return employees.Select(q => new User
         {
             Id = q.Id,

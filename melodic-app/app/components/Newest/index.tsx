@@ -6,6 +6,7 @@ import images from "@/assets/pictures/heroImage";
 import { simplifiedProduct } from "@/app/interface";
 import { client } from "@/app/lib/sanity";
 import { links } from "@/configs/routes";
+import { formatPrice } from "@/app/lib/utils";
 
 async function fetchData() {
   const queryHeroImage = "*[_type=='heroImage'][0]";
@@ -23,7 +24,6 @@ export default async function Newest() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const data: { newestProduct: simplifiedProduct[]; heroImage: any } =
     await fetchData();
-  console.log(data.heroImage);
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -61,10 +61,7 @@ export default async function Newest() {
                     </p>
                   </div>
                   <p className="text-xl sm:text-sm font-medium text-gray-900">
-                    {product.price.toLocaleString("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    })}
+                    {formatPrice(product.price)}
                   </p>
                 </div>
               </Link>
