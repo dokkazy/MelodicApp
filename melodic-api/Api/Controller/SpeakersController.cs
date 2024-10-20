@@ -49,6 +49,7 @@ namespace Api.Controller
             {
                 Id = s.Id,
                 Name = s.Name,
+                CreateAt  = s.CreatedAt,
                 //BrandId = s.BrandId,
                 //BrandName = s.Brand.Name,
                 Brand = new BrandDto
@@ -56,6 +57,7 @@ namespace Api.Controller
                     BrandId = s.Brand.BrandId,
                     Name = s.Brand.Name
                 },
+               
                 Price = s.Price,
                 Decription = s.Decription,
                 UnitInStock = s.UnitInStock,

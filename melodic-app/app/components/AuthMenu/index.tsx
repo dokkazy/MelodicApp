@@ -83,9 +83,9 @@ export default function AuthMenu() {
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => handleLogout()}>
+          <DropdownMenuItem onClick={() => handleLogout()} className="cursor-pointer">
             <LogOut className="mr-2 h-4 w-4" />
-            <span className="font-semibold">Log out</span>
+            <span className="font-semibold ">Log out</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

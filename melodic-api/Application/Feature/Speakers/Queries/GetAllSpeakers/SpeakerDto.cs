@@ -14,6 +14,7 @@ namespace Application.Feature.Speakers.Queries.GetAllSpeakers
     {
         public Guid Id { get; set; }
         public string? Name { get; set; }
+        public DateTime CreateAt { get; set; }
         //public Guid BrandId { get; set; }
         //public string? BrandName { get; set; }
         public BrandDto? Brand { get; set; }
