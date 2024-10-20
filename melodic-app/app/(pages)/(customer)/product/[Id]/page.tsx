@@ -1,44 +1,42 @@
+"use client";
 import { Star, Truck } from "lucide-react";
 
-import ImageGallery from "@/app/components/ImageGallery";
-import { fullProduct } from "@/app/interface";
-import { client } from "@/app/lib/sanity";
 import { Button } from "@/components/ui/button";
+import { ProductDetailResType } from "@/app/schemaValidations/product.schema";
+import ImageGallery from "@/app/components/ImageGallery";
+import speakerApiRequest from "@/api/speaker";
 import { formatPrice } from "@/app/lib/utils";
 
-async function fetchData(slug: string) {
-  const query = `*[_type == "product" && slug.current=="${slug}"][0]{
-  _id,
-    price,
-    image,
-    name,
-    description,
-    "slug":slug.current,
-    "categoryName":category->name,
-    
-}`;
-  const response = await client.fetch(query);
+async function fetchData(id: string) {
+  const response = await speakerApiRequest.getSpeakerDetails(id);
   return response;
 }
 
 export default async function ProductPage({
   params,
 }: {
-  params: { slug: string };
+  params: { Id: string };
 }) {
-  const data: fullProduct = await fetchData(params.slug);
+  const data = await fetchData(params.Id);
+
+  console.log(data);
+
+  if (data.status !== 200) {
+    return <h1>Product not found</h1>;
+  }
+  const productData = data.payload as ProductDetailResType;
   return (
     <div className="bg-white">
-      <div className="mx-auto max-w-screen-xl px-4 md:px-8">
+      <div className="mx-auto min-h-screen max-w-screen-xl px-4 md:px-8">
         <div className="grid gap-8 md:grid-cols-2">
-          <ImageGallery image={data.image} />
+          <ImageGallery image={productData.img} />
           <div className="md:py-8">
             <div className="mb-2 md:mb-3">
               <span className="mb-0.5 inline-block text-gray-500">
-                {data.categoryName}
+                {productData.brand.Name}
               </span>
               <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
-                {data.name}
+                {productData.name}
               </h2>
             </div>
 
@@ -55,10 +53,10 @@ export default async function ProductPage({
             <div className="mb-4">
               <div className="flex items-end gap-2">
                 <span className="text-xl font-bold text-gray-800 md:text-2xl">
-                  {formatPrice(data.price)}
+                  {formatPrice(productData.price)}
                 </span>
                 <span className="mb-0.5 text-gray-300 line-through">
-                  {formatPrice(data.price + 100000)}
+                  {formatPrice(productData.price + 100000)}
                 </span>
               </div>
               <span className="text-sm text-gray-500">
@@ -76,7 +74,9 @@ export default async function ProductPage({
               <Button variant="secondary">Buy Now</Button>
             </div>
 
-            <p className="text-base text-gray-500 tracking-normal">{data.description}</p>
+            <p className="text-base text-gray-500 tracking-normal">
+              {productData.description}
+            </p>
           </div>
         </div>
       </div>

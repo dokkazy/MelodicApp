@@ -11,8 +11,8 @@ import { ProductListResType, ProductDetailResType } from "@/app/schemaValidation
   const speakerApiRequest = {
     getListSpeakers: (queryParams?: string) => 
         http.get<ProductListResType>(apiLinks.speakerOData + (queryParams || "")),
-    getDetail : (id : string) => 
-        http.get<ProductDetailResType>(apiLinks.speaker +`/${id}`),
+    getSpeakerDetails : (id : string) => 
+        http.get<ProductDetailResType>(apiLinks.speaker +`/${id}`, {}),
 
   };
   

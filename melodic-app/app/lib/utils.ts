@@ -4,3 +4,8 @@ export const formatPrice = (price: number) => {
     currency: "VND",
   });
 };
+
+export const checkIsImg = (url: string) => {
+  // return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+  return url.includes("/")
+}

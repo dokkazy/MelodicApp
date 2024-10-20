@@ -9,7 +9,7 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<MelodicIdentityDb
     public MelodicIdentityDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<MelodicIdentityDbContext>();
-        optionsBuilder.UseSqlServer("Server=LAPTOP-P37125QH\\SABER;database=;User ID=sa;Password=123;Database=Melodic;Trusted_Connection=True;TrustServerCertificate=True;");
+        optionsBuilder.UseSqlServer("Data Source=SQL5112.site4now.net;User Id=db_aae5f9_melodic_admin; Password=melodic123321;Initial Catalog=db_aae5f9_melodic;Integrated Security=True;Encrypt=False;Trusted_Connection=False");
 
         return new MelodicIdentityDbContext(optionsBuilder.Options);
     }
