@@ -13,8 +13,8 @@ export const apiLinks = {
   register: "/api/authenticate/register",
   login: "/api/authenticate/login",
   logout: "/api/authenticate/logout",
-  //products
-  getProducts: "/api/speakers"
+  speakerOData: "/odata/speakers",
+  speaker: "/api/speakers"
 }
 
 export const apiClientLinks = {
