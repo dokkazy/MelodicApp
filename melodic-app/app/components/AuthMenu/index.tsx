@@ -21,10 +21,12 @@ import { useAppContext } from "@/app/_context/AppProvider";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function AuthMenu() {
   const { toast } = useToast();
   const { setSessionToken } = useAppContext();
+  const router = useRouter();
   const handleLogout = async () => {
     try {
       await fetch(
@@ -34,6 +36,7 @@ export default function AuthMenu() {
         }
       ).then(async (res) => {
         if (res.ok) {
+          router.push(links.home.href);
           setSessionToken("");
           toast({
             title: "Logout successfully",
