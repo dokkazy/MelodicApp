@@ -1,12 +1,11 @@
 // Add this line at the top to mark this file as a Client Component
 "use client";
-
-import { formatPrice } from "@/app/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import speakerApiRequest from "@/api/speaker";
 import { useEffect, useState } from "react";
-import { ProductListResType } from "@/app/schemaValidations/product.schema"; // Import the type for better type safety
+import { ProductListResType } from "@/app/schemaValidations/product.schema";
+import { checkIsImg, formatPrice } from "@/app/lib/utils";
 
 export default function ShopPage() {
   const itemPerPage = 12;
@@ -35,7 +34,6 @@ export default function ShopPage() {
     };
     fetchSpeakers();
   }, [queryParams]); // Dependencies include queryParams to fetch data when it changes
-
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -45,7 +43,7 @@ export default function ShopPage() {
               <Link href={`/product/${product.Id}`}>
                 <div className="aspect-square w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-80">
                   <Image
-                    src={product.Img}
+                    src={checkIsImg(product.Img) ? product.Img : "https://placehold.co/300"}
                     alt={product.Name}
                     className="w-full h-full object-center object-cover lg:h-full lg:w-full"
                     width={300}

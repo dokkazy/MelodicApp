@@ -5,30 +5,22 @@ import Image from "next/image";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import images from "@/assets/pictures/heroImage";
 import { links } from "@/configs/routes";
-import { formatPrice } from "@/app/lib/utils";
+import { checkIsImg, formatPrice } from "@/app/lib/utils";
 import speakerApiRequest from "@/api/speaker";
 import { useEffect, useState } from "react";
 import { ProductListResType } from "@/app/schemaValidations/product.schema";
 
 export default function Newest() {
-  const itemPerPage = 4;
-  const [page, setPage] = useState(0);
+  const newestItems = 4;
   const [productList, setProductList] = useState<ProductListResType["value"]>([]);
-  const [totalCount, setTotalCount] = useState(0);
-  const [maxPage, setMaxPage] = useState(0);
 
-  const queryParams = `?$top=${itemPerPage}&$count=true&$orderby=createAt desc`;
+  const queryParams = `?$top=${newestItems}&$count=true&$orderby=createAt desc`;
 
   const fetchSpeakers = async () => {
     try {
       const response = await speakerApiRequest.getListSpeakers(queryParams);
-      console.log("API Response:", response);
       const { value, "@odata.count": count } = response.payload;
-      console.log("Total Products Count:", count);
       setProductList(value || []);
-      setTotalCount(count || 0);
-      setMaxPage(Math.ceil(count / itemPerPage));
-      console.log("Max Page:", Math.ceil(count / itemPerPage));
     } catch (error) {
       console.error("Failed to fetch speakers:", error);
     }
@@ -58,7 +50,7 @@ export default function Newest() {
               <Link href={`/product/${product.Id}`}>
                 <div className="aspect-square w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-80">
                   <Image
-                    src={product.Img}
+                    src={checkIsImg(product.Img) ? product.Img : "https://placehold.co/300"}
                     alt={product.Name}
                     className="w-full h-full object-center object-cover lg:h-full lg:w-full"
                     width={300}
@@ -85,8 +77,8 @@ export default function Newest() {
         <div className="md:flex md:items-center bg-gray-100 rounded-md w-full max-h-[520px] p-4 mt-12 sm:mt-24 sm:px-14 sm:py-12">
           <div className="w-full md:w-2/4">
             <Image
-              src={images.hero3}
-              alt="https://placehold.co/500x500"
+              src={images.hero3 || "https://placehold.co/500"}
+              alt="hero image"
               width={500}
               height={500}
               className="object-cover object-center"
