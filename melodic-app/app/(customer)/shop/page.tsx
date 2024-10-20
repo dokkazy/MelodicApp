@@ -1,5 +1,6 @@
 import { simplifiedProduct } from "@/app/interface";
 import { client } from "@/app/lib/sanity";
+import { formatPrice } from "@/app/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -18,7 +19,7 @@ async function GetData() {
 
 export default async function ShopPage() {
   const data: simplifiedProduct[] = await GetData();
-  console.log(data);
+
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -45,10 +46,7 @@ export default async function ShopPage() {
                     </p>
                   </div>
                   <p className="text-sm font-medium text-gray-900">
-                    {product.price.toLocaleString("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    })}
+                    {formatPrice(product.price)}
                   </p>
                 </div>
               </Link>

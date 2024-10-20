@@ -4,6 +4,7 @@ import ImageGallery from "@/app/components/ImageGallery";
 import { fullProduct } from "@/app/interface";
 import { client } from "@/app/lib/sanity";
 import { Button } from "@/components/ui/button";
+import { formatPrice } from "@/app/lib/utils";
 
 async function fetchData(slug: string) {
   const query = `*[_type == "product" && slug.current=="${slug}"][0]{
@@ -54,16 +55,10 @@ export default async function ProductPage({
             <div className="mb-4">
               <div className="flex items-end gap-2">
                 <span className="text-xl font-bold text-gray-800 md:text-2xl">
-                  {data.price.toLocaleString("vi-VN", {
-                    style: "currency",
-                    currency: "VND",
-                  })}
+                  {formatPrice(data.price)}
                 </span>
                 <span className="mb-0.5 text-gray-300 line-through">
-                  {(data.price + 100000).toLocaleString("vi-VN", {
-                    style: "currency",
-                    currency: "VND",
-                  })}
+                  {formatPrice(data.price + 100000)}
                 </span>
               </div>
               <span className="text-sm text-gray-500">
