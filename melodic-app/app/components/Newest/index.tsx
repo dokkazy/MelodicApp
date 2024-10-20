@@ -9,18 +9,22 @@ import { checkIsImg, formatPrice } from "@/app/lib/utils";
 import speakerApiRequest from "@/api/speaker";
 import { useEffect, useState } from "react";
 import { ProductListResType } from "@/app/schemaValidations/product.schema";
+import Loading from "./loading";
 
 export default function Newest() {
   const newestItems = 4;
   const [productList, setProductList] = useState<ProductListResType["value"]>([]);
+  const[loading, setLoading] = useState(false);
 
   const queryParams = `?$top=${newestItems}&$count=true&$orderby=createAt desc`;
 
   const fetchSpeakers = async () => {
+    setLoading(true);
     try {
       const response = await speakerApiRequest.getListSpeakers(queryParams);
       const { value, "@odata.count": count } = response.payload;
       setProductList(value || []);
+      setLoading(false);
     } catch (error) {
       console.error("Failed to fetch speakers:", error);
     }
@@ -44,7 +48,10 @@ export default function Newest() {
             </span>
           </Link>
         </div>
-        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+        {loading ? (
+          <Loading />
+        ) : (
+          <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {productList.map((product) => (
             <div key={product.Id} className="group relative">
               <Link href={`/product/${product.Id}`}>
@@ -74,6 +81,7 @@ export default function Newest() {
             </div>
           ))}
         </div>
+        )}
         <div className="md:flex md:items-center bg-gray-100 rounded-md w-full max-h-[520px] p-4 mt-12 sm:mt-24 sm:px-14 sm:py-12">
           <div className="w-full md:w-2/4">
             <Image

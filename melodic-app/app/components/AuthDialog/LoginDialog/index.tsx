@@ -48,14 +48,17 @@ export default function LoginDialog() {
 
       switch (response.status) {
         case 200: {
+          const responseFromNextServer = await authApiRequest.setToken({
+            sessionToken: response.payload?.token,
+          });
+          setSessionToken(responseFromNextServer.payload?.sessionToken);
           toast({
             title: "Login successfully",
             description: "You have successfully logged in.",
           });
-          const responseFromNextServer = await authApiRequest.setToken({sessionToken: response.payload?.token});
-          setSessionToken(responseFromNextServer.payload?.sessionToken);
           break;
         }
+        case 404:
         case 400: {
           toast({
             variant: "destructive",
