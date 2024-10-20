@@ -5,6 +5,14 @@
 
 @layer base {
   :root {
+    --primary: #1F1F21;
+    --text: white;
+    --text-gray: #9D9D9E;
+    --hover: #353537;
+    --border: #3C3C3E;
+    --error: #E3452F;
+    --bg: #373739;
+    
     --background: 0 0% 100%;
     --foreground: 20 14.3% 4.1%;
     --card: 0 0% 100%;

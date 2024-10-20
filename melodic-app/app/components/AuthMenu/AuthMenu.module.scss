@@ -1,0 +1,6 @@
+.profile {
+  @apply hover:scale-105;
+  @apply hover:bg-accent hover:text-accent-foreground hover:cursor-pointer;
+  @apply hover:transition-all hover:ease-in-out hover:duration-200;
+}
+

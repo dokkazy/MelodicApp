@@ -107,8 +107,8 @@ This project is a ecommerce web app using nextjs as client and aspnet as server
 
 | Application       | URL                                   | Credentials                           |
 |-------------------|---------------------------------------|---------------------------------------|
-| Melodic API       | http://localhost:                     |                                       |
-| melodic-app       | http://localhost:5173                 |                                       |
+| Melodic API       | http://localhost:7149                 |                                       |
+| melodic-app       | http://localhost:3000                 |                                       |
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
