@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 import { LogOut, Settings, User, ShoppingBasket } from "lucide-react";
 
 import {
@@ -21,9 +23,8 @@ import { ToastAction } from "@/components/ui/toast";
 import Link from "next/link";
 
 export default function AuthMenu() {
-  const { setSessionToken } = useAppContext();
   const { toast } = useToast();
-
+  const { setSessionToken } = useAppContext();
   const handleLogout = async () => {
     try {
       await fetch(
@@ -37,7 +38,7 @@ export default function AuthMenu() {
           toast({
             title: "Logout successfully",
           });
-          await fetch(`${envConfig.NEXT_PUBLIC_API_CLIENT}${apiClientLinks.removeToken}`,{method: "POST"});          
+          await fetch(`${envConfig.NEXT_PUBLIC_API_CLIENT}${apiClientLinks.removeToken}`,{method: "POST"});
         }
       });
     } catch (error: any) {
@@ -67,12 +68,12 @@ export default function AuthMenu() {
           <DropdownMenuLabel>My account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-              <Link href={links.profile.href}>
-            <DropdownMenuItem>
+            <Link href={links.profile.href}>
+              <DropdownMenuItem>
                 <User className="mr-2 h-4 w-4" />
                 <span className="font-semibold">Profile</span>
-            </DropdownMenuItem>
-              </Link>
+              </DropdownMenuItem>
+            </Link>
             <DropdownMenuItem>
               <ShoppingBasket className="mr-2 h-4 w-4" />
               <span className="font-semibold">Orders</span>

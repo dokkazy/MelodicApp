@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import envConfig from "@/configs/config";
+import { apiLinks } from "@/configs/routes";
 
 class HttpError {
   constructor(
@@ -10,7 +11,7 @@ class HttpError {
 
 type MethodType = "GET" | "POST" | "PUT" | "DELETE";
 
-type CustomOptionsType = RequestInit & {
+type CustomOptionsType = Omit<RequestInit, "method"> & {
   baseURL?: string | undefined;
 };
 

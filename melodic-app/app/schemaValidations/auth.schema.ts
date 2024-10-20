@@ -20,7 +20,7 @@ export const registerSchema = z
       .string()
       .min(6, { message: formatMessageError("Password", 6) })
       .max(100),
-    confirmPassword: z.string().min(6).max(100),
+    confirmPassword: z.string().min(6, {message:formatMessageError("Password", 6)}).max(100),
   })
   .strict()
   .superRefine(({ password, confirmPassword }, ctx) => {

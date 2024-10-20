@@ -45,7 +45,6 @@ export default function LoginDialog() {
     try {
       setLoading(true);
       const response = await authApiRequest.login(data);
-      console.log(response);
 
       switch (response.status) {
         case 200: {
