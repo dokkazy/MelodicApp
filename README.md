@@ -96,7 +96,7 @@ This project is a ecommerce web app using nextjs as client and aspnet as server
   - Update Migration
     - CLI:
       ```
-      dotnet ef update database --context (This is the first DbContext)
+      dotnet ef database update --context (This is the first DbContext)
       ```
     - PM:
       ```
