@@ -6,4 +6,5 @@ public class AuthResponse
     public string UserName { get; set; }
     public string Email { get; set; }
     public string Token { get; set; }
+    public RefreshToken RefreshToken { get; set; }
 }

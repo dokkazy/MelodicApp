@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Application.Contracts.Pagination;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.ExtensionMethods;
 

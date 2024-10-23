@@ -5,8 +5,8 @@ namespace Domain.Entities;
 
 public class Order : AuditableEntity
 {
-    [Key]
-    public Guid OrderId { get; set; }
+    // [Key]
+    // public Guid OrderId { get; set; }
     public Guid? UserId { get; set; }
     public string? FullName { get; set; }
     public string? Address { get; set; }

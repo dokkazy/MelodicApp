@@ -1,9 +1,7 @@
-﻿using Application.Exception;
-using Application.Feature.Speakers.Commands.CreateSpeaker;
+﻿using Application.Contracts.Persistence;
+using Application.Exception;
 using AutoMapper;
 using Domain.Entities;
-using FluentValidation;
-using Infrastructure.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,12 +10,12 @@ namespace Application.Feature.Speakers.Commands.UpdateSpeaker
     public class UpdateSpeakerCommandHandler : IRequestHandler<UpdateSpeakerCommand, Unit>
     {
         private readonly IMapper _mapper;
-        private readonly MelodicDbContext _dbContext;
+        private readonly ISpeakerRepository _speakerRepository;
 
-        public UpdateSpeakerCommandHandler(IMapper mapper, MelodicDbContext dbContext)
+        public UpdateSpeakerCommandHandler(IMapper mapper, ISpeakerRepository speakerRepository)
         {
             _mapper = mapper;
-            _dbContext = dbContext;
+            _speakerRepository = speakerRepository;
         }
 
         public async Task<Unit> Handle(UpdateSpeakerCommand request, CancellationToken cancellationToken)
@@ -28,8 +26,7 @@ namespace Application.Feature.Speakers.Commands.UpdateSpeaker
             if (!validationResult.IsValid)
                 throw new BadRequestException("Invalid Information", validationResult);
 
-            var speaker = await _dbContext.Speakers.AsNoTracking()             
-                .FirstOrDefaultAsync(s => s.Id == request.Id, cancellationToken);
+            var speaker = await _speakerRepository.GetByIdAsync(request.Id);
 
             if (speaker is null)
                 throw new NotFoundException(nameof(Speaker), request.Id);
@@ -41,10 +38,10 @@ namespace Application.Feature.Speakers.Commands.UpdateSpeaker
             if (request.Price > 0) speaker.Price = request.Price; // Check for a valid price
             if (request.Decription != null) speaker.Decription = request.Decription;
             if (request.UnitInStock.HasValue) speaker.UnitInStock = request.UnitInStock;
-            if (request.Img != null) speaker.Img = request.Img;
-            _dbContext.Entry(speaker).State = EntityState.Modified;
-            //_dbContext.Speakers.Update(speaker);
-            await _dbContext.SaveChangesAsync();
+            if (request.Img != null) speaker.MainImg = request.Img;
+
+            //_speakerRepository.Speakers.Update(speaker);
+            await _speakerRepository.UpdateAsync(speaker);
 
             return Unit.Value;
         }

@@ -6,7 +6,7 @@ namespace Domain.Entities;
 
 public class Speaker : AuditableEntity
 {
-    public Guid Id { get; set; }
+    // public Guid Id { get; set; }
     [Required]
     public string? Name { get; set; }
 
@@ -28,7 +28,11 @@ public class Speaker : AuditableEntity
     public int? UnitInStock { get; set; }
 
     // [ValidateNever]
-    public string? Img { get; set; }
+    public string? MainImg { get; set; }
+    public string? Img1 { get; set; }
+    public string? Img2 { get; set; }
+    public string? Img3 { get; set; }
+    public string? Img4 { get; set; }
 
     public List<OrderDetail> OrderDetails { get; set; } = new();
 }

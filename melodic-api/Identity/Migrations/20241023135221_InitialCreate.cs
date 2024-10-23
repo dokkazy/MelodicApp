@@ -34,6 +34,9 @@ namespace Identity.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TokenCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TokenExpired = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -171,11 +174,11 @@ namespace Identity.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "SecurityStamp", "TokenCreated", "TokenExpired", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "8e445865-a24d-4543-a6c6-9443d048cdb9", 0, "0e5087de-3739-4282-b3f0-3da6cd87cd77", "admin@localhost.com", true, "System", "Admin", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEMcH2JYg8rt3HBLM5P/yBLpnwj7ZYlKKqMNf6b4sLSEN8jbCbdM3IpTUQiULeO/Qug==", null, false, "885a8d54-e708-4d51-9b9e-afd1d27037cb", false, "admin@localhost.com" },
-                    { "9e224968-33e4-4652-b7b7-8574d048cdb9", 0, "0ac63fb5-1b95-4276-8ada-55a71e647e0f", "user@localhost.com", true, "System", "User", false, null, "USER@LOCALHOST.COM", "USER@LOCALHOST.COM", "AQAAAAIAAYagAAAAEBXqbhX02jqpmU3clAUiILrNTJ8rfJbuf1yNRWOk3IY5fv8V9AWEhUi/20+vfVnXeg==", null, false, "581e0585-0ef8-41f8-a1fa-2c581ef9a4dd", false, "user@localhost.com" }
+                    { "8e445865-a24d-4543-a6c6-9443d048cdb9", 0, "c523b4f0-f39d-4761-80d1-c7c727bafa0a", "admin@localhost.com", true, "System", "Admin", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAECceMFDAbOJAfhteUYQ2m5Ot7niL7zrrnP8uVtUnEcMO6EhhoEXur9P/rBptn98g1g==", null, false, "", "dcec9dc2-9471-4bf6-8b43-5624bda6ee05", new DateTime(2024, 10, 23, 20, 52, 20, 641, DateTimeKind.Local).AddTicks(7375), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "admin@localhost.com" },
+                    { "9e224968-33e4-4652-b7b7-8574d048cdb9", 0, "2efee786-9ff8-4cd8-949e-24e086167e05", "user@localhost.com", true, "System", "User", false, null, "USER@LOCALHOST.COM", "USER@LOCALHOST.COM", "AQAAAAIAAYagAAAAEFf1gaU604qI82RIfwqtutYjCgEYZNrUMCkuNF9BbSU6TcQpgxDNUws43i0dwFL0MQ==", null, false, "", "ce58936c-a8d6-4e53-8f4c-23f87d754c52", new DateTime(2024, 10, 23, 20, 52, 20, 704, DateTimeKind.Local).AddTicks(4802), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "user@localhost.com" }
                 });
 
             migrationBuilder.InsertData(

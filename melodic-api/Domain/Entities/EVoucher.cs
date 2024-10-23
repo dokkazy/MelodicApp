@@ -5,8 +5,8 @@ namespace Domain.Entities
 {
     public class EVoucher : AuditableEntity
     {
-        [Key]
-        public Guid VoucherId { get; set; }
+        // [Key]
+        // public Guid VoucherId { get; set; }
         [Required]
         public string Code { get; set; }
         [Required]

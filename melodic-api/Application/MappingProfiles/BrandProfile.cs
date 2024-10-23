@@ -1,3 +1,4 @@
+using Application.Contracts.Pagination;
 using Application.Feature.Brand.Commands.CreateBrand;
 using Application.Feature.Brand.Commands.UpdateBrand;
 using Application.Feature.Brand.Queries.GetAllBrands;

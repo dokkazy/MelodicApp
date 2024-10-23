@@ -1,6 +1,6 @@
+using Application.Contracts.Persistence;
 using Application.Exception;
 using AutoMapper;
-using Infrastructure.Database;
 using MediatR;
 
 namespace Application.Feature.Brand.Commands.CreateBrand;
@@ -8,12 +8,12 @@ namespace Application.Feature.Brand.Commands.CreateBrand;
 public class CreateBrandCommandHandler : IRequestHandler<CreateBrandCommand, Unit>
 {
     private readonly IMapper _mapper;
-    private readonly MelodicDbContext _dbContext;
+    private readonly IBrandRepository _brandRepository;
 
-    public CreateBrandCommandHandler(IMapper mapper, MelodicDbContext dbContext)
+    public CreateBrandCommandHandler(IMapper mapper, IBrandRepository brandRepository)
     {
         _mapper = mapper;
-        _dbContext = dbContext;
+        _brandRepository = brandRepository;
     }
 
     public async Task<Unit> Handle(CreateBrandCommand request, CancellationToken cancellationToken)
@@ -25,8 +25,7 @@ public class CreateBrandCommandHandler : IRequestHandler<CreateBrandCommand, Uni
             throw new BadRequestException("Invalid Information", validationResult);
 
         var brandCreate = _mapper.Map<Domain.Entities.Brand>(request);
-        await _dbContext.AddAsync(brandCreate);
-        await _dbContext.SaveChangesAsync();
+        await _brandRepository.AddAsync(brandCreate);
 
         return Unit.Value;
     }

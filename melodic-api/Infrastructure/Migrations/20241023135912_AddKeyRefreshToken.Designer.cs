@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(MelodicDbContext))]
-    [Migration("20241017150302_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241023135912_AddKeyRefreshToken")]
+    partial class AddKeyRefreshToken
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,9 +25,30 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Application.Models.Identity.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Exprires")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("Domain.Entities.Brand", b =>
                 {
-                    b.Property<Guid>("BrandId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -36,9 +57,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte>("DelFlg")
-                        .HasColumnType("tinyint");
 
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");
@@ -50,37 +68,33 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("BrandId");
+                    b.HasKey("Id");
 
                     b.ToTable("Brands");
 
                     b.HasData(
                         new
                         {
-                            BrandId = new Guid("f27effce-038f-4253-a632-14aa0acc89ca"),
+                            Id = new Guid("f27effce-038f-4253-a632-14aa0acc89ca"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DelFlg = (byte)0,
                             Name = "JBL"
                         },
                         new
                         {
-                            BrandId = new Guid("f8c6cc19-38e0-4867-8216-43092f01af05"),
+                            Id = new Guid("f8c6cc19-38e0-4867-8216-43092f01af05"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DelFlg = (byte)0,
                             Name = "Logitech"
                         },
                         new
                         {
-                            BrandId = new Guid("db66c4f6-162c-4f56-a8b9-0832bd3a81f2"),
+                            Id = new Guid("db66c4f6-162c-4f56-a8b9-0832bd3a81f2"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DelFlg = (byte)0,
                             Name = "Sony"
                         },
                         new
                         {
-                            BrandId = new Guid("8b0eac64-c224-4a6f-9971-d875e1fac9fe"),
+                            Id = new Guid("8b0eac64-c224-4a6f-9971-d875e1fac9fe"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DelFlg = (byte)0,
                             Name = "Nanomax"
                         });
                 });
@@ -99,8 +113,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("DelFlg")
-                        .HasColumnType("tinyint");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");
@@ -118,7 +132,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.EVoucher", b =>
                 {
-                    b.Property<Guid>("VoucherId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -131,9 +145,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte>("DelFlg")
-                        .HasColumnType("tinyint");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -152,57 +163,52 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("VoucherId");
+                    b.HasKey("Id");
 
                     b.ToTable("EVouchers");
 
                     b.HasData(
                         new
                         {
-                            VoucherId = new Guid("e09f2a37-f53e-4aad-8dba-35be56184c50"),
+                            Id = new Guid("e09f2a37-f53e-4aad-8dba-35be56184c50"),
                             Code = "EVOUNCHERKM5%",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DelFlg = (byte)0,
                             Description = "Discount 5% for speaker",
                             Percent = 0.5,
                             VouncherName = "KM5%"
                         },
                         new
                         {
-                            VoucherId = new Guid("da20e3e7-a8f6-4ace-abee-3f03436d33d2"),
+                            Id = new Guid("da20e3e7-a8f6-4ace-abee-3f03436d33d2"),
                             Code = "EVOUNCHERKM10%",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DelFlg = (byte)0,
                             Description = "Discount 10% for speaker",
                             Percent = 0.10000000000000001,
                             VouncherName = "KM10%"
                         },
                         new
                         {
-                            VoucherId = new Guid("e9cf62f1-bdde-48c3-a3a0-58bc7696ad7a"),
+                            Id = new Guid("e9cf62f1-bdde-48c3-a3a0-58bc7696ad7a"),
                             Code = "EVOUNCHERKM15%",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DelFlg = (byte)0,
                             Description = "Discount 15% for speaker",
                             Percent = 0.14999999999999999,
                             VouncherName = "KM15%"
                         },
                         new
                         {
-                            VoucherId = new Guid("a723d28b-24d6-4c58-9e3a-0bdcb93580d2"),
+                            Id = new Guid("a723d28b-24d6-4c58-9e3a-0bdcb93580d2"),
                             Code = "EVOUNCHERKM20%",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DelFlg = (byte)0,
                             Description = "Discount 20% for speaker",
                             Percent = 0.20000000000000001,
                             VouncherName = "KM20%"
                         },
                         new
                         {
-                            VoucherId = new Guid("bf712960-13f1-4be0-a34b-8f53a1095faf"),
+                            Id = new Guid("bf712960-13f1-4be0-a34b-8f53a1095faf"),
                             Code = "EVOUNCHERKM25%",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DelFlg = (byte)0,
                             Description = "Discount 25% for speaker",
                             Percent = 0.25,
                             VouncherName = "KM25%"
@@ -211,7 +217,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Order", b =>
                 {
-                    b.Property<Guid>("OrderId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -223,9 +229,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte>("DelFlg")
-                        .HasColumnType("tinyint");
 
                     b.Property<double?>("Discount")
                         .HasColumnType("float");
@@ -257,7 +260,7 @@ namespace Infrastructure.Migrations
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("OrderId");
+                    b.HasKey("Id");
 
                     b.ToTable("Orders");
                 });
@@ -276,8 +279,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("DelFlg")
-                        .HasColumnType("tinyint");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");
@@ -314,16 +317,25 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte>("DelFlg")
-                        .HasColumnType("tinyint");
+                    b.Property<string>("Img1")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Img")
+                    b.Property<string>("Img2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Img3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Img4")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MainImg")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -350,8 +362,7 @@ namespace Infrastructure.Migrations
                             BrandId = new Guid("f8c6cc19-38e0-4867-8216-43092f01af05"),
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Decription = "Portable Bluetooth speaker with light show",
-                            DelFlg = (byte)0,
-                            Img = "https://cdn.tgdd.vn/Products/Images/2162/249767/sony-srs-xb13-150323-031134-600x600.jpg",
+                            MainImg = "https://cdn.tgdd.vn/Products/Images/2162/249767/sony-srs-xb13-150323-031134-600x600.jpg",
                             Name = "Sony SRS-XB13",
                             Price = 950000.0,
                             UnitInStock = 10

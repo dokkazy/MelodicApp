@@ -1,36 +1,27 @@
-﻿using Application.Exception;
-using Application.Feature.Brand.Commands.DeleteBrand;
+﻿using Application.Contracts.Persistence;
+using Application.Exception;
 using Domain.Entities;
-using Infrastructure.Database;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Feature.Speakers.Commands.DeleteSpeaker
 {
     public class DeleteSpeakerCommandHandler : IRequestHandler<DeleteSpeakerCommand, Unit>
     {
-        private readonly MelodicDbContext _dbContext;
+        private readonly ISpeakerRepository _speakerRepository;
 
-        public DeleteSpeakerCommandHandler(MelodicDbContext dbContext)
+        public DeleteSpeakerCommandHandler(ISpeakerRepository speakerRepository)
         {
-            _dbContext = dbContext;
+            _speakerRepository = speakerRepository;
         }
 
         public async Task<Unit> Handle(DeleteSpeakerCommand request, CancellationToken cancellationToken)
         {
-            var speaker = await _dbContext.Speakers.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+            var speaker = await _speakerRepository.GetByIdAsync(request.Id);
 
             if (speaker == null)
                 throw new NotFoundException(nameof(Speaker), request.Id);
-
-            speaker.DelFlg = 1;
-
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            
+            await _speakerRepository.DeleteAsync(speaker);
 
             return Unit.Value;
         }

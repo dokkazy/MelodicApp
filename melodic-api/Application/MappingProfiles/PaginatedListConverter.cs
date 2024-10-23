@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Application.Contracts.Pagination;
+using AutoMapper;
 
 namespace Application.MappingProfiles;
 

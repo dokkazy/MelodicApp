@@ -1,7 +1,7 @@
-﻿using Application.Exception;
+﻿using Application.Contracts.Persistence;
+using Application.Exception;
 using AutoMapper;
 using Domain.Entities;
-using Infrastructure.Database;
 using MediatR;
 
 
@@ -10,12 +10,12 @@ namespace Application.Feature.Speakers.Commands.CreateSpeaker
     public class CreateSpeakerCommandHandler : IRequestHandler<CreateSpeakerCommand, Unit>
     {
         private readonly IMapper _mapper;
-        private readonly MelodicDbContext _dbContext;
+        private readonly ISpeakerRepository _speakerRepository;
 
-        public CreateSpeakerCommandHandler(IMapper mapper, MelodicDbContext dbContext)
+        public CreateSpeakerCommandHandler(IMapper mapper, ISpeakerRepository speakerRepository)
         {
             _mapper = mapper;
-            _dbContext = dbContext;
+            _speakerRepository = speakerRepository;
         }
 
         public async Task<Unit> Handle(CreateSpeakerCommand request, CancellationToken cancellationToken)
@@ -29,8 +29,7 @@ namespace Application.Feature.Speakers.Commands.CreateSpeaker
 
             var speakerCreate = _mapper.Map<Speaker>(request);
 
-            await _dbContext.AddAsync(speakerCreate);
-            await _dbContext.SaveChangesAsync();
+            await _speakerRepository.AddAsync(speakerCreate);
 
             return Unit.Value;
         }

@@ -1,34 +1,28 @@
-using Application.ExtensionMethods;
-using Infrastructure.Database;
+using Application.Contracts.Persistence;
 using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Feature.Brand.Queries.GetAllBrands;
 
-public class GetAllBrandQueryHandler : IRequestHandler<GetAllBrandQuery, PaginatedList<BrandDto>>
+public class GetAllBrandQueryHandler : IRequestHandler<GetAllBrandQuery, List<BrandDto>>
 {
     private readonly IMapper _mapper;
-    private readonly MelodicDbContext _dbContext;
+    private readonly IBrandRepository _brandRepository;
 
-    public GetAllBrandQueryHandler(IMapper mapper, MelodicDbContext dbContext)
+    public GetAllBrandQueryHandler(IMapper mapper, IBrandRepository brandRepository)
     {
         _mapper = mapper;
-        _dbContext = dbContext;
+        _brandRepository = brandRepository;
     }
 
-    public async Task<PaginatedList<BrandDto>> Handle(GetAllBrandQuery request, CancellationToken cancellationToken)
+    public async Task<List<BrandDto>> Handle(GetAllBrandQuery request, CancellationToken cancellationToken)
     {
-        var query = _dbContext.Brands
-            .AsNoTracking()
-            .AsQueryable()
-            .Where(x => x.DelFlg == 0)
-            .OrderBy(x => x.CreatedAt);
+        var query = await _brandRepository.GetAllAsync();
 
-        var pageIndex = request.PageIndex == 0 ? 1 : request.PageIndex ?? 1;
-        var pagination = await query.PaginatedListAsync(pageIndex, 5);
+        // var pageIndex = request.PageIndex == 0 ? 1 : request.PageIndex ?? 1;
+        // var pagination = await query.PaginatedListAsync(pageIndex, 5);
 
-        var data = _mapper.Map<PaginatedList<BrandDto>>(pagination);
+        var data = _mapper.Map<List<BrandDto>>(query);
         return data;
     }
 }

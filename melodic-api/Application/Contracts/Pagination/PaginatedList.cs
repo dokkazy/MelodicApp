@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+namespace Application.Contracts.Pagination;
+
 public class PaginatedList<T>
 {
     public List<T> Items { get; private set; }

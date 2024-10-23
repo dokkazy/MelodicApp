@@ -72,8 +72,18 @@ namespace Identity.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TokenCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("TokenExpired")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -99,7 +109,7 @@ namespace Identity.Migrations
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0e5087de-3739-4282-b3f0-3da6cd87cd77",
+                            ConcurrencyStamp = "c523b4f0-f39d-4761-80d1-c7c727bafa0a",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "System",
@@ -107,9 +117,12 @@ namespace Identity.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMcH2JYg8rt3HBLM5P/yBLpnwj7ZYlKKqMNf6b4sLSEN8jbCbdM3IpTUQiULeO/Qug==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECceMFDAbOJAfhteUYQ2m5Ot7niL7zrrnP8uVtUnEcMO6EhhoEXur9P/rBptn98g1g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "885a8d54-e708-4d51-9b9e-afd1d27037cb",
+                            RefreshToken = "",
+                            SecurityStamp = "dcec9dc2-9471-4bf6-8b43-5624bda6ee05",
+                            TokenCreated = new DateTime(2024, 10, 23, 20, 52, 20, 641, DateTimeKind.Local).AddTicks(7375),
+                            TokenExpired = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         },
@@ -117,7 +130,7 @@ namespace Identity.Migrations
                         {
                             Id = "9e224968-33e4-4652-b7b7-8574d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0ac63fb5-1b95-4276-8ada-55a71e647e0f",
+                            ConcurrencyStamp = "2efee786-9ff8-4cd8-949e-24e086167e05",
                             Email = "user@localhost.com",
                             EmailConfirmed = true,
                             FirstName = "System",
@@ -125,9 +138,12 @@ namespace Identity.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@LOCALHOST.COM",
                             NormalizedUserName = "USER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBXqbhX02jqpmU3clAUiILrNTJ8rfJbuf1yNRWOk3IY5fv8V9AWEhUi/20+vfVnXeg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFf1gaU604qI82RIfwqtutYjCgEYZNrUMCkuNF9BbSU6TcQpgxDNUws43i0dwFL0MQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "581e0585-0ef8-41f8-a1fa-2c581ef9a4dd",
+                            RefreshToken = "",
+                            SecurityStamp = "ce58936c-a8d6-4e53-8f4c-23f87d754c52",
+                            TokenCreated = new DateTime(2024, 10, 23, 20, 52, 20, 704, DateTimeKind.Local).AddTicks(4802),
+                            TokenExpired = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TwoFactorEnabled = false,
                             UserName = "user@localhost.com"
                         });

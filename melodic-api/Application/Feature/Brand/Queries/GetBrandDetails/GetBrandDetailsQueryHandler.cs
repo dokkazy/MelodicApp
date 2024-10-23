@@ -1,27 +1,24 @@
+using Application.Contracts.Persistence;
 using Application.Exception;
 using AutoMapper;
-using Infrastructure.Database;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Feature.Brand.Queries.GetBrandDetails;
 
 public class GetBrandDetailsQueryHandler : IRequestHandler<GetBrandDetailsQuery, BrandDetailsDto>
 {
     private readonly IMapper _mapper;
-    private readonly MelodicDbContext _dbContext;
+    private readonly IBrandRepository _brandRepository;
 
-    public GetBrandDetailsQueryHandler(IMapper mapper, MelodicDbContext dbContext)
+    public GetBrandDetailsQueryHandler(IMapper mapper, IBrandRepository brandRepository)
     {
         _mapper = mapper;
-        _dbContext = dbContext;
+        _brandRepository = brandRepository;
     }
 
     public async Task<BrandDetailsDto> Handle(GetBrandDetailsQuery request, CancellationToken cancellationToken)
     {
-        var brand = await _dbContext.Brands
-            .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.BrandId == request.Id && x.DelFlg == 0, cancellationToken: cancellationToken);
+        var brand = await _brandRepository.GetByIdAsync(request.Id);
         
         if (brand is null)
             throw new NotFoundException(nameof(Brand), request.Id);

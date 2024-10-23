@@ -1,21 +1,19 @@
+using Application.Contracts.Persistence;
 using Application.Exception;
-using Application.Feature.Brand.Commands.CreateBrand;
 using AutoMapper;
-using Infrastructure.Database;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Feature.Brand.Commands.UpdateBrand;
 
 public class UpdateBrandCommandHandler : IRequestHandler<UpdateBrandCommand, Unit>
 {
     private readonly IMapper _mapper;
-    private readonly MelodicDbContext _dbContext;
+    private readonly IBrandRepository _brandRepository;
 
-    public UpdateBrandCommandHandler(IMapper mapper, MelodicDbContext dbContext)
+    public UpdateBrandCommandHandler(IMapper mapper, IBrandRepository brandRepository)
     {
         _mapper = mapper;
-        _dbContext = dbContext;
+        _brandRepository = brandRepository;
     }
 
     public async Task<Unit> Handle(UpdateBrandCommand request, CancellationToken cancellationToken)
@@ -26,17 +24,14 @@ public class UpdateBrandCommandHandler : IRequestHandler<UpdateBrandCommand, Uni
         if (!validationResult.IsValid)
             throw new BadRequestException("Invalid Information", validationResult);
 
-        var brand = await _dbContext.Brands
-            .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.BrandId == request.BrandId, cancellationToken);
+        var brand = await _brandRepository.GetByIdAsync(request.BrandId);
 
         if (brand is null)
             throw new NotFoundException(nameof(Brand), request.BrandId);
 
         _mapper.Map(request, brand);
-
-        _dbContext.Brands.Update(brand);
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        
+        await _brandRepository.UpdateAsync(brand);
 
         return Unit.Value;
     }
