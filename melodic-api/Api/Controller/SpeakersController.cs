@@ -7,6 +7,7 @@ using Application.Feature.Speakers.Queries.GetAllSpeakers;
 using Application.Feature.Speakers.Queries.GetSpeakerDetails;
 using Infrastructure.Database;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
@@ -77,6 +78,7 @@ public class SpeakersController : ODataController
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> CreateSpeaker([FromBody] CreateSpeakerCommand command)
     {
         if (command == null)
@@ -87,6 +89,7 @@ public class SpeakersController : ODataController
     }
 
     [HttpPut("{id:guid}")]
+    [Authorize]
     public async Task<IActionResult> UpdateSpeaker(Guid id, [FromBody] UpdateSpeakerCommand command)
     {
         await _mediator.Send(command);
@@ -94,6 +97,7 @@ public class SpeakersController : ODataController
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> DeleteSpeaker(Guid id)
     {
         if (id == Guid.Empty)

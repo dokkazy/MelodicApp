@@ -19,7 +19,10 @@ namespace Application.MappingProfiles
     {
         public SpeakerProfile()
         {
-            CreateMap<SpeakerDto, Speaker>().ReverseMap();
+            CreateMap<SpeakerDto, Speaker>()
+                .ForPath(x => x.Brand!.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(x => x.MainImg, opt => opt.MapFrom(src => src.Img))
+                .ReverseMap();
 
             CreateMap<CreateSpeakerCommand, Speaker>();
             CreateMap<UpdateSpeakerCommand, Speaker>();

@@ -12,7 +12,10 @@ public class BrandProfile : Profile
 {
     public BrandProfile()
     {
-        CreateMap<BrandDto, Brand>().ReverseMap();
+        CreateMap<BrandDto, Brand>()
+            .ForMember(x => x.Id , opt => opt.MapFrom(src => src.BrandId))
+            .ForMember(x => x.Name , opt => opt.MapFrom(src => src.Name))
+            .ReverseMap();
         CreateMap<Brand, BrandDetailsDto>().ReverseMap();
         CreateMap(typeof(PaginatedList<>), typeof(PaginatedList<>)).ConvertUsing(typeof(PaginatedListConverter<,>));
         CreateMap<CreateBrandCommand, Brand>();

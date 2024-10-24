@@ -19,10 +19,7 @@ namespace Application.Feature.Speakers.Queries.GetSpeakerDetails
 
         public async Task<SpeakerDetailsDto> Handle(GetSpeakerDetailsQuery request, CancellationToken cancellationToken)
         {
-            var speaker = await _speakerRepository.GetByIdAsync(request.Id);
-
-            if(speaker == null)
-                throw new NotFoundException(nameof(Speaker), request.Id);
+            var speaker = await _speakerRepository.GetSpeakerDetails(request.Id);
 
             var data = _mapper.Map<SpeakerDetailsDto>(speaker);
             

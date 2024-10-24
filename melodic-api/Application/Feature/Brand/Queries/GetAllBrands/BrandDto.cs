@@ -1,3 +1,5 @@
+using Domain.Common;
+
 namespace Application.Feature.Brand.Queries.GetAllBrands;
 
 public class BrandDto

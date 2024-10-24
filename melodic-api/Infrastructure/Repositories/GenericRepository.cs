@@ -16,7 +16,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : AuditableEnt
 
     public async Task<IReadOnlyList<T>> GetAllAsync()
     {
-        return await _context.Set<T>().AsNoTracking().ToListAsync();
+        return await _context.Set<T>().AsNoTracking().OrderByDescending(x => x.CreatedAt).ToListAsync();
     }
 
     public async Task<T> GetByIdAsync(Guid id)
