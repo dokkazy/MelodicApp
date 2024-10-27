@@ -17,7 +17,7 @@ import styles from "./AuthMenu.module.scss";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import envConfig from "@/configs/config";
 import { apiClientLinks, apiLinks, links } from "@/configs/routes";
-import { useAppContext } from "@/app/_context/AppProvider";
+import { useAppContext } from "@/providers/AppProvider";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import Link from "next/link";

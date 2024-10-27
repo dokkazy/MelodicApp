@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { CircleUser, ShoppingBag } from "lucide-react";
+import { CircleUser, Search, ShoppingBag } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
@@ -11,7 +11,9 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import AuthDialog from "../AuthDialog";
 import AuthMenu from "../AuthMenu";
 import { DialogTrigger } from "@radix-ui/react-dialog";
-import { useAppContext } from "@/app/_context/AppProvider";
+import { useAppContext } from "@/providers/AppProvider";
+import { Badge } from "@/components/ui/badge";
+import SearchDrawer from "../SearchDrawer";
 
 const navLink = [links.home, links.shop, links.contact];
 
@@ -20,8 +22,8 @@ export default function NavBar() {
   const { sessionToken } = useAppContext();
 
   return (
-    <header className="mb-8 border-b sticky top-0 bg-white z-20">
-      <div className="flex items-center justify-between mx-auto max-w-2xl px-4 max-md:py-2 sm:px-6 md:max-w-4xl lg:max-w-6xl">
+    <header className="sticky top-0 z-20 mb-8 border-b bg-white">
+      <div className="mx-auto flex max-w-2xl items-center justify-between px-4 max-md:py-2 sm:px-6 md:max-w-4xl lg:max-w-6xl">
         <Link href={"/"} className="flex flex-col items-center py-2">
           <svg
             id="logo-38"
@@ -48,7 +50,7 @@ export default function NavBar() {
               fill="#FFBC7D"
             ></path>{" "}
           </svg>
-          <h1 className="hidden md:block text-2xl font-bold text-primary">
+          <h1 className="hidden text-2xl font-bold text-primary md:block">
             Melodic
           </h1>
         </Link>
@@ -57,13 +59,13 @@ export default function NavBar() {
             <div key={index}>
               {pathname === link.href ? (
                 <Link href={link.href}>
-                  <h1 className="text-primary text-lg font-bold">
+                  <h1 className="text-lg font-bold text-primary">
                     {link.label}
                   </h1>
                 </Link>
               ) : (
                 <Link href={link.href}>
-                  <h1 className="text-gray-600 transition duration-100 text-lg font-bold hover:text-primary">
+                  <h1 className="text-lg font-bold text-gray-600 transition duration-100 hover:text-primary">
                     {link.label}
                   </h1>
                 </Link>
@@ -71,23 +73,31 @@ export default function NavBar() {
             </div>
           ))}
         </nav>
-        <div className="flex items-center justify-center gap-3 mr-16 h-12 w-12 sm:mr-12 sm:h-12 sm:w-12 md:h-16 md:w-16">
-          <Button
-            className="flex flex-col gap-y-1.5 h-10 w-10 hover:scale-105 sm:h-12 sm:w-12 md:h-14 md:w-14"
-            variant="outline"
-          >
-            <ShoppingBag />
-            <span className="hidden text-xs font-semibold text-gray-500 md:block">
-              Cart
-            </span>
-          </Button>
+        <div className="mr-16 flex h-12 w-12 items-center justify-center gap-3 sm:mr-12 sm:h-12 sm:w-12 md:h-16 md:w-16">
+          <div>
+            <SearchDrawer>
+              <Search className="cursor-pointer hover:scale-105 hover:opacity-90" />
+            </SearchDrawer>
+          </div>
+          <div className="relative">
+            <Button
+              className="flex h-10 w-10 flex-col gap-y-1.5 hover:scale-105 sm:h-12 sm:w-12 md:h-14 md:w-14"
+              variant="outline"
+            >
+              <ShoppingBag />
+              <span className="hidden text-xs font-semibold text-gray-500 md:block">
+                Cart
+              </span>
+            </Button>
+            <Badge className="absolute -right-2 -top-2">0</Badge>
+          </div>
           {!!sessionToken ? (
             <AuthMenu />
           ) : (
             <Dialog>
               <DialogTrigger asChild>
                 <Button
-                  className="flex flex-col gap-y-1.5 h-10 w-10 hover:scale-105 sm:h-12 sm:w-12 md:h-14 md:w-14"
+                  className="flex h-10 w-10 flex-col gap-y-1.5 hover:scale-105 sm:h-12 sm:w-12 md:h-14 md:w-14"
                   variant="outline"
                 >
                   <CircleUser />

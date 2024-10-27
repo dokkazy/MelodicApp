@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import envConfig from "@/configs/config";
-import { apiLinks } from "@/configs/routes";
 
-class HttpError {
+export class HttpError {
   constructor(
     public status: number,
-    public payload: any
-  ){}
+    public payload: any,
+  ) {}
 }
 
 type MethodType = "GET" | "POST" | "PUT" | "DELETE";
@@ -18,7 +17,7 @@ type CustomOptionsType = Omit<RequestInit, "method"> & {
 const request = async <Response>(
   method: MethodType,
   url: string,
-  options?: CustomOptionsType | undefined
+  options?: CustomOptionsType | undefined,
 ) => {
   const body = options?.body ? JSON.stringify(options.body) : undefined;
   const baseHeaders = {
@@ -48,9 +47,7 @@ const request = async <Response>(
     payload,
   };
   if (!response.ok) {
-    if (response.status === 400) {
-      return new HttpError(response.status, payload);
-    }
+    return new HttpError(response.status, payload);
   }
   return data;
 };
@@ -58,28 +55,28 @@ const request = async <Response>(
 const http = {
   get: <Response>(
     url: string,
-    options?: Omit<CustomOptionsType, "body"> | undefined
+    options?: Omit<CustomOptionsType, "body"> | undefined,
   ) => {
     return request<Response>("GET", url, options);
   },
   post: <Response>(
     url: string,
     body?: any,
-    options?: Omit<CustomOptionsType, "body"> | undefined
+    options?: Omit<CustomOptionsType, "body"> | undefined,
   ) => {
     return request<Response>("POST", url, { ...options, body });
   },
   put: <Response>(
     url: string,
     body: any,
-    options?: Omit<CustomOptionsType, "body"> | undefined
+    options?: Omit<CustomOptionsType, "body"> | undefined,
   ) => {
     return request<Response>("PUT", url, options);
   },
   delete: <Response>(
     url: string,
     body: any,
-    options?: Omit<CustomOptionsType, "body"> | undefined
+    options?: Omit<CustomOptionsType, "body"> | undefined,
   ) => {
     return request<Response>("DELETE", url, options);
   },

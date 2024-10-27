@@ -15,7 +15,7 @@ import {
 import {
   registerSchema,
   RegisterSchemaType,
-} from "@/app/schemaValidations/auth.schema";
+} from "@/schemaValidations/auth.schema";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
@@ -95,7 +95,7 @@ export default function RegisterDialog() {
     <Form {...registerForm}>
       <form
         onSubmit={registerForm.handleSubmit(onSubmit)}
-        className="space-y-2 mt-2"
+        className="space-y-4 mt-2"
         noValidate
       >
         <div className="flex items-center space-x-2">

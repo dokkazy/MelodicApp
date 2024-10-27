@@ -16,3 +16,9 @@ export interface fullProduct {
     image: unknown;
     description?: string;
 }
+
+export interface CartItem {
+    productId: string;
+    quantity: number;
+    price: number;
+}

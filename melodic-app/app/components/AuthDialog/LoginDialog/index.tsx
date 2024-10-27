@@ -17,10 +17,10 @@ import { Input } from "@/components/ui/input";
 import {
   loginSchema,
   LoginSchemaType,
-} from "@/app/schemaValidations/auth.schema";
+} from "@/schemaValidations/auth.schema";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
-import { useAppContext } from "@/app/_context/AppProvider";
+import { useAppContext } from "@/providers/AppProvider";
 import authApiRequest from "@/api/auth";
 
 export default function LoginDialog() {
