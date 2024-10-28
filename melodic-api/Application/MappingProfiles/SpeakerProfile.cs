@@ -26,7 +26,10 @@ namespace Application.MappingProfiles
 
             CreateMap<CreateSpeakerCommand, Speaker>();
             CreateMap<UpdateSpeakerCommand, Speaker>();
-            CreateMap<SpeakerDetailsDto, Speaker>().ReverseMap();
+            CreateMap<SpeakerDetailsDto, Speaker>()
+                .ForPath(x => x.Brand!.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(x => x.MainImg, opt => opt.MapFrom(src => src.Img))
+                .ReverseMap();
 
             CreateMap(typeof(PaginatedList<>), typeof(PaginatedList<>)).ConvertUsing(typeof(PaginatedListConverter<,>));
         }
