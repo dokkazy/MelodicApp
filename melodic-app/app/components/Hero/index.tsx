@@ -6,37 +6,21 @@ import * as React from "react";
 import images from "@/assets/pictures/heroImage";
 import {
   Carousel,
-  type CarouselApi,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 
-// async function GetData(category?: string) {
-//   const queryProductByCategory = `*[_type == "product" && category->name == "${category}"] {
-//     _id,
-//       "imageUrl":image[0].asset->url,
-//         price,
-//       name,
-//       "slug":slug.current,
-//       "categoryName":category->name
-//   }`;
-//   const productByCategory = await client.fetch(queryProductByCategory);
-//   return { productByCategory };
-// }
 
 export default function Hero() {
-  const [carouselApi, setCarouselApi] = React.useState<CarouselApi>();
 
   return (
     <section className="mx-auto max-w-2xl px-4 sm:pb-6 lg:max-w-7xl lg:px-8">
       <div className="mb-8 flex flex-wrap justify-between md:mb-16">
         <div className="mb-6 flex w-full flex-col justify-center sm:mb-12 lg:mb-0 lg:w-1/3 lg:pb-24 lg:pt-48">
-          <h1 className="mb-4 text-4xl font-bold text-black max-md:text-center sm:text-5xl md:mb-8 md:text-6xl">
+          <h1 className="select-none mb-4 text-4xl font-bold text-black max-md:text-center sm:text-5xl md:mb-8 md:text-6xl">
             Top speakers for a top price!
           </h1>
-          <p className="w-full leading-relaxed md:max-w-md max-md:text-center text-gray-500 xl:text-lg">
+          <p className="select-none w-full leading-relaxed md:max-w-md max-md:text-center text-gray-500 xl:text-lg">
             Perfect pitch is no longer a dream. With our speakers, you can
             experience the best sound quality you have ever heard.
             {/* We only sell the most exclusive and high quality products for you.

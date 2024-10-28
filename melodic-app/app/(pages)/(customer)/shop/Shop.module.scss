@@ -1,0 +1,6 @@
+.category-card{
+    @apply bg-gray-100 rounded-lg;
+    @apply flex items-center gap-4;
+    @apply mx-auto w-full max-h-max p-4 mt-4;
+    @apply sm:px-8 sm:py-8 lg:max-w-7xl;
+}

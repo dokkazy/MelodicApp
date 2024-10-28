@@ -3,8 +3,7 @@ import {
   LoginSchemaType,
   RegisterResponseSchemaType,
   RegisterSchemaType,
-} from "@/app/schemaValidations/auth.schema";
-import { MessageResType } from "@/app/schemaValidations/common.schema";
+} from "@/schemaValidations/auth.schema";
 import { apiClientLinks, apiLinks } from "@/configs/routes";
 import http from "@/lib/http";
 

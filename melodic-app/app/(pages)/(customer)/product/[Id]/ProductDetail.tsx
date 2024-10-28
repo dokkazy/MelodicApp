@@ -3,7 +3,7 @@ import React from "react";
 import { Star, Truck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { ProductDetailResType } from "@/app/schemaValidations/product.schema";
+import { ProductDetailResType } from "@/schemaValidations/product.schema";
 import ImageGallery from "@/app/components/ImageGallery";
 import speakerApiRequest from "@/api/speaker";
 import { formatPrice } from "@/app/lib/utils";
@@ -38,7 +38,7 @@ export default function ProductDetail({ Id }: { Id: string }) {
         {loading || !data ? (
           <SkeletonLoading />
         ) : (
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-8 lg:grid-cols-2">
             <ImageGallery image={data?.img} />
             <div className="md:py-8">
               <div className="mb-2 md:mb-3">
