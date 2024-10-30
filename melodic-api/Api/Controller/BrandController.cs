@@ -3,6 +3,7 @@ using Application.Feature.Brand.Commands.DeleteBrand;
 using Application.Feature.Brand.Commands.UpdateBrand;
 using Application.Feature.Brand.Queries.GetAllBrands;
 using Application.Feature.Brand.Queries.GetBrandDetails;
+using Identity.Models;
 using Infrastructure.Database;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -38,7 +39,7 @@ public class BrandController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize]
+    [Authorize(Roles = ApplicationRole.Role_Admin)]
     public async Task<IActionResult> CreateBrand([FromBody] CreateBrandCommand command)
     {
         var result = await _mediator.Send(command);
@@ -46,7 +47,7 @@ public class BrandController : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
-    [Authorize]
+    [Authorize(Roles = ApplicationRole.Role_Admin)]
     public async Task<IActionResult> UpdateBrand(Guid id, [FromBody] UpdateBrandCommand command)
     {
         await _mediator.Send(command);
@@ -54,7 +55,7 @@ public class BrandController : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
-    [Authorize]
+    [Authorize(Roles = ApplicationRole.Role_Admin)]
     public async Task<IActionResult> DeleteBrand(Guid id)
     {
         var result = new DeleteBrandCommand { Id = id };

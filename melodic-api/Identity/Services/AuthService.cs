@@ -40,6 +40,7 @@ public class AuthService : IAuthService
             throw new NotFoundException($"User with {request.Email} not found", request.Email);
         }
 
+        var isUser = await _userManager.IsInRoleAsync(user, ApplicationRole.Role_User);
         var result = await _signinManager.CheckPasswordSignInAsync(user, request.Password, false);
         if (!result.Succeeded)
         {
@@ -56,7 +57,8 @@ public class AuthService : IAuthService
             Email = user.Email,
             UserName = user.Email,
             Token = new JwtSecurityTokenHandler().WriteToken(jwtToken),
-            RefreshToken = refreshToken
+            RefreshToken = refreshToken,
+            Role = isUser ? ApplicationRole.Role_User : ApplicationRole.Role_Admin
         };
         
         

@@ -5,6 +5,7 @@ using Application.Feature.Speakers.Commands.DeleteSpeaker;
 using Application.Feature.Speakers.Commands.UpdateSpeaker;
 using Application.Feature.Speakers.Queries.GetAllSpeakers;
 using Application.Feature.Speakers.Queries.GetSpeakerDetails;
+using Identity.Models;
 using Infrastructure.Database;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -27,13 +28,7 @@ public class SpeakersController : ODataController
         _mediator = mediator;
         _dbContext = dbContext;
     }
-
-    //[HttpGet]
-    //public async Task<PaginatedList<SpeakerDto>> GetAllSpeakers(int pageIndex, string? speakerName = null, string? sortBy = null, string? sortDirection = "asc")
-    //{
-    //    var speakers = await _mediator.Send(new GetAllSpeakerQuery(pageIndex, speakerName, sortBy, sortDirection));
-    //    return speakers;
-    //}
+    
     [HttpGet]
     [EnableQuery]
     public async Task<IActionResult> Get()
@@ -78,7 +73,7 @@ public class SpeakersController : ODataController
     }
 
     [HttpPost]
-    [Authorize]
+    [Authorize(Roles = ApplicationRole.Role_Admin)]
     public async Task<IActionResult> CreateSpeaker([FromBody] CreateSpeakerCommand command)
     {
         if (command == null)
@@ -89,7 +84,7 @@ public class SpeakersController : ODataController
     }
 
     [HttpPut("{id:guid}")]
-    [Authorize]
+    [Authorize(Roles = ApplicationRole.Role_Admin)]
     public async Task<IActionResult> UpdateSpeaker(Guid id, [FromBody] UpdateSpeakerCommand command)
     {
         await _mediator.Send(command);
@@ -97,7 +92,7 @@ public class SpeakersController : ODataController
     }
 
     [HttpDelete("{id}")]
-    [Authorize]
+    [Authorize(Roles = ApplicationRole.Role_Admin)]
     public async Task<IActionResult> DeleteSpeaker(Guid id)
     {
         if (id == Guid.Empty)

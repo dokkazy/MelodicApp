@@ -1,6 +1,5 @@
 using Application.Identity;
 using Application.Models.Identity;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controller;
