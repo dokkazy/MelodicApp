@@ -7,6 +7,12 @@ export const links = {
   login: { href: "/login", label: "Login" },
   register: { href: "/register", label: "Register" },
 };
+export const adminLinks = {
+  user: { href: "/admin/user", label: "User" },
+  product: { href: "/admin/product", label: "Product" },
+  order: { href: "/admin/order", label: "Order" },
+  brand: { href: "/admin/brand", label: "Brand" },
+}
 
 export const apiLinks = {
   //auth

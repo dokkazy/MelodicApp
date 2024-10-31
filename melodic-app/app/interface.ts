@@ -1,24 +1,20 @@
-export interface simplifiedProduct {
-    _id: string;
-    price: number;
-    name: string;
-    slug: string;
-    categoryName: string;
-    imageUrl: string;
-}
-
-export interface fullProduct {
-    _id: string;
-    price: number;
-    name: string;
-    slug: string;
-    categoryName: string;
-    image: unknown;
-    description?: string;
-}
-
 export interface CartItem {
     productId: string;
     quantity: number;
     price: number;
 }
+
+export interface SearchResults {
+    Id: string;
+    Name: string;
+    Img: string;
+    Price: number;
+    UnitInStock: number;
+    CreatedAt: string;
+    Decription: string;
+    Brand: {
+        Id: string;
+        Name: string;
+    };
+}
+
