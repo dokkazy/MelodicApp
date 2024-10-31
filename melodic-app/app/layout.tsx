@@ -31,12 +31,13 @@ export default function RootLayout({
 }>) {
   const cookieStore = cookies();
   const sessionToken = cookieStore.get("sessionToken");
+  const roleBase = cookieStore.get("role");
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AppProvider initialToken={sessionToken?.value}>
+        <AppProvider initialToken={sessionToken?.value} initalRole={roleBase?.value}>
           <NavBar />
           {children}
         </AppProvider>

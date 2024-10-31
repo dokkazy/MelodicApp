@@ -25,7 +25,7 @@ import authApiRequest from "@/api/auth";
 
 export default function LoginDialog() {
   const { toast } = useToast();
-  const { setSessionToken } = useAppContext();
+  const { setSessionToken, setRole } = useAppContext();
   const [loading, setLoading] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const loginForm = useForm<LoginSchemaType>({
@@ -45,13 +45,16 @@ export default function LoginDialog() {
     try {
       setLoading(true);
       const response = await authApiRequest.login(data);
-
+      console.log(response);
       switch (response.status) {
         case 200: {
           const responseFromNextServer = await authApiRequest.setToken({
             sessionToken: response.payload?.token,
+            role: response.payload?.role,
           });
+          console.log("Role:", responseFromNextServer.payload?.role);
           setSessionToken(responseFromNextServer.payload?.sessionToken);
+          setRole(responseFromNextServer.payload?.role);
           toast({
             title: "Login successfully",
             description: "You have successfully logged in.",

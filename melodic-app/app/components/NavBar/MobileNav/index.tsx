@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 
 export default function MobileNav({
   navLink,
@@ -20,7 +20,6 @@ export default function MobileNav({
         <Menu size={28} />
       </Button>
       <Sheet open={isOpen} onOpenChange={() => setIsOpen(false)}>
-        <SheetTrigger></SheetTrigger>
         <SheetContent className="max-w-60">
           <nav className="flex flex-col gap-4 p-2">
             {navLink.map((link, index) => (
