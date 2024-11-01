@@ -29,7 +29,7 @@ const MAX = 20000000;
 
 export default function ShopPage() {
   const itemPerPage = 12;
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [productList, setProductList] = useState<ProductListResType["value"]>(
     [],
   );
@@ -38,17 +38,16 @@ export default function ShopPage() {
   const pathname = usePathname();
   const [values, setValues] = useState([MIN, MAX]);
 
-  const queryParams = `?$top=${itemPerPage}&$skip=${
-    page * itemPerPage
-  }&$count=true&$orderby=createAt desc`;
+  const queryParams = `?$top=${itemPerPage}&$skip=${(page - 1) * itemPerPage
+    }&$count=true&$orderby=createAt desc`;
 
   useEffect(() => {
     const fetchSpeakers = async () => {
       try {
         const response = await speakerApiRequest.getListSpeakers(queryParams);
-        console.log("API Response:", response);
         const { value, "@odata.count": count } = response.payload;
-        console.log("Total Products Count:", count);
+        // console.log("API Response:", response);
+        // console.log("Total Products Count:", count);
         setProductList(value || []);
         setTotalCount(count || 0);
         setMaxPage(Math.ceil(count / itemPerPage));
@@ -58,8 +57,12 @@ export default function ShopPage() {
       }
     };
     fetchSpeakers();
-  }, [queryParams]);
-  console.log(pathname);
+  }, [queryParams, page]);
+  // console.log(pathname);
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
 
   return (
     <div className="min-h-screen bg-white px-4 sm:px-6 lg:px-8">
@@ -91,8 +94,9 @@ export default function ShopPage() {
         </div>
         <div className="md:w-2/4"></div>
       </div>
-      <div className="mx-auto flex max-w-2xl gap-x-6 py-16 sm:py-24 lg:max-w-7xl">
-        <div className="hidden max-h-max rounded-md bg-gray-50 px-4 py-8 md:block md:w-2/4">
+
+      <div className="mx-auto flex max-w-2xl gap-x-6 py-16 sm:py-24 lg:max-w-7xl ">
+        <div className="hidden max-h-max rounded-md max-w-[311px] bg-gray-50 px-4 py-8 md:block md:w-2/4">
           <div className="w-full space-y-6">
             <h3 className="font-semibold">Lọc sản phẩm</h3>
             <Slider
@@ -117,7 +121,7 @@ export default function ShopPage() {
           <div className="space-y-12">
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 md:w-full lg:grid-cols-4 xl:gap-x-4">
               {productList.map((product, index) => (
-                <div key={index} className="group relative">
+                <div key={index} className="group relative " >
                   <ProductCard product={product} />
                 </div>
               ))}
@@ -125,28 +129,104 @@ export default function ShopPage() {
             <div>
               <Pagination>
                 <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious href="#" />
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink href="#" isActive>
-                      1
-                    </PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink href="#">2</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink href="#">3</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationEllipsis />
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationNext href="#" />
-                  </PaginationItem>
+                  {maxPage > 1 && (
+                    <>
+                      {/* Previous button */}
+                      <PaginationItem>
+                        <PaginationPrevious
+                          href="#"
+                          onClick={() => handlePageChange(Math.max(1, page - 1))}
+                          isActive = {(page != 1)}
+                          className={`${
+                            page === 1
+                              ? "opacity-50 cursor-not-allowed"
+                              : "hover:bg-gray-200 cursor-pointer"
+                          }`}
+                        />
+                      </PaginationItem>
+
+                      {/* Always show the first page */}
+                      <PaginationItem>
+                        <PaginationLink
+                          href="#"
+                          onClick={() => handlePageChange(1)}
+                          isActive={page === 1}
+                        >
+                          1
+                        </PaginationLink>
+                      </PaginationItem>
+
+                      {/* Always show the second page if there are more than one page */}
+                      {maxPage > 1 && (
+                        <PaginationItem>
+                          <PaginationLink
+                            href="#"
+                            onClick={() => handlePageChange(2)}
+                            isActive={page === 2}
+                          >
+                            2
+                          </PaginationLink>
+                        </PaginationItem>
+                      )}
+
+                      {/* Show current page if it's greater than 2 and less than maxPage */}
+                      {page > 2 && page < maxPage && (
+                        <PaginationItem>
+                          <PaginationLink
+                            href="#"
+                            onClick={() => handlePageChange(page)}
+                            isActive
+                          >
+                            {page}
+                          </PaginationLink>
+                        </PaginationItem>
+                      )}
+
+                      {/* Show ellipsis if there are pages between the current page and the last page */}
+                      {page < maxPage - 1 && <PaginationEllipsis />}
+
+                      {page === maxPage && <PaginationEllipsis />}
+                      {/* Always show the last page if there are more than two pages */}
+                      {maxPage > 2 && (
+                        <PaginationItem>
+                          <PaginationLink
+                            href="#"
+                            onClick={() => handlePageChange(maxPage)}
+                            isActive={page === maxPage}
+                          >
+                            {maxPage}
+                          </PaginationLink>
+                        </PaginationItem>
+                      )}
+
+                      {/* Next button */}
+                      <PaginationItem>
+                        <PaginationNext
+                          href="#"
+                          onClick={() => handlePageChange(Math.min(maxPage, page + 1))}
+                          isActive = {page != maxPage}
+                          className={`${
+                            page === maxPage
+                              ? "opacity-50 cursor-not-allowed"
+                              : "hover:bg-gray-200 cursor-pointer"
+                          }`}
+                        />
+                      </PaginationItem>
+                    </>
+                  )}
+
+                  {/* If there is only one page, show the current page */}
+                  {maxPage === 1 && (
+                    <PaginationItem>
+                      <PaginationLink href="#" isActive >
+                        1
+                      </PaginationLink>
+                    </PaginationItem>
+                  )}
                 </PaginationContent>
               </Pagination>
+
+
             </div>
           </div>
         ) : (

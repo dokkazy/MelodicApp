@@ -48,17 +48,17 @@ export default function ProductCard({
             />
             <div className="mt-4 flex flex-col gap-4">
               <div>
-                <h3 className="text-sm font-semibold text-black md:text-xs lg:text-lg">
+                <h3 className="text-sm font-semibold text-black md:text-xs lg:text-lg truncate" title={product.Name}>
                   {product.Name}
                 </h3>
-                <p className="text-gray-500">{product.Brand.Name}</p>
+                <p className="text-gray-500 ">{product.Brand.Name}</p>
               </div>
               <div className="flex items-center gap-x-1 text-base">
                 <Check />
                 <p className="text-gray-700">In stock</p>
               </div>
               <p className="text-base font-medium text-gray-900">
-                {formatPrice(10000000)}
+                {formatPrice(product.Price)}
               </p>
 
               <Button
