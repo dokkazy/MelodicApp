@@ -27,7 +27,7 @@ const MIN = 0;
 const MAX = 20000000;
 
 export default function ShopPage() {
-  const itemPerPage = 12;
+  const itemPerPage = 8;
   const [page, setPage] = useState(1);
   const [productList, setProductList] = useState<ProductListResType["value"]>(
     [],
@@ -37,20 +37,18 @@ export default function ShopPage() {
   const pathname = usePathname();
   const [values, setValues] = useState([MIN, MAX]);
   let defaultQueryParams = `?$top=${itemPerPage}&$skip=${
-    (page - 1) * itemPerPage
-  }&$count=true&$orderby=createAt desc`;
+    (page - 1) * itemPerPage}&$count=true&$orderby=createAt desc`;
   const [queryParams, setQueryParams] = useState(defaultQueryParams);
 
-  function getQueryParams(query: string = "") {
-    return query.concat(defaultQueryParams.slice(1));
-  }
+  // function getQueryParams(query: string = "") {
+  //   return query.concat(defaultQueryParams.slice(1));
+  // }
 
   useEffect(() => {
     console.log(queryParams);
-
     const fetchSpeakers = async () => {
       try {
-        const response = await speakerApiRequest.getListSpeakers(defaultQueryParams);
+        const response = await speakerApiRequest.getListSpeakers(queryParams);
         const { value, "@odata.count": count } = response.payload;
         // console.log("API Response:", response);
         // console.log("Total Products Count:", count);
@@ -63,7 +61,7 @@ export default function ShopPage() {
       }
     };
     fetchSpeakers();
-  }, [defaultQueryParams, page]);
+  }, [queryParams, page]);
   // console.log(pathname);
 
   const handlePageChange = (newPage: number) => {
@@ -71,13 +69,9 @@ export default function ShopPage() {
   };
 
   const handleFilter = (min: number, max: number) => {
-    setQueryParams(defaultQueryParams);
-    
-    // setQueryParams(
-    //   `?$filter=Price ge ${min} and Price le ${max}&`.concat(
-    //     queryParams.slice(1),
-    //   ),
-    // );
+    console.log("Min: ", min, "Max: ", max);
+    const queryFilterPrice = `&$filter=Price ge ${min} and Price le ${max}`;
+    setQueryParams(defaultQueryParams + queryFilterPrice);     // Update queryParams to include filter
   };
 
   return (
