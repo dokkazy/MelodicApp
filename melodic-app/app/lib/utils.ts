@@ -1,4 +1,5 @@
 export const formatPrice = (price: number) => {
+  if (price == null || typeof price == "string") return "0";
   return price.toLocaleString("vi-VN", {
     style: "currency",
     currency: "VND",
@@ -7,10 +8,10 @@ export const formatPrice = (price: number) => {
 
 export const checkIsImg = (url: string) => {
   // return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
-  if(url == null || url == "") return false;
-  return url.includes("/")
-}
+  if (url == null || url == "") return false;
+  return url.includes("/");
+};
 
 export const toUpperCase = (str: string) => {
   return str.toUpperCase();
-}
+};

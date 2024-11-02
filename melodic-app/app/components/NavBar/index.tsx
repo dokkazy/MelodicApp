@@ -15,10 +15,8 @@ import { useAppContext } from "@/providers/AppProvider";
 import { Badge } from "@/components/ui/badge";
 import SearchDrawer from "../SearchDrawer";
 import AdminNavBar from "./AdminNavBar";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
-import Image from "next/image";
-import { formatPrice, toUpperCase } from "@/app/lib/utils";
-import images from "@/assets/pictures/heroImage";
+import CartSheet from "../CartSheet";
+import { useCartStore } from "@/providers/CartProvider";
 enum UserRole {
   Admin = "Admin",
   User = "User",
@@ -27,7 +25,7 @@ enum UserRole {
 export default function NavBar() {
   const pathname = usePathname();
   const [userRole, setUserRole] = React.useState<UserRole>(UserRole.User);
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpenCart, setIsOpenCart] = React.useState(false);
   const { sessionToken } = useAppContext();
   const navLink = [links.home, links.shop, links.contact];
 
@@ -67,7 +65,7 @@ export default function NavBar() {
           {navLink.map((link, index) => (
             <div key={index}>
               {pathname === link.href ? (
-                <Link href={link.href}>
+                <Link prefetch href={link.href}>
                   <h1 className="text-lg font-bold text-primary">
                     {link.label}
                   </h1>
@@ -102,79 +100,17 @@ export default function NavBar() {
             <Button
               className="flex h-10 w-10 flex-col gap-y-1.5 hover:scale-105 sm:h-12 sm:w-12 md:h-14 md:w-14"
               variant="outline"
-              onClick={() => setIsOpen(true)}
+              onClick={() => setIsOpenCart(true)}
             >
               <ShoppingBag />
               <span className="hidden text-xs font-semibold text-gray-500 md:block">
                 Cart
               </span>
             </Button>
-            <Badge className="absolute -right-2 -top-2">0</Badge>
-            <Sheet open={isOpen} onOpenChange={() => setIsOpen(false)}>
-              <SheetContent className="max-w-60">
-                <div className="relative h-full w-full space-y-2">
-                  <div className="border-b p-2">
-                    <h1 className="text-lg font-semibold text-primary">
-                      Shopping cart
-                    </h1>
-                  </div>
-                  <div className="flex flex-col gap-4">
-                    <div className="group flex items-center gap-10">
-                      <div className="aspect-square h-20 w-20 overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75">
-                        <Image
-                          src={images.hero2}
-                          alt="Empty search"
-                          width={500}
-                          height={500}
-                          className="h-full w-full cursor-pointer object-center"
-                        />
-                      </div>
-                      <div className="flex flex-col">
-                        <h3 className="text-lg font-semibold">
-                          {toUpperCase("Product Name")}
-                        </h3>
-                        <p>
-                          <span>1 x</span>{" "}
-                          <span className="text-sm font-semibold">
-                            {formatPrice(500000)}
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-                    <div className="group flex items-center gap-10">
-                      <div className="aspect-square h-20 w-20 overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75">
-                        <Image
-                          src={images.hero2}
-                          alt="Empty search"
-                          width={500}
-                          height={500}
-                          className="h-full w-full cursor-pointer object-center"
-                        />
-                      </div>
-                      <div className="flex flex-col">
-                        <h3 className="text-lg font-semibold">
-                          {toUpperCase("Product Name")}
-                        </h3>
-                        <p>
-                          <span>1 x</span>{" "}
-                          <span className="text-sm font-semibold">
-                            {formatPrice(500000)}
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="absolute bottom-0 w-full space-y-2">
-                    <Button className="w-full rounded-none bg-black p-8 text-lg hover:bg-black hover:opacity-90">
-                      Xem giỏ hàng
-                    </Button>
-                    <Button className="w-full rounded-none p-8 text-lg">
-                      Thanh toán
-                    </Button>
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
+            <Badge className="absolute -right-2 -top-2">
+              {useCartStore((state) => state.getQuantity())}
+            </Badge>
+            <CartSheet isOpenCart={isOpenCart} setIsOpenCart={setIsOpenCart}/>
           </div>
           {!!sessionToken ? (
             <AuthMenu />

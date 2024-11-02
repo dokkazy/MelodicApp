@@ -9,7 +9,8 @@ import { toUpperCase } from "@/app/lib/utils";
 import useDebounce from "@/hooks/use-debounce";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import envConfig from "@/configs/config";
-import { SearchResults } from "@/app/interface";
+import { ProductType } from "@/schemaValidations/product.schema";
+import LoadingComponent from "../LoadingComponent";
 
 export default function SearchDrawer({
   children,
@@ -17,11 +18,11 @@ export default function SearchDrawer({
   children: React.ReactNode;
 }) {
   const [searchQuery, setSearchQuery] = React.useState("");
-  const [searchResults, setSearchResults] = React.useState<SearchResults[]>([]);
-  const [loading, setLoading] = React.useState(true);
+  const [searchResults, setSearchResults] = React.useState<ProductType[]>([]);
   const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement | null>(null);
-  const deboundedValue = useDebounce(searchQuery, 500);
+  const debouncedValue = useDebounce(searchQuery, 500);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const handleClear = () => {
@@ -38,33 +39,44 @@ export default function SearchDrawer({
     setSearchResults([]);
   };
 
+  const handleOpenChange = () => {
+    setOpen(!open);
+    setSearchQuery("");
+    setSearchResults([]);
+  };
+
   React.useEffect(() => {
-    const queryParams = `?$filter=contains(tolower(name), '${deboundedValue}')`;
-    if (!deboundedValue.trim()) {
+    const queryParams = `?$filter=contains(tolower(name), '${debouncedValue}')`;
+    if (!debouncedValue.trim()) {
       setSearchResults([]);
       return;
     }
-    try {
-      const search = async () => {
-        const response = await fetch(
-          `${envConfig.NEXT_PUBLIC_API_ENDPOINT}/odata/speakers${queryParams}`,
-        ).then((res) => res.json());
-        console.log("API Response:", response);
-        setSearchResults(response.value || []);
+    setLoading(true);
+    const timer = setTimeout(() => {
+      try {
+        const search = async () => {
+          const response = await fetch(
+            `${envConfig.NEXT_PUBLIC_API_ENDPOINT}/odata/speakers${queryParams}`,
+          ).then((res) => res.json());
+          console.log("API Response:", response);
+          setSearchResults(response.value || []);
+        };
+        search();
+      } catch (error) {
+        console.error("Failed to fetch speakers:", error);
+      } finally {
         setLoading(false);
-      };
-      search();
-    } catch (error) {
-      console.error("Failed to fetch speakers:", error);
-    }
-  }, [deboundedValue]);
+      }
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, [debouncedValue]);
 
   React.useEffect(() => {
     console.log("Search Results:", searchResults);
   }, [searchResults]);
 
   return (
-    <Drawer open={open} onOpenChange={() => setOpen(!open)}>
+    <Drawer open={open} onOpenChange={handleOpenChange}>
       <DrawerTrigger onClick={() => setOpen(true)}>{children}</DrawerTrigger>
       <DrawerContent aria-describedby={undefined}>
         <div className="space-y-4">
@@ -92,15 +104,19 @@ export default function SearchDrawer({
             )}
           </div>
 
-          {searchResults.length == 0 ? (
+          {loading ? (
+            <div className="flex min-h-96 items-center justify-center">
+              <LoadingComponent />
+            </div>
+          ) : searchResults.length == 0 ? (
             <div className="min-h-96 text-center">
               <p className="text-lg font-semibold">
                 Start typing to see products you are looking for
               </p>
             </div>
           ) : (
-            <div className="max-h-[425px] space-y-6 divide-y overflow-y-scroll scroll-smooth">
-              <div className="grid w-full grid-cols-2 gap-x-4 gap-y-10 px-16 md:grid-cols-4 md:px-20 lg:grid-cols-6 lg:px-24">
+            <div className="max-h-[450px] space-y-6 divide-y overflow-y-scroll scroll-smooth">
+              <div className="grid min-h-96 w-full grid-cols-2 gap-x-4 gap-y-10 px-16 md:grid-cols-4 md:px-20 lg:grid-cols-6 lg:px-24">
                 {searchResults.map((product, index) => (
                   <Link
                     onClick={handleClose}

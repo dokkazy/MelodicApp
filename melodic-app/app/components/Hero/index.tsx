@@ -18,7 +18,7 @@ export default function Hero() {
       <div className="mb-8 flex flex-wrap justify-between md:mb-16">
         <div className="mb-6 flex w-full flex-col justify-center sm:mb-12 lg:mb-0 lg:w-1/3 lg:pb-24 lg:pt-48">
           <h1 className="select-none mb-4 text-4xl font-bold text-black max-md:text-center sm:text-5xl md:mb-8 md:text-6xl">
-            Top speakers for a top price!
+            Top speakers for a low price!
           </h1>
           <p className="select-none w-full leading-relaxed md:max-w-md max-md:text-center text-gray-500 xl:text-lg">
             Perfect pitch is no longer a dream. With our speakers, you can

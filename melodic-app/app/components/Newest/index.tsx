@@ -32,9 +32,11 @@ export default function Newest() {
       console.error("Failed to fetch speakers:", error);
     }
   };
+  console.log(productList);
 
   useEffect(() => {
     fetchSpeakers();
+    
   }, []);
 
   return (
@@ -63,7 +65,7 @@ export default function Newest() {
                       src={
                         checkIsImg(product.Img)
                           ? product.Img
-                          : "https://placehold.co/300"
+                          : images.empty
                       }
                       alt={product.Name}
                       className="w-full h-full object-center object-cover lg:h-full lg:w-full"

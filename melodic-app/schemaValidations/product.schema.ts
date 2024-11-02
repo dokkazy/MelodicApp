@@ -10,13 +10,15 @@ const BrandDto = z.object({
 const ProductSchema = z.object({
   Id: z.string(),
   Name: z.string(),
-  CreateAt: z.date().transform((dateString) => new Date(dateString)),
+  CreateAt: z.date().transform((dateString) => new Date(dateString)).nullable(),
   Price: z.number().positive(),
   Decription: z.string(),
   UnitInStock: z.number(),
   Img: z.string(),
   Brand: BrandDto,
 });
+
+export type ProductType = z.TypeOf<typeof ProductSchema>;
 
 const ProductDetailSchema = z.object({
   id: z.string(),
