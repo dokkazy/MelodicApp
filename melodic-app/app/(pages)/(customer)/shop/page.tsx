@@ -36,14 +36,21 @@ export default function ShopPage() {
   const [maxPage, setMaxPage] = useState(0);
   const pathname = usePathname();
   const [values, setValues] = useState([MIN, MAX]);
+  let defaultQueryParams = `?$top=${itemPerPage}&$skip=${
+    (page - 1) * itemPerPage
+  }&$count=true&$orderby=createAt desc`;
+  const [queryParams, setQueryParams] = useState(defaultQueryParams);
 
-  const queryParams = `?$top=${itemPerPage}&$skip=${(page - 1) * itemPerPage
-    }&$count=true&$orderby=createAt desc`;
+  function getQueryParams(query: string = "") {
+    return query.concat(defaultQueryParams.slice(1));
+  }
 
   useEffect(() => {
+    console.log(queryParams);
+
     const fetchSpeakers = async () => {
       try {
-        const response = await speakerApiRequest.getListSpeakers(queryParams);
+        const response = await speakerApiRequest.getListSpeakers(defaultQueryParams);
         const { value, "@odata.count": count } = response.payload;
         // console.log("API Response:", response);
         // console.log("Total Products Count:", count);
@@ -56,11 +63,21 @@ export default function ShopPage() {
       }
     };
     fetchSpeakers();
-  }, [queryParams, page]);
+  }, [defaultQueryParams, page]);
   // console.log(pathname);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
+  };
+
+  const handleFilter = (min: number, max: number) => {
+    setQueryParams(defaultQueryParams);
+    
+    // setQueryParams(
+    //   `?$filter=Price ge ${min} and Price le ${max}&`.concat(
+    //     queryParams.slice(1),
+    //   ),
+    // );
   };
 
   return (
@@ -72,8 +89,8 @@ export default function ShopPage() {
         <BrandCard />
       </div>
 
-      <div className="mx-auto flex max-w-2xl gap-x-6 py-16 sm:py-24 lg:max-w-7xl ">
-        <div className="hidden max-h-max rounded-md max-w-[311px] bg-gray-50 px-4 py-8 md:block md:w-2/4">
+      <div className="mx-auto flex max-w-2xl justify-between gap-x-6 py-16 sm:py-24 lg:max-w-7xl">
+        <div className="hidden max-h-max max-w-80 rounded-md bg-gray-50 px-4 py-8 md:block md:w-2/4">
           <div className="w-full space-y-6">
             <h3 className="font-semibold">Lọc sản phẩm</h3>
             <Slider
@@ -90,15 +107,17 @@ export default function ShopPage() {
                 -{" "}
                 <span className="font-semibold">{formatPrice(values[1])}</span>
               </h3>
-              <Button>Lọc</Button>
+              <Button onClick={() => handleFilter(values[0], values[1])}>
+                Lọc
+              </Button>
             </div>
           </div>
         </div>
         {productList.length > 0 ? (
-          <div className="space-y-12">
+          <div className="w-full space-y-12">
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 md:w-full lg:grid-cols-4 xl:gap-x-4">
               {productList.map((product, index) => (
-                <div key={index} className="group relative " >
+                <div key={index} className="group relative">
                   <ProductCard product={product} />
                 </div>
               ))}
@@ -112,12 +131,14 @@ export default function ShopPage() {
                       <PaginationItem>
                         <PaginationPrevious
                           href="#"
-                          onClick={() => handlePageChange(Math.max(1, page - 1))}
-                          isActive = {(page != 1)}
+                          onClick={() =>
+                            handlePageChange(Math.max(1, page - 1))
+                          }
+                          isActive={page != 1}
                           className={`${
                             page === 1
-                              ? "opacity-50 cursor-not-allowed"
-                              : "hover:bg-gray-200 cursor-pointer"
+                              ? "cursor-not-allowed opacity-50"
+                              : "cursor-pointer hover:bg-gray-200"
                           }`}
                         />
                       </PaginationItem>
@@ -180,12 +201,14 @@ export default function ShopPage() {
                       <PaginationItem>
                         <PaginationNext
                           href="#"
-                          onClick={() => handlePageChange(Math.min(maxPage, page + 1))}
-                          isActive = {page != maxPage}
+                          onClick={() =>
+                            handlePageChange(Math.min(maxPage, page + 1))
+                          }
+                          isActive={page != maxPage}
                           className={`${
                             page === maxPage
-                              ? "opacity-50 cursor-not-allowed"
-                              : "hover:bg-gray-200 cursor-pointer"
+                              ? "cursor-not-allowed opacity-50"
+                              : "cursor-pointer hover:bg-gray-200"
                           }`}
                         />
                       </PaginationItem>
@@ -195,15 +218,13 @@ export default function ShopPage() {
                   {/* If there is only one page, show the current page */}
                   {maxPage === 1 && (
                     <PaginationItem>
-                      <PaginationLink href="#" isActive >
+                      <PaginationLink href="#" isActive>
                         1
                       </PaginationLink>
                     </PaginationItem>
                   )}
                 </PaginationContent>
               </Pagination>
-
-
             </div>
           </div>
         ) : (
