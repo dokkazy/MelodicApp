@@ -18,7 +18,7 @@ namespace Application.Feature.Speakers.Commands.CreateSpeaker
         public double? Price { get; set; }
         public string? Decription { get; set; }
         public int? UnitInStock { get; set; }
-        public string? Img { get; set; }
+        public string? MainImg { get; set; }
 
     }
 }
