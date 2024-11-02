@@ -1,13 +1,16 @@
-import { create } from "zustand";
-import { CartItem } from "@/app/interface";
-import { createSelectors } from "./createSelectors";
+import { ProductType } from "@/schemaValidations/product.schema";
+import { createStore } from "zustand/vanilla";
 
-type cartState =  {
-  cart: CartItem[];
-  
+export interface CartItem {
+  product: ProductType;
+  quantity: number;
 }
 
-type cartActions = {
+type CartState = {
+  cart: CartItem[];
+};
+
+type CartActions = {
   getCarts: () => CartItem[];
   addToCart: (item: CartItem) => void;
   removeFromCart: (productId: string) => void;
@@ -17,97 +20,109 @@ type cartActions = {
   totalItem: (productId: string) => number;
   increaseQuantity: (productId: string) => void;
   decreaseQuantity: (productId: string) => void;
-}
+};
 
-const useCartStore = create<cartState & cartActions>((set, get) => ({
-  cart: [],
-  getCarts: () => {
-    const cartItems = localStorage.getItem("Carts");
-    if (cartItems) {
-      set({ cart: JSON.parse(cartItems) });
-    }
-    return get().cart;
-  },
+export type CartStoreType = CartState & CartActions;
 
-  addToCart: (newItem: CartItem) => {
-    set((state) => {
-      const existingItem = state.cart.find(
-        (item) => item.productId === newItem.productId,
-      );
+const initialState: CartState = {
+  cart: JSON.parse(localStorage.getItem("carts") || "[]"),
+};
 
-      if (existingItem) {
-        existingItem.quantity += newItem.quantity;
-      } else {
-        state.cart.push(newItem);
+export const createCartStore = (initState: CartState = initialState) => {
+  return createStore<CartStoreType>()((set, get) => ({
+    ...initState,
+    getCarts: () => {
+      const cartItems = localStorage.getItem("Carts");
+      if (cartItems) {
+        set({ cart: JSON.parse(cartItems) });
       }
+      return get().cart;
+    },
 
-      saveCartToLocalStorage(state.cart);
+    addToCart: (newItem: CartItem) => {
+      set((state) => {
+        const existingItem = state.cart.find(
+          (item) => item.product.Id === newItem.product.Id,
+        );
 
-      return { cart: [...state.cart] };
-    });
-  },
-  removeFromCart: (productId: string) => {
-    set((state) => {
-      const newCart = state.cart.filter((item) => item.productId !== productId);
-      saveCartToLocalStorage(newCart);
-      return { cart: newCart };
-    });
-  },
-
-  getQuantity: () => {
-    return get().cart.reduce((total, item) => total + item.quantity, 0);
-  },
-
-  getTotal: () => {
-    return get().cart.reduce(
-      (total, item) => total + item.quantity * item.price,
-      0,
-    );
-  },
-
-  clearCart: () => {
-    set({ cart: [] });
-    localStorage.removeItem("Carts");
-  },
-
-  totalItem: (productId: string) => {
-    const item = get().cart.find((item) => item.productId === productId);
-    return item ? item.quantity : 0;
-  },
-
-  increaseQuantity: (productId: string) => {
-    set((state) => {
-      const item = state.cart.find((item) => item.productId === productId);
-      if (item) {
-        item.quantity += 1;
-        saveCartToLocalStorage([...state.cart]);
-      }
-      return { cart: [...state.cart] };
-    });
-  },
-
-  decreaseQuantity: (productId: string) => {
-    set((state) => {
-      const item = state.cart.find((item) => item.productId === productId);
-      if (item) {
-        item.quantity -= 1;
-        if (item.quantity === 0) {
-          const newCart = state.cart.filter(
-            (item) => item.productId !== productId,
-          );
-          saveCartToLocalStorage(newCart);
-          return { cart: newCart };
+        if (existingItem) {
+          existingItem.quantity += newItem.quantity;
+          // existingItem.totalPrice +=
+          //   existingItem.totalPrice * existingItem.quantity;
+        } else {
+          // newItem.totalPrice = newItem.product.Price * newItem.quantity;
+          state.cart.push(newItem);
         }
-        saveCartToLocalStorage([...state.cart]);
-      }
-      return { cart: [...state.cart] };
-    });
-  },
-}));
+
+        saveCartToLocalStorage(state.cart);
+
+        return { cart: [...state.cart] };
+      });
+    },
+    removeFromCart: (productId: string) => {
+      set((state) => {
+        const newCart = state.cart.filter(
+          (item) => item.productId !== productId,
+        );
+        saveCartToLocalStorage(newCart);
+        return { cart: newCart };
+      });
+    },
+
+    getQuantity: () => {
+      return get().cart.reduce((total, item) => total + item.quantity, 0);
+    },
+
+    getTotal: () => {
+      return get().cart.reduce(
+        (total, item) => total + item.quantity * item.product.Price,
+        0,
+      );
+    },
+
+    clearCart: () => {
+      set({ cart: [] });
+      localStorage.removeItem("Carts");
+    },
+
+    totalItem: (productId: string) => {
+      const item = get().cart.find((item) => item.product.Id === productId);
+      return item ? item.quantity : 0;
+    },
+
+    increaseQuantity: (productId: string) => {
+      set((state) => {
+        const item = state.cart.find((item) => item.product.Id === productId);
+        if (item) {
+          item.quantity += 1;
+          saveCartToLocalStorage([...state.cart]);
+        }
+        return { cart: [...state.cart] };
+      });
+    },
+
+    decreaseQuantity: (productId: string) => {
+      set((state) => {
+        const item = state.cart.find((item) => item.product.Id === productId);
+        if (item) {
+          item.quantity -= 1;
+          if (item.quantity === 0) {
+            const newCart = state.cart.filter(
+              (item) => item.product.Id !== productId,
+            );
+            saveCartToLocalStorage(newCart);
+            return { cart: newCart };
+          }
+          saveCartToLocalStorage([...state.cart]);
+        }
+        return { cart: [...state.cart] };
+      });
+    },
+  }));
+};
 
 function saveCartToLocalStorage(items: CartItem[]) {
-  localStorage.removeItem("Carts");
+  localStorage.removeItem("carts");
 
-  localStorage.setItem("Carts", JSON.stringify(items));
+  localStorage.setItem("carts", JSON.stringify(items));
 }
-

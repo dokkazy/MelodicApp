@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
@@ -18,11 +17,11 @@ import { formatPrice } from "@/app/lib/utils";
 import Breadcrumb from "@/app/components/BreadCrumb";
 import { cn } from "@/lib/utils";
 import styles from "./Shop.module.scss";
-import images from "@/assets/pictures/heroImage";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import SkeletonLoading from "./SkeletonLoading";
 import ProductCard from "@/app/components/ProductCard";
+import BrandCard from "@/app/components/BrandCard";
 
 const MIN = 0;
 const MAX = 20000000;
@@ -67,29 +66,7 @@ export default function ShopPage() {
         <Breadcrumb pathname={pathname} title="Shop" />
       </div>
       <div className={`${cn(styles["category-card"])}`}>
-        <div className="flex flex-col items-center">
-          <Image
-            src={images.hero1 || "https://placehold.co/80"}
-            alt="images"
-            width={100}
-            height={100}
-            className="h-full w-full cursor-pointer object-scale-down transition duration-500 ease-in-out hover:scale-110"
-          />
-          <h3 className="font-bold">SONY</h3>
-          <p className="">10 products</p>
-        </div>
-        <div className="flex flex-col items-center">
-          <Image
-            src={images.hero2}
-            alt="images"
-            width={100}
-            height={100}
-            className="h-full w-full cursor-pointer object-scale-down transition duration-500 ease-in-out hover:scale-105"
-          />
-          <h3 className="font-bold">SONY</h3>
-          <p>10 products</p>
-        </div>
-        <div className="md:w-2/4"></div>
+        <BrandCard />
       </div>
       <div className="mx-auto flex max-w-2xl gap-x-6 py-16 sm:py-24 lg:max-w-7xl">
         <div className="hidden max-h-max rounded-md bg-gray-50 px-4 py-8 md:block md:w-2/4">

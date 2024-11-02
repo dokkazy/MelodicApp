@@ -7,6 +7,7 @@ import NavBar from "./components/NavBar";
 import { Toaster } from "@/components/ui/toaster";
 import Footer from "./components/Footer";
 import AppProvider from "@/providers/AppProvider";
+import { CartProvider } from "@/providers/CartProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -38,8 +39,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AppProvider initialToken={sessionToken?.value} initalRole={roleBase?.value}>
-          <NavBar />
-          {children}
+         <CartProvider>
+            <NavBar />
+            {children}
+         </CartProvider>
         </AppProvider>
         <Footer />
         <Toaster />

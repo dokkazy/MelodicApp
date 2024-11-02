@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import { Star, Truck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -8,10 +8,43 @@ import ImageGallery from "@/app/components/ImageGallery";
 import speakerApiRequest from "@/api/speaker";
 import { formatPrice } from "@/app/lib/utils";
 import SkeletonLoading from "./SkeletonLoading";
+import { useCartStore } from "@/providers/CartProvider";
+import { useToast } from "@/hooks/use-toast";
+import { CartItem } from "@/stores/cartStore";
 
 export default function ProductDetail({ Id }: { Id: string }) {
   const [data, setData] = React.useState<ProductDetailResType | null>(null);
   const [loading, setLoading] = React.useState(true);
+  const addItem = useCartStore((state) => state.addToCart);
+  const cart = useCartStore((state) => state.cart);
+  const { toast } = useToast();
+
+  React.useEffect(() => {
+    console.log(cart);
+  }, [cart]);
+  
+  const handleAddToCart = (e: SyntheticEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const cartItem: CartItem = {
+      product: {
+        Id: data?.id || "",
+        Name: data?.name || "",
+        Price: data?.price || 0,
+        Img: data?.img || "",
+        Decription: data?.decription || "",
+        Brand: data?.brand || { BrandId: "", Name: "" },
+        CreateAt: null,
+        UnitInStock: data?.unitInStock || 0,
+      },
+      quantity: 1,
+    };
+    addItem(cartItem);
+    toast({
+      title: "Add successfully",
+    });
+  };
+
   React.useEffect(() => {
     try {
       setLoading(true);
@@ -51,7 +84,7 @@ export default function ProductDetail({ Id }: { Id: string }) {
               </div>
 
               <div className="mb-6 flex items-center gap-3 md:mb-10">
-                <Button className="rounded-full gap-x-2">
+                <Button className="gap-x-2 rounded-full">
                   <span className="text-sm">4.2</span>
                   <Star className="h-5 w-5" />
                 </Button>
@@ -79,12 +112,12 @@ export default function ProductDetail({ Id }: { Id: string }) {
                 <span className="text-sm">2-4 Day Shipping</span>
               </div>
 
-              <div className="flex gap-2.5 mb-6">
-                <Button>Add To Bag</Button>
+              <div className="mb-6 flex gap-2.5">
+                <Button onClick={handleAddToCart}>Add To Bag</Button>
                 <Button variant="secondary">Buy Now</Button>
               </div>
 
-              <p className="text-base text-gray-500 tracking-normal">
+              <p className="text-base tracking-normal text-gray-500">
                 {data?.decription}
               </p>
             </div>

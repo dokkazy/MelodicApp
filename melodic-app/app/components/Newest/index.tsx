@@ -32,9 +32,11 @@ export default function Newest() {
       console.error("Failed to fetch speakers:", error);
     }
   };
+  console.log(productList);
 
   useEffect(() => {
     fetchSpeakers();
+    
   }, []);
 
   return (
