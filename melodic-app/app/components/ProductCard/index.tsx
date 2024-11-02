@@ -65,7 +65,7 @@ export default function ProductCard({
               <p className="text-gray-700">In stock</p>
             </div>
             <p className="text-base font-medium text-gray-900">
-              {formatPrice(10000000)}
+              {formatPrice(product.Price)}
             </p>
 
             <Button
