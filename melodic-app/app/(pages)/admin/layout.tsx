@@ -6,9 +6,10 @@ export default function Adminlayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>
-    <AdminSidebar />
-    <Suspense
+  return (
+    <section className="container flex">
+      <AdminSidebar />
+      <Suspense
         fallback={
           <div className="flex h-screen items-center justify-center">
             <LoadingComponent />
@@ -17,6 +18,6 @@ export default function Adminlayout({
       >
         {children}
       </Suspense>
-
-  </>;
+    </section>
+  );
 }

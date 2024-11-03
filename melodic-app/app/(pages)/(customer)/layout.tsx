@@ -1,7 +1,8 @@
+import React, { Suspense } from "react";
 import Footer from "@/app/components/Footer";
 import LoadingComponent from "@/app/components/LoadingComponent";
 import NavBar from "@/app/components/NavBar";
-import React, { Suspense } from "react";
+import { CartProvider } from "@/providers/CartProvider";
 
 export default function CustomerLayout({
   children,
@@ -18,7 +19,7 @@ export default function CustomerLayout({
           </div>
         }
       >
-        {children}
+        <CartProvider>{children}</CartProvider>
       </Suspense>
 
       <Footer />
