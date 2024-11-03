@@ -4,7 +4,6 @@ import { type ReactNode, createContext, useRef, useContext } from 'react'
 import { useStore } from 'zustand'
 
 import { CartStoreType, createCartStore } from '@/stores/cartStore'
-import useClearCartOnExit from '@/hooks/useClearCartOnExit'
 
 
 export type CartStoreApi = ReturnType<typeof createCartStore>

@@ -3,9 +3,7 @@ import localFont from "next/font/local";
 import { cookies } from "next/headers";
 
 import "./globals.css";
-import NavBar from "./components/NavBar";
 import { Toaster } from "@/components/ui/toaster";
-import Footer from "./components/Footer";
 import AppProvider from "@/providers/AppProvider";
 import { CartProvider } from "@/providers/CartProvider";
 
@@ -33,18 +31,32 @@ export default function RootLayout({
   const cookieStore = cookies();
   const sessionToken = cookieStore.get("sessionToken");
   const roleBase = cookieStore.get("role");
+  const userBase = {
+    id: "",
+    userName: "",
+    email: "",
+    token: "",
+    role: "",
+    refreshToken: {
+      id: "",
+      refresh: "",
+      created: "",
+      exprires: "",
+    },
+  };
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AppProvider initialToken={sessionToken?.value} initalRole={roleBase?.value}>
-         <CartProvider>
-            <NavBar />
-            {children}
-         </CartProvider>
+        <AppProvider
+          initialToken={sessionToken?.value}
+          initalRole={roleBase?.value}
+          initalUser={userBase}
+        >
+          <CartProvider>{children}</CartProvider>
         </AppProvider>
-        <Footer />
         <Toaster />
       </body>
     </html>

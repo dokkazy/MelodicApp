@@ -1,7 +1,7 @@
 import { Check, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { SyntheticEvent, useEffect } from "react";
+import { SyntheticEvent } from "react";
 
 import { checkIsImg, formatPrice } from "@/app/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -15,13 +15,8 @@ import images from "@/assets/pictures/heroImage";
 
 export default function ProductCard({ product }: { product: ProductType }) {
   const addItem = useCartStore((state) => state.addToCart);
-  const cart = useCartStore((state) => state.cart);
   const { toast } = useToast();
   const isMobile = useMediaQuery("(max-width: 768px)");
-  useEffect(() => {
-    console.log(product);
-    console.log(cart);
-  }, [cart]);
   const handleAddToCart = (e: SyntheticEvent) => {
     e.stopPropagation();
     e.preventDefault();
@@ -80,7 +75,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
                     : "transition-transform duration-300 group-hover/btn:-translate-y-[200%]"
                 }`}
               >
-                Thêm vào giỏ hàng
+                Add to cart
               </span>
               {!isMobile && (
                 <span className="absolute inset-0 inline-flex translate-y-full items-center justify-center transition-transform duration-300 group-hover/btn:translate-y-0">

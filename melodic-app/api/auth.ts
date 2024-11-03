@@ -12,10 +12,12 @@ const authApiRequest = {
     http.post<LoginResponseSchemaType>(apiLinks.login, body),
   register: (body: Omit<RegisterSchemaType, "confirmPassword">) =>
     http.post<RegisterResponseSchemaType>(apiLinks.register, body),
-  setToken: (body: { sessionToken: string, role: string }) =>
+  setToken: (body: { sessionToken: string; role: string }) =>
     http.post<LoginResponseSchemaType>(apiClientLinks.setToken, body, {
       baseURL: "",
     }),
+  getRole: () =>
+    http.get<{ role: string }>(apiClientLinks.getRole, { baseURL: "" }),
 };
 
 export default authApiRequest;

@@ -1,5 +1,6 @@
 import { ProductType } from "@/schemaValidations/product.schema";
 import { createStore } from "zustand/vanilla";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 export interface CartItem {
   product: ProductType;
@@ -24,105 +25,120 @@ type CartActions = {
 
 export type CartStoreType = CartState & CartActions;
 
+const SESSION_TIMEOUT_DURATION = 30 * 60 * 1000; // 30 minutes
+
+let sessionTimeout: NodeJS.Timeout;
+
 const initialState: CartState = {
-  cart: JSON.parse(localStorage.getItem("carts") || "[]"),
+  cart: JSON.parse(localStorage.getItem("cart-store") || "[]"),
 };
 
 export const createCartStore = (initState: CartState = initialState) => {
-  return createStore<CartStoreType>()((set, get) => ({
-    ...initState,
-    getCarts: () => {
-      const cartItems = localStorage.getItem("Carts");
-      if (cartItems) {
-        set({ cart: JSON.parse(cartItems) });
-      }
-      return get().cart;
-    },
+  return createStore<CartStoreType>()(
+    persist(
+      (set, get) => ({
+        ...initState,
+        getCarts: () => {
+          resetSessionTimeout();
+          return get().cart;
+        },
 
-    addToCart: (newItem: CartItem) => {
-      set((state) => {
-        const existingItem = state.cart.find(
-          (item) => item.product.Id === newItem.product.Id,
-        );
+        addToCart: (newItem: CartItem) => {
+          set((state) => {
+            const existingItem = state.cart.find(
+              (item) => item.product.Id === newItem.product.Id,
+            );
 
-        if (existingItem) {
-          existingItem.quantity += newItem.quantity;
-          // existingItem.totalPrice +=
-          //   existingItem.totalPrice * existingItem.quantity;
-        } else {
-          // newItem.totalPrice = newItem.product.Price * newItem.quantity;
-          state.cart.push(newItem);
-        }
+            if (existingItem) {
+              existingItem.quantity += newItem.quantity;
+            } else {
+              state.cart.push(newItem);
+            }
 
-        saveCartToLocalStorage(state.cart);
-
-        return { cart: [...state.cart] };
-      });
-    },
-    removeFromCart: (productId: string) => {
-      set((state) => {
-        const newCart = state.cart.filter(
-          (item) => item.productId !== productId,
-        );
-        saveCartToLocalStorage(newCart);
-        return { cart: newCart };
-      });
-    },
-
-    getQuantity: () => {
-      return get().cart.reduce((total, item) => total + item.quantity, 0);
-    },
-
-    getTotal: () => {
-      return get().cart.reduce(
-        (total, item) => total + item.quantity * item.product.Price,
-        0,
-      );
-    },
-
-    clearCart: () => {
-      set({ cart: [] });
-      localStorage.removeItem("Carts");
-    },
-
-    totalItem: (productId: string) => {
-      const item = get().cart.find((item) => item.product.Id === productId);
-      return item ? item.quantity : 0;
-    },
-
-    increaseQuantity: (productId: string) => {
-      set((state) => {
-        const item = state.cart.find((item) => item.product.Id === productId);
-        if (item) {
-          item.quantity += 1;
-          saveCartToLocalStorage([...state.cart]);
-        }
-        return { cart: [...state.cart] };
-      });
-    },
-
-    decreaseQuantity: (productId: string) => {
-      set((state) => {
-        const item = state.cart.find((item) => item.product.Id === productId);
-        if (item) {
-          item.quantity -= 1;
-          if (item.quantity === 0) {
+            resetSessionTimeout();
+            return { cart: [...state.cart] };
+          });
+        },
+        removeFromCart: (productId: string) => {
+          set((state) => {
             const newCart = state.cart.filter(
               (item) => item.product.Id !== productId,
             );
-            saveCartToLocalStorage(newCart);
+            resetSessionTimeout();
             return { cart: newCart };
-          }
-          saveCartToLocalStorage([...state.cart]);
-        }
-        return { cart: [...state.cart] };
-      });
-    },
-  }));
+          });
+        },
+
+        getQuantity: () => {
+          resetSessionTimeout();
+          return get().cart.reduce((total, item) => total + item.quantity, 0);
+        },
+
+        getTotal: () => {
+          resetSessionTimeout();
+          return get().cart.reduce(
+            (total, item) => total + item.quantity * item.product.Price,
+            0,
+          );
+        },
+
+        clearCart: () => {
+          set({ cart: [] });
+          clearTimeout(sessionTimeout);
+        },
+
+        totalItem: (productId: string) => {
+          resetSessionTimeout();
+          const item = get().cart.find((item) => item.product.Id === productId);
+          return item ? item.quantity : 0;
+        },
+
+        increaseQuantity: (productId: string) => {
+          set((state) => {
+            const item = state.cart.find(
+              (item) => item.product.Id === productId,
+            );
+            if (item) {
+              item.quantity += 1;
+              resetSessionTimeout();
+            }
+            return { cart: [...state.cart] };
+          });
+        },
+
+        decreaseQuantity: (productId: string) => {
+          set((state) => {
+            const item = state.cart.find(
+              (item) => item.product.Id === productId,
+            );
+            if (item) {
+              item.quantity -= 1;
+              if (item.quantity === 0) {
+                const newCart = state.cart.filter(
+                  (item) => item.product.Id !== productId,
+                );
+                resetSessionTimeout();
+                return { cart: newCart };
+              }
+              resetSessionTimeout();
+            }
+            return { cart: [...state.cart] };
+          });
+        },
+      }),
+      {
+        name: "cart-store",
+        storage: createJSONStorage(() => localStorage),
+        onRehydrateStorage: () => resetSessionTimeout(),
+      },
+    ),
+  );
 };
 
-function saveCartToLocalStorage(items: CartItem[]) {
-  localStorage.removeItem("carts");
-
-  localStorage.setItem("carts", JSON.stringify(items));
+function resetSessionTimeout() {
+  clearTimeout(sessionTimeout);
+  sessionTimeout = setTimeout(() => {
+    localStorage.removeItem("cart-store");
+  }, SESSION_TIMEOUT_DURATION);
 }
+

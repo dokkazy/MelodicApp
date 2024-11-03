@@ -25,7 +25,7 @@ import { useRouter } from "next/navigation";
 
 export default function AuthMenu() {
   const { toast } = useToast();
-  const { setSessionToken } = useAppContext();
+  const { setSessionToken, setRole } = useAppContext();
   const router = useRouter();
   const handleLogout = async () => {
     try {
@@ -38,6 +38,7 @@ export default function AuthMenu() {
         if (res.ok) {
           router.push(links.home.href);
           setSessionToken("");
+          setRole("");
           toast({
             title: "Logout successfully",
           });

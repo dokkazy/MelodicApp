@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/pagination";
 import speakerApiRequest from "@/api/speaker";
 import { ProductListResType } from "@/schemaValidations/product.schema";
-import { formatPrice } from "@/app/lib/utils";
+import { checkUserRole, formatPrice } from "@/app/lib/utils";
 import Breadcrumb from "@/app/components/BreadCrumb";
 import { cn } from "@/lib/utils";
 import styles from "./Shop.module.scss";
@@ -33,21 +33,20 @@ export default function ShopPage() {
     [],
   );
   const [totalCount, setTotalCount] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [maxPage, setMaxPage] = useState(0);
   const pathname = usePathname();
   const [values, setValues] = useState([MIN, MAX]);
-  let defaultQueryParams = `?$top=${itemPerPage}&$skip=${
-    (page - 1) * itemPerPage}&$count=true&$orderby=createAt desc`;
+  const defaultQueryParams = `?$top=${itemPerPage}&$skip=${
+    (page - 1) * itemPerPage
+  }&$count=true&$orderby=createAt desc`;
   const [queryParams, setQueryParams] = useState(defaultQueryParams);
-
-  // function getQueryParams(query: string = "") {
-  //   return query.concat(defaultQueryParams.slice(1));
-  // }
 
   useEffect(() => {
     console.log(queryParams);
     const fetchSpeakers = async () => {
       try {
+        setLoading(true);
         const response = await speakerApiRequest.getListSpeakers(queryParams);
         const { value, "@odata.count": count } = response.payload;
         // console.log("API Response:", response);
@@ -56,11 +55,13 @@ export default function ShopPage() {
         setTotalCount(count || 0);
         setMaxPage(Math.ceil(count / itemPerPage));
         console.log("Max Page:", Math.ceil(count / itemPerPage));
+        setLoading(false);
       } catch (error) {
         console.error("Failed to fetch speakers:", error);
       }
     };
     fetchSpeakers();
+    
   }, [queryParams, page]);
   // console.log(pathname);
 
@@ -71,7 +72,7 @@ export default function ShopPage() {
   const handleFilter = (min: number, max: number) => {
     console.log("Min: ", min, "Max: ", max);
     const queryFilterPrice = `&$filter=Price ge ${min} and Price le ${max}`;
-    setQueryParams(defaultQueryParams + queryFilterPrice);     // Update queryParams to include filter
+    setQueryParams(defaultQueryParams + queryFilterPrice); // Update queryParams to include filter
   };
 
   return (
@@ -86,7 +87,7 @@ export default function ShopPage() {
       <div className="mx-auto flex max-w-2xl justify-between gap-x-6 py-16 sm:py-24 lg:max-w-7xl">
         <div className="hidden max-h-max max-w-80 rounded-md bg-gray-50 px-4 py-8 md:block md:w-2/4">
           <div className="w-full space-y-6">
-            <h3 className="font-semibold">Lọc sản phẩm</h3>
+            <h3 className="font-semibold">Filter</h3>
             <Slider
               value={values}
               onValueChange={setValues}
@@ -221,8 +222,14 @@ export default function ShopPage() {
               </Pagination>
             </div>
           </div>
-        ) : (
+        ) : loading ? (
           <SkeletonLoading />
+        ) : (
+          <div className="grid">
+            <h2 className="text-center text-2xl font-semibold">
+              Không có sản phẩm nào
+            </h2>
+          </div>
         )}
       </div>
     </div>

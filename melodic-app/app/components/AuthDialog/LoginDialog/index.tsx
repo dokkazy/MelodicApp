@@ -17,16 +17,21 @@ import { Input } from "@/components/ui/input";
 import {
   loginSchema,
   LoginSchemaType,
+  UserRole,
 } from "@/schemaValidations/auth.schema";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { useAppContext } from "@/providers/AppProvider";
 import authApiRequest from "@/api/auth";
+import { useRouter } from "next/navigation";
+import { adminLinks } from "@/configs/routes";
 
 export default function LoginDialog() {
   const { toast } = useToast();
-  const { setSessionToken, setRole } = useAppContext();
+  const { setSessionToken, setRole, setUser } = useAppContext();
   const [loading, setLoading] = React.useState(false);
+  const [isPageLoading, setIsPageLoading] = React.useState(false);
+  const router = useRouter();
   const [showPassword, setShowPassword] = React.useState(false);
   const loginForm = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
@@ -52,13 +57,19 @@ export default function LoginDialog() {
             sessionToken: response.payload?.token,
             role: response.payload?.role,
           });
-          console.log("Role:", responseFromNextServer.payload?.role);
+          setUser(response.payload);
           setSessionToken(responseFromNextServer.payload?.sessionToken);
           setRole(responseFromNextServer.payload?.role);
           toast({
             title: "Login successfully",
             description: "You have successfully logged in.",
           });
+          if (response.payload?.role === UserRole.Admin) {
+            setTimeout(() => {
+              router.push(adminLinks.admin.href); // Chuyển hướng sau thời gian chờ
+              setIsPageLoading(false); // Tắt hiệu ứng loading
+            }, 2000);
+          }
           break;
         }
         case 404:
@@ -87,7 +98,7 @@ export default function LoginDialog() {
     <Form {...loginForm}>
       <form
         onSubmit={loginForm.handleSubmit(onSubmit)}
-        className="space-y-4 mt-4"
+        className="mt-4 space-y-4"
         noValidate
       >
         <FormField
@@ -98,7 +109,7 @@ export default function LoginDialog() {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400" />
                   <Input
                     {...field}
                     placeholder="Enter your username"
@@ -118,7 +129,7 @@ export default function LoginDialog() {
               <FormLabel>Password</FormLabel>
               <FormControl>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400" />
                   <Input
                     {...field}
                     type={showPassword ? "text" : "password"}
@@ -127,7 +138,7 @@ export default function LoginDialog() {
                   />
                   <button
                     type="button"
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 transform text-gray-400"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {password ? showPassword ? <EyeOff /> : <Eye /> : null}
@@ -145,7 +156,7 @@ export default function LoginDialog() {
         >
           {loading ? (
             <svg
-              className="animate-spin h-5 w-5 mr-3 text-white"
+              className="mr-3 h-5 w-5 animate-spin text-white"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"

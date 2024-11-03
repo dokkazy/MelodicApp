@@ -3,9 +3,13 @@ import { X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import images from "@/assets/pictures/heroImage";
-import { toUpperCase } from "@/app/lib/utils";
+import { checkIsImg, toUpperCase } from "@/app/lib/utils";
 import useDebounce from "@/hooks/use-debounce";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import envConfig from "@/configs/config";
@@ -71,12 +75,12 @@ export default function SearchDrawer({
     return () => clearTimeout(timer);
   }, [debouncedValue]);
 
-  React.useEffect(() => {
-    console.log("Search Results:", searchResults);
-  }, [searchResults]);
-
   return (
-    <Drawer open={open} onOpenChange={handleOpenChange}>
+    <Drawer
+      open={open}
+      onOpenChange={handleOpenChange}
+      aria-describedby={undefined}
+    >
       <DrawerTrigger onClick={() => setOpen(true)}>{children}</DrawerTrigger>
       <DrawerContent aria-describedby={undefined}>
         <div className="space-y-4">
@@ -127,7 +131,9 @@ export default function SearchDrawer({
                     <div className="group flex flex-col gap-1">
                       <div className="aspect-square w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75">
                         <Image
-                          src={images.hero2}
+                          src={
+                            checkIsImg(product.Img) ? product.Img : images.empty
+                          }
                           alt="Empty search"
                           width={500}
                           height={500}

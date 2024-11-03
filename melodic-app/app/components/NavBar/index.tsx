@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { adminLinks, links } from "@/configs/routes";
+import { links } from "@/configs/routes";
 import MobileNav from "./MobileNav";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import AuthDialog from "../AuthDialog";
@@ -14,17 +14,11 @@ import { DialogTrigger } from "@radix-ui/react-dialog";
 import { useAppContext } from "@/providers/AppProvider";
 import { Badge } from "@/components/ui/badge";
 import SearchDrawer from "../SearchDrawer";
-import AdminNavBar from "./AdminNavBar";
 import CartSheet from "../CartSheet";
 import { useCartStore } from "@/providers/CartProvider";
-enum UserRole {
-  Admin = "Admin",
-  User = "User",
-}
 
 export default function NavBar() {
   const pathname = usePathname();
-  const [userRole, setUserRole] = React.useState<UserRole>(UserRole.User);
   const [isOpenCart, setIsOpenCart] = React.useState(false);
   const { sessionToken } = useAppContext();
   const navLink = [links.home, links.shop, links.contact];
@@ -80,15 +74,6 @@ export default function NavBar() {
               )}
             </div>
           ))}
-          {userRole === UserRole.Admin && (
-            <Link href={adminLinks.user.href}>
-              <AdminNavBar>
-                <h1 className="text-lg font-bold text-gray-600 transition duration-100 hover:text-primary">
-                  Admin
-                </h1>
-              </AdminNavBar>
-            </Link>
-          )}
         </nav>
         <div className="mr-16 flex h-12 w-12 items-center justify-center gap-3 sm:mr-12 sm:h-12 sm:w-12 md:h-16 md:w-16">
           <div>
@@ -110,7 +95,7 @@ export default function NavBar() {
             <Badge className="absolute -right-2 -top-2">
               {useCartStore((state) => state.getQuantity())}
             </Badge>
-            <CartSheet isOpenCart={isOpenCart} setIsOpenCart={setIsOpenCart}/>
+            <CartSheet isOpenCart={isOpenCart} setIsOpenCart={setIsOpenCart} />
           </div>
           {!!sessionToken ? (
             <AuthMenu />

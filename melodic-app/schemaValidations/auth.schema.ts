@@ -4,6 +4,11 @@ function formatMessageError(name: string, num: number) {
   return `${name} must contain at least ${num} characters`;
 }
 
+export enum UserRole {
+  Admin = "Administrator",
+  User = "User",
+}
+
 export const registerSchema = z
   .object({
     firstName: z
