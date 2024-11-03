@@ -37,9 +37,8 @@ export default function ShopPage() {
   const [maxPage, setMaxPage] = useState(0);
   const pathname = usePathname();
   const [values, setValues] = useState([MIN, MAX]);
-  const defaultQueryParams = `?$top=${itemPerPage}&$skip=${
-    (page - 1) * itemPerPage
-  }&$count=true&$orderby=createAt desc`;
+  const defaultQueryParams = `?$top=${itemPerPage}&$skip=${(page - 1) * itemPerPage
+    }&$count=true&$orderby=createAt desc`;
   const [queryParams, setQueryParams] = useState(defaultQueryParams);
 
   useEffect(() => {
@@ -61,7 +60,7 @@ export default function ShopPage() {
       }
     };
     fetchSpeakers();
-    
+
   }, [queryParams, page]);
   // console.log(pathname);
 
@@ -85,7 +84,7 @@ export default function ShopPage() {
       </div>
 
       <div className="mx-auto flex max-w-2xl justify-between gap-x-6 py-16 sm:py-24 lg:max-w-7xl">
-        <div className="hidden max-h-max max-w-80 rounded-md bg-gray-50 px-4 py-8 md:block md:w-2/4">
+        <div className="hidden max-h-max max-w-[280px] rounded-md bg-gray-50 px-4 py-8 md:block md:w-2/4">
           <div className="w-full space-y-6">
             <h3 className="font-semibold">Filter</h3>
             <Slider
@@ -126,15 +125,12 @@ export default function ShopPage() {
                       <PaginationItem>
                         <PaginationPrevious
                           href="#"
-                          onClick={() =>
-                            handlePageChange(Math.max(1, page - 1))
-                          }
-                          isActive={page != 1}
-                          className={`${
-                            page === 1
-                              ? "cursor-not-allowed opacity-50"
-                              : "cursor-pointer hover:bg-gray-200"
-                          }`}
+                          onClick={() => handlePageChange(Math.max(1, page - 1))}
+                          isActive={page !== 1}
+                          className={`${page === 1
+                            ? "cursor-not-allowed opacity-50"
+                            : "cursor-pointer hover:bg-gray-200"
+                            }`}
                         />
                       </PaginationItem>
 
@@ -162,8 +158,11 @@ export default function ShopPage() {
                         </PaginationItem>
                       )}
 
-                      {/* Show current page if it's greater than 2 and less than maxPage */}
-                      {page > 2 && page < maxPage && (
+                      {/* Show ellipsis if the current page is greater than 3 */}
+                      {page > 3 && <PaginationEllipsis />}
+
+                      {/* Show current page link */}
+                      {page > 2 && (
                         <PaginationItem>
                           <PaginationLink
                             href="#"
@@ -175,12 +174,15 @@ export default function ShopPage() {
                         </PaginationItem>
                       )}
 
-                      {/* Show ellipsis if there are pages between the current page and the last page */}
-                      {page < maxPage - 1 && <PaginationEllipsis />}
+                      {/* Show ellipsis if there are more pages after the current page */}
+                      {page < maxPage - 1 && (
+                        <PaginationItem>
+                          <PaginationEllipsis />
+                        </PaginationItem>
+                      )}
 
-                      {page === maxPage && <PaginationEllipsis />}
                       {/* Always show the last page if there are more than two pages */}
-                      {maxPage > 2 && (
+                      {maxPage > 2 &&  page < maxPage &&(
                         <PaginationItem>
                           <PaginationLink
                             href="#"
@@ -196,15 +198,12 @@ export default function ShopPage() {
                       <PaginationItem>
                         <PaginationNext
                           href="#"
-                          onClick={() =>
-                            handlePageChange(Math.min(maxPage, page + 1))
-                          }
-                          isActive={page != maxPage}
-                          className={`${
-                            page === maxPage
-                              ? "cursor-not-allowed opacity-50"
-                              : "cursor-pointer hover:bg-gray-200"
-                          }`}
+                          onClick={() => handlePageChange(Math.min(maxPage, page + 1))}
+                          isActive={page !== maxPage}
+                          className={`${page === maxPage
+                            ? "cursor-not-allowed opacity-50"
+                            : "cursor-pointer hover:bg-gray-200"
+                            }`}
                         />
                       </PaginationItem>
                     </>
@@ -220,6 +219,7 @@ export default function ShopPage() {
                   )}
                 </PaginationContent>
               </Pagination>
+
             </div>
           </div>
         ) : loading ? (
