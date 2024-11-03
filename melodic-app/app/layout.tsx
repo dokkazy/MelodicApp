@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import AppProvider from "@/providers/AppProvider";
+import { CartProvider } from "@/providers/CartProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -54,7 +55,7 @@ export default function RootLayout({
           initalRole={roleBase?.value}
           initalUser={userBase}
         >
-          {children}
+        <CartProvider>{children}</CartProvider>
         </AppProvider>
         <Toaster />
       </body>
