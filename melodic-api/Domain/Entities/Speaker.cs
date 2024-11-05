@@ -34,5 +34,5 @@ public class Speaker : AuditableEntity
     public string? Img3 { get; set; }
     public string? Img4 { get; set; }
 
-    public List<OrderDetail> OrderDetails { get; set; } = new();
+    public List<OrderItem> OrderItems { get; set; } = new();
 }

@@ -3,22 +3,19 @@ using Application.Models.Identity;
 using Domain.Common;
 using Domain.Entities;
 using Domain.ValueObjects;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database;
 
-public class MelodicDbContext : DbContext
+public class MelodicDbContext(DbContextOptions<MelodicDbContext> options, IMediator mediator, IUserService userService) : DbContext(options)
 {
-    private readonly IUserService _userService;
-    public MelodicDbContext(DbContextOptions<MelodicDbContext> options, IUserService userService) : base(options)
-    {
-        _userService = userService;
-    }
     public DbSet<Brand> Brands { get; set; }
-    public DbSet<Cart> Carts { get; set; }
+    public DbSet<Basket> Baskets { get; set; }
+    public DbSet<BasketItem> BasketItems { get; set; }
     public DbSet<EVoucher> EVouchers { get; set; }
     public DbSet<Order> Orders { get; set; }
-    public DbSet<OrderDetail> OrderDetails { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<Speaker> Speakers { get; set; }
     public DbSet<Payment> Payment { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
@@ -26,12 +23,12 @@ public class MelodicDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Cart>().HasKey(c => new { c.UserId, c.SpeakerId });
+        modelBuilder.Entity<BasketItem>().HasKey(c => new { c.BasketId, c.SpeakerId });
         modelBuilder.Entity<Payment>().HasNoKey();
         modelBuilder.Entity<RefreshToken>().HasKey(e => e.Id);
-        modelBuilder.Entity<Speaker>().HasMany(e => e.OrderDetails).WithOne(e => e.Speaker).HasForeignKey(e => e.SpeakerId);
+        modelBuilder.Entity<Speaker>().HasMany(e => e.OrderItems).WithOne(e => e.Speaker).HasForeignKey(e => e.SpeakerId);
         modelBuilder.Entity<Order>().HasKey(e => e.Id);
-        modelBuilder.Entity<OrderDetail>().HasKey(e => new { e.OrderId, e.SpeakerId });
+        modelBuilder.Entity<Basket>().HasKey(e => e.Id);
         modelBuilder.Entity<EVoucher>().HasData(
            new EVoucher()
            {
@@ -111,21 +108,23 @@ public class MelodicDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(MelodicDbContext).Assembly);
         
     }
-    
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries<AuditableEntity>()
                      .Where(q => q.State is EntityState.Added or EntityState.Modified))
         {
             entry.Entity.LastModified = DateTime.Now;
-            entry.Entity.LastModifiedBy = _userService.UserId;
+            entry.Entity.LastModifiedBy = userService.UserId;
             if (entry.State == EntityState.Added)
             {
                 entry.Entity.CreatedAt = DateTime.Now;
-                entry.Entity.CreatedBy = _userService.UserId;
+                entry.Entity.CreatedBy = userService.UserId;
             }
         }
 
-        return base.SaveChangesAsync(cancellationToken);
+        await mediator.DispatchDomainEventsAsync(this);
+
+        return await base.SaveChangesAsync(cancellationToken);
     }
 }
