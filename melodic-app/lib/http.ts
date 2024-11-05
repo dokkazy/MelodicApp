@@ -75,7 +75,6 @@ const http = {
   },
   delete: <Response>(
     url: string,
-    body: any,
     options?: Omit<CustomOptionsType, "body"> | undefined,
   ) => {
     return request<Response>("DELETE", url, options);

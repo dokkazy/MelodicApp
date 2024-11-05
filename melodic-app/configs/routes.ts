@@ -19,9 +19,11 @@ export const apiLinks = {
   login: "/api/authenticate/login",
   logout: "/api/authenticate/logout",
   speakerOData: "/odata/speakers",
-  speaker: "/api/speakers"
-}
+  speaker: "/api/speakers",
+  brand: "/api/brand"
 
+}
+ 
 export const apiClientLinks = {
   setToken: "/api/auth/set-token",
   removeToken: "/api/auth/remove-token",

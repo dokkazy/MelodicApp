@@ -8,18 +8,14 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 const nextConfig = {
     images: {
         remotePatterns: [
-            {   
-                protocol: 'https',
-                hostname: 'cdn.sanity.io',
-                port: '',
-                //   pathname: '/account123/**',
-            }, {
+          {
                 protocol: 'https',
                 hostname: '**',
                 port: '',
                 // pathname: '/**', // Uncomment if you want to restrict the path
             },
-        ],
+        ], 
+        domains: ['localhost'],
     }
 };
 
