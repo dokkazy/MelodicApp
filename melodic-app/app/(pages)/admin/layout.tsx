@@ -7,7 +7,7 @@ export default function Adminlayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="container flex">
+    <section className="flex">
       <AdminSidebar />
       <Suspense
         fallback={

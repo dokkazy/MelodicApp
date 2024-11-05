@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function ProductAddButton() {
     
     return (
-      <Link href={'/product/add'}>
+      <Link href={'product/add'}>
         <Button variant={'secondary'}>Thêm sản phẩm</Button>
       </Link>
     )

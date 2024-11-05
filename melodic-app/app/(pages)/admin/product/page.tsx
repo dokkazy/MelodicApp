@@ -25,7 +25,7 @@ export default function ProductPage() {
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [maxPage, setMaxPage] = useState(0);
-  const [selectedProduct, setSelectedProduct] = useState<ProductListResType["value"][0] | null>(null);
+
   const pathname = usePathname();
   const defaultQueryParams = `?$top=${itemPerPage}&$skip=${(page - 1) * itemPerPage}&$count=true&$orderby=createAt desc`;
   const [queryParams, setQueryParams] = useState(defaultQueryParams);
@@ -50,15 +50,6 @@ export default function ProductPage() {
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
-  };
-
-  const handleEdit = (productId: string) => {
-    const productToEdit = productList.find(product => product.Id === productId);
-    setSelectedProduct(productToEdit || null);
-  };
-
-  const handleCloseEditForm = () => {
-    setSelectedProduct(null);
   };
 
 
@@ -96,9 +87,7 @@ export default function ProductPage() {
                   <td className="border border-gray-300 p-3">{product.Brand.Name}</td>
                   <td className="border border-gray-300 p-3 text-center">{new Date(product.CreateAt).toLocaleDateString()}</td>
                   <td className="border border-gray-300 p-3 text-center col-span-2" >
-                    <button onClick={() => handleEdit(product.Id)}>
-                      Edit
-                    </button>
+                    <ProductUpdateButton id={product.Id} />
                     <DeleteProduct product={product} />
                   </td>
 

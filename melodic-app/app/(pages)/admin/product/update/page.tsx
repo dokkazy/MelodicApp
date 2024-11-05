@@ -1,56 +1,38 @@
+// /admin/product/update/[id].tsx
 import React from 'react';
 import { useRouter } from 'next/router';
-import { ProductResType } from "@/schemaValidations/product.schema";
+import speakerApiRequest from '@/api/speaker'; // Ensure this API can fetch product details by ID
+import { ProductDetailResType, ProductResType } from '@/schemaValidations/product.schema';
+import UpdateSpeakerForm from '../../_component/product-update-form';
 
-type Product = ProductResType['data'];
+const UpdateProductPage = () => {
+  const router = useRouter();
+  const { id } = router.query;
 
-interface UpdateSpeakerFormProps {
-  product?: Product;
-}
+  const [product, setProduct] = React.useState<ProductDetailResType| null>(null);
+  const [loading, setLoading] = React.useState(true);
 
-export default function UpdateSpeakerForm({ product }: UpdateSpeakerFormProps, ) {
-  // Fetch product details using the ID if necessary, or use the passed `product` prop
-  return (
-    <form>
-      <h2>Update Product Information</h2>
-      {product ? (
-        <>
-          <div>
-            <label htmlFor="id">ID:</label>
-            <input type="text" id="id" value={product.Id} readOnly />
-          </div>
-          <div>
-            <label htmlFor="name">Name:</label>
-            <input type="text" id="name" value={product.Name} readOnly />
-          </div>
-          <div>
-            <label htmlFor="createAt">Created At:</label>
-            <input type="text" id="createAt" value={product.CreateAt?.toString()} readOnly />
-          </div>
-          <div>
-            <label htmlFor="price">Price:</label>
-            <input type="number" id="price" value={product.Price} readOnly />
-          </div>
-          <div>
-            <label htmlFor="description">Description:</label>
-            <textarea id="description" value={product.Decription} readOnly />
-          </div>
-          <div>
-            <label htmlFor="unitInStock">Units in Stock:</label>
-            <input type="number" id="unitInStock" value={product.UnitInStock} readOnly />
-          </div>
-          <div>
-            <label htmlFor="img">Image URL:</label>
-            <input type="text" id="img" value={product.Img} readOnly />
-          </div>
-          <div>
-            <label htmlFor="brand">Brand:</label>
-            <input type="text" id="brand" value={product.Brand?.Name} readOnly />
-          </div>
-        </>
-      ) : (
-        <p>No product information available.</p>
-      )}
-    </form>
-  );
-}
+  React.useEffect(() => {
+    const fetchProduct = async () => {
+      if (typeof id === 'string') { // Ensure 'id' is a string
+        try {
+          const response = await speakerApiRequest.getSpeakerDetails(id); // Implement this API call
+          setProduct(response.payload);
+        } catch (error) {
+          console.error('Failed to fetch product:', error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  if (loading) return <div>Loading...</div>;
+  if (!product) return <div>No product found.</div>;
+
+  return <UpdateSpeakerForm product={product} />;
+};
+
+export default UpdateProductPage;
