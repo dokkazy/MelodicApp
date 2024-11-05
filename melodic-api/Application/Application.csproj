@@ -7,29 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Feature\Cart\Commands\CreateCart\" />
-      <Folder Include="Feature\Cart\Commands\DeleteCart\" />
-      <Folder Include="Feature\Cart\Commands\UpdateCart\" />
-      <Folder Include="Feature\Cart\Queries\GetAllCarts\" />
-      <Folder Include="Feature\Cart\Queries\GetCartDetails\" />
-      <Folder Include="Feature\EVoucher\Commands\CreateEVoucher\" />
-      <Folder Include="Feature\EVoucher\Commands\DeleteEVoucher\" />
-      <Folder Include="Feature\EVoucher\Commands\UpdateEVoucher\" />
-      <Folder Include="Feature\EVoucher\Queries\GetAllEVouchers\" />
-      <Folder Include="Feature\EVoucher\Queries\GetEVoucherDetails\" />
-      <Folder Include="Feature\OrderDetail\Commands\CreateOrderDetail\" />
-      <Folder Include="Feature\OrderDetail\Commands\DeleteOrderDetail\" />
-      <Folder Include="Feature\OrderDetail\Commands\UpdateOrderDetail\" />
-      <Folder Include="Feature\OrderDetail\Queries\GetAllOrderDetails\" />
-      <Folder Include="Feature\OrderDetail\Queries\GetOrderDetails\" />
-      <Folder Include="Feature\Order\Commands\CreateOrder\" />
-      <Folder Include="Feature\Order\Commands\DeleteOrder\" />
-      <Folder Include="Feature\Order\Commands\UpdateOrder\" />
-      <Folder Include="Feature\Order\Queries\GetAllOrders\" />
-      <Folder Include="Feature\Order\Queries\GetOrderDetails\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="AutoMapper" Version="12.0.1" />
       <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
       <PackageReference Include="FluentValidation" Version="11.10.0" />
@@ -41,6 +18,24 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Feature\Cart\**" />
+      <Compile Remove="Feature\EVoucher\**" />
+      <Compile Remove="Feature\OrderDetail\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Feature\Cart\**" />
+      <EmbeddedResource Remove="Feature\EVoucher\**" />
+      <EmbeddedResource Remove="Feature\OrderDetail\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Feature\Cart\**" />
+      <None Remove="Feature\EVoucher\**" />
+      <None Remove="Feature\OrderDetail\**" />
     </ItemGroup>
 
 </Project>

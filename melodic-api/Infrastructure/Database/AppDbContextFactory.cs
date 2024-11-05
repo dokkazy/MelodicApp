@@ -13,6 +13,6 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<MelodicDbContext>
         // Create a mock or default implementation of IUserService
         var userService = new DefaultUserService();
 
-        return new MelodicDbContext(optionsBuilder.Options, null, userService);
+        return new MelodicDbContext(optionsBuilder.Options, userService);
     }
 }

@@ -7,13 +7,12 @@ public class OrderItem
 {
     [Required] public string SpeakerName { get; private set; }
 
-    public string SpeakerUrl { get; private set; }
     public Guid SpeakerId { get; private set; }
     public Guid OrderId { get; private set; }
-    public int? Units { get; set; }
+    public int Units { get; set; }
 
-    public decimal UnitPrice { get; private set; }
-    public decimal Discount { get; private set; }
+    public double UnitPrice { get; private set; }
+    public double Discount { get; private set; }
 
 
     public Order Order { get; set; } = null!;
@@ -23,7 +22,7 @@ public class OrderItem
     {
     }
 
-    public OrderItem(Guid speakerId, string speakerName, decimal unitPrice, decimal discount, string speakerUrl,
+    public OrderItem(Guid speakerId, string speakerName, double unitPrice, double discount,
         int units = 1)
     {
         if (units <= 0)
@@ -41,10 +40,9 @@ public class OrderItem
         UnitPrice = unitPrice;
         Discount = discount;
         Units = units;
-        SpeakerUrl = speakerUrl;
     }
 
-    public void SetNewDiscount(decimal discount)
+    public void SetNewDiscount(double discount)
     {
         if (discount < 0)
         {

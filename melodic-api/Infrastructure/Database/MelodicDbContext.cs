@@ -1,14 +1,14 @@
+using Application.Contracts.Persistence;
 using Application.Identity;
 using Application.Models.Identity;
 using Domain.Common;
 using Domain.Entities;
 using Domain.ValueObjects;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database;
 
-public class MelodicDbContext(DbContextOptions<MelodicDbContext> options, IMediator mediator, IUserService userService) : DbContext(options)
+public class MelodicDbContext(DbContextOptions<MelodicDbContext> options, IUserService userService) : DbContext(options), IApplicationDbContext
 {
     public DbSet<Brand> Brands { get; set; }
     public DbSet<Basket> Baskets { get; set; }
@@ -122,8 +122,6 @@ public class MelodicDbContext(DbContextOptions<MelodicDbContext> options, IMedia
                 entry.Entity.CreatedBy = userService.UserId;
             }
         }
-
-        await mediator.DispatchDomainEventsAsync(this);
 
         return await base.SaveChangesAsync(cancellationToken);
     }

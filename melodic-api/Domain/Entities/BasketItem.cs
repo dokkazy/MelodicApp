@@ -17,4 +17,14 @@ public class BasketItem
 
         Quantity += quantity;
     }
+
+    public void RemoveUnits(int quantity)
+    {
+        if (quantity < 0)
+        {
+            throw new OrderingDomainException("Invalid units");
+        }
+
+        Quantity -= quantity;
+    }
 }

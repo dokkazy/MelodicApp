@@ -25,7 +25,7 @@ public class Speaker : AuditableEntity
 
     [Required]
     [Range(1, int.MaxValue, ErrorMessage = "Please enter a value bigger than 0")]
-    public int? UnitInStock { get; set; }
+    public int UnitInStock { get; set; }
 
     // [ValidateNever]
     public string? MainImg { get; set; }
@@ -35,4 +35,24 @@ public class Speaker : AuditableEntity
     public string? Img4 { get; set; }
 
     public List<OrderItem> OrderItems { get; set; } = new();
+    
+    
+    public int RemoveStock(int quantityDesired)
+    {
+        if (UnitInStock == 0)
+        {
+            throw new AggregateException($"Empty stock, product item {Name} is sold out");
+        }
+
+        if (quantityDesired <= 0)
+        {
+            throw new AggregateException($"Item units desired should be greater than zero");
+        }
+
+        int removed = Math.Min(quantityDesired, this.UnitInStock);
+
+        this.UnitInStock -= removed;
+
+        return removed;
+    }
 }

@@ -12,8 +12,6 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
             .IsRequired(false)
             .HasColumnName("USER_ID");
 
-        builder.Ignore(b => b.DomainEvents);
-
         builder
             .OwnsOne(o => o.Address);
     }

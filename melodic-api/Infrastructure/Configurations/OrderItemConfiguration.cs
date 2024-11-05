@@ -30,8 +30,7 @@ public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
             .WithMany()
             .HasForeignKey(p => p.SpeakerId)
             .OnDelete(DeleteBehavior.NoAction);
-        builder.Property(x => x.UnitPrice).IsRequired().HasColumnName("UNIT_PRICE").HasPrecision(18, 2);
-        builder.Property(x => x.Discount).HasColumnName("DISCOUNT").HasPrecision(18, 2);
-        builder.Property(x => x.SpeakerUrl).IsRequired(false).HasColumnName("SPEAKER_URL");
+        builder.Property(x => x.UnitPrice).IsRequired().HasColumnName("UNIT_PRICE");
+        builder.Property(x => x.Discount).HasColumnName("DISCOUNT");
     }
 }

@@ -1,8 +1,6 @@
-﻿using Domain.SeedWork;
+﻿namespace Domain.ValueObjects;
 
-namespace Domain.ValueObjects;
-
-public class Address : ValueObject
+public class Address
 {
     public string Street { get; private set; }
     public string City { get; private set; }
@@ -10,7 +8,9 @@ public class Address : ValueObject
     public string Country { get; private set; }
     public string ZipCode { get; private set; }
 
-    public Address() { }
+    public Address()
+    {
+    }
 
     public Address(string street, string city, string state, string country, string zipcode)
     {
@@ -19,15 +19,5 @@ public class Address : ValueObject
         State = state;
         Country = country;
         ZipCode = zipcode;
-    }
-
-    protected override IEnumerable<object> GetEqualityComponents()
-    {
-        // Using a yield return statement to return each element one at a time
-        yield return Street;
-        yield return City;
-        yield return State;
-        yield return Country;
-        yield return ZipCode;
     }
 }
