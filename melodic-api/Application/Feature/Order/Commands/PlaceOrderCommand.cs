@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Application.Contracts.Persistence;
 using Application.Feature.Order.Event;
 using Domain.ValueObjects;
@@ -8,9 +9,16 @@ namespace Application.Feature.Order.Commands;
 
 public class PlaceOrderCommand : IRequest<Domain.Entities.Order>
 {
-    public string UserId { get; set; }
-    public Address Address { get; private set; }
-    public List<OrderItem> OrderItems { get; set; }
+    [Required] public string UserId { get; set; }
+    [Required] public string City { get; set; }
+
+    [Required] public string Street { get; set; }
+
+    [Required] public string State { get; set; }
+
+    [Required] public string Country { get; set; }
+    [Required] public string ZipCode { get; set; }
+    public List<OrderItemRequest> OrderItems { get; set; } = new();
 }
 
 public class PlaceOrderCommandHandler(IApplicationDbContext context, IPublisher publisher)
@@ -28,7 +36,8 @@ public class PlaceOrderCommandHandler(IApplicationDbContext context, IPublisher 
         var speakerDict = speakers.ToDictionary(x => x.Id, x => x);
         var confirmedOrderStockItems = new List<OrderConfirmedItem>();
 
-        var order = new Domain.Entities.Order(request.UserId, request.Address, orderCode);
+        var address = new Address(request.Street, request.City, request.State, request.Country, request.ZipCode);
+        var order = new Domain.Entities.Order(request.UserId, address, orderCode);
 
         foreach (var item in request.OrderItems)
         {
@@ -62,9 +71,9 @@ public class PlaceOrderCommandHandler(IApplicationDbContext context, IPublisher 
 
 public record OrderConfirmedItem(Guid ProductId, bool HasStock);
 
-public abstract class OrderItem
+public class OrderItemRequest
 {
-    public Guid SpeakerId { get; init; }
+    [Required] public Guid SpeakerId { get; set; }
 
-    public int Units { get; init; }
+    [Required] public int Units { get; set; }
 }

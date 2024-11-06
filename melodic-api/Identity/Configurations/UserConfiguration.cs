@@ -15,6 +15,7 @@ public class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
         builder.HasOne<Basket>()
             .WithOne()
             .HasForeignKey<Basket>(up => up.UserId)
+            .OnDelete(DeleteBehavior.NoAction)
             .IsRequired();
         // builder.HasData(
         //     new ApplicationUser
@@ -39,7 +40,11 @@ public class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
         //         UserName = "user@localhost.com",
         //         NormalizedUserName = "USER@LOCALHOST.COM",
         //         PasswordHash = hasher.HashPassword(null, "P@ssword1"),
-        //         EmailConfirmed = true
+        //         EmailConfirmed = true,
+        //         Basket = new()
+        //         {
+        //             
+        //         }
         //     }
         // );
     }

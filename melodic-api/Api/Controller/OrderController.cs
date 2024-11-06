@@ -51,7 +51,7 @@ public class OrderController(
     // POST: api/Order
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Order>> Checkout(PlaceOrderCommand request)
+    public async Task<ActionResult> Checkout([FromBody] PlaceOrderCommand request)
     {
         request.UserId = userService.UserId;
         var order = await mediator.Send(request);
@@ -85,7 +85,7 @@ public class OrderController(
         var createPayment = await payOs.createPaymentLink(paymentData);
 
 
-        return Created(createPayment.checkoutUrl, order);
+        return Created(createPayment.checkoutUrl);
     }
 
     // PUT: api/Order/5
