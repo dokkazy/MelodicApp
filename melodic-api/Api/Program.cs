@@ -11,10 +11,14 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
+using Net.payOS;
 
 var builder = WebApplication.CreateBuilder(args);
-
-
+var configuration = builder.Configuration;
+var payOs = new PayOS(configuration["Environment:PAYOS_CLIENT_ID"] ?? throw new Exception("Cannot find environment"),
+    configuration["Environment:PAYOS_API_KEY"] ?? throw new Exception("Cannot find environment"),
+    configuration["Environment:PAYOS_CHECKSUM_KEY"] ?? throw new Exception("Cannot find environment"));
+builder.Services.AddSingleton(payOs);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();

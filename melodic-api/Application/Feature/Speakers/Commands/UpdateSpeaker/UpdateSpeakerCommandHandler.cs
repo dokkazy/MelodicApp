@@ -37,7 +37,7 @@ namespace Application.Feature.Speakers.Commands.UpdateSpeaker
             if (request.BrandId != Guid.Empty) speaker.BrandId = request.BrandId;
             if (request.Price > 0) speaker.Price = request.Price; // Check for a valid price
             if (request.Decription != null) speaker.Decription = request.Decription;
-            if (request.UnitInStock.HasValue) speaker.UnitInStock = request.UnitInStock;
+            speaker.UnitInStock = request.UnitInStock;
             if (request.Img != null) speaker.MainImg = request.Img;
 
             //_speakerRepository.Speakers.Update(speaker);
