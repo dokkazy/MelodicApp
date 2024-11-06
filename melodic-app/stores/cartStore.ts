@@ -1,9 +1,10 @@
-import { ProductType } from "@/schemaValidations/product.schema";
+import { ProductCartType } from "@/schemaValidations/product.schema";
 import { createStore } from "zustand/vanilla";
 import { createJSONStorage, persist } from "zustand/middleware";
+import {toast } from "@/hooks/use-toast";
 
 export interface CartItem {
-  product: ProductType;
+  product: ProductCartType;
   quantity: number;
 }
 
@@ -13,7 +14,7 @@ type CartState = {
 
 type CartActions = {
   getCarts: () => CartItem[];
-  addToCart: (item: CartItem) => void;
+  addToCart: (product: ProductCartType) => void;
   removeFromCart: (productId: string) => void;
   getQuantity: () => number;
   getTotal: () => number;
@@ -43,16 +44,31 @@ export const createCartStore = (initState: CartState = initialState) => {
           return get().cart;
         },
 
-        addToCart: (newItem: CartItem) => {
+        addToCart: (product: ProductCartType) => {
           set((state) => {
             const existingItem = state.cart.find(
-              (item) => item.product.Id === newItem.product.Id,
+              (item) => item.product.Id === product.Id,
             );
 
             if (existingItem) {
-              existingItem.quantity += newItem.quantity;
+              const newQuantity = existingItem.quantity + 1;
+              if (newQuantity <= product.UnitInStock) {
+                existingItem.quantity = newQuantity;
+                toast({
+                  title: "Add successfully",
+                });
+              } else {
+                alert("Quantity exceeds available stock");
+              }
             } else {
-              state.cart.push(newItem);
+              if (1 <= product.UnitInStock) {
+                state.cart.push({ product, quantity: 1 });
+                toast({
+                  title: "Add successfully",
+                });
+              } else {
+                alert("Quantity exceeds available stock");
+              }
             }
 
             resetSessionTimeout();
@@ -64,6 +80,9 @@ export const createCartStore = (initState: CartState = initialState) => {
             const newCart = state.cart.filter(
               (item) => item.product.Id !== productId,
             );
+            toast({
+              title: "Item removed from cart",
+            });
             resetSessionTimeout();
             return { cart: newCart };
           });

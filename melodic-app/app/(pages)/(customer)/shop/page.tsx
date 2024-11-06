@@ -1,7 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
 
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import {
   Pagination,
   PaginationContent,
@@ -13,8 +20,7 @@ import {
 } from "@/components/ui/pagination";
 import speakerApiRequest from "@/api/speaker";
 import { ProductListResType } from "@/schemaValidations/product.schema";
-import { checkUserRole, formatPrice } from "@/app/lib/utils";
-import Breadcrumb from "@/app/components/BreadCrumb";
+import { formatPrice } from "@/app/lib/utils";
 import { cn } from "@/lib/utils";
 import styles from "./Shop.module.scss";
 import { Button } from "@/components/ui/button";
@@ -22,6 +28,7 @@ import { Slider } from "@/components/ui/slider";
 import SkeletonLoading from "./SkeletonLoading";
 import ProductCard from "@/app/components/ProductCard";
 import BrandCard from "@/app/components/BrandCard";
+import { links } from "@/configs/routes";
 
 const MIN = 0;
 const MAX = 20000000;
@@ -35,21 +42,20 @@ export default function ShopPage() {
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [maxPage, setMaxPage] = useState(0);
-  const pathname = usePathname();
   const [values, setValues] = useState([MIN, MAX]);
-  const defaultQueryParams = `?$top=${itemPerPage}&$skip=${(page - 1) * itemPerPage
-    }&$count=true&$orderby=createAt desc`;
+  const defaultQueryParams = `?$top=${itemPerPage}&$skip=${
+    (page - 1) * itemPerPage
+  }&$count=true&$orderby=createAt desc`;
   const [queryParams, setQueryParams] = useState(defaultQueryParams);
 
   useEffect(() => {
-    console.log(queryParams);
     const fetchSpeakers = async () => {
       try {
         setLoading(true);
         const response = await speakerApiRequest.getListSpeakers(queryParams);
         const { value, "@odata.count": count } = response.payload;
-        // console.log("API Response:", response);
-        // console.log("Total Products Count:", count);
+        console.log("API Response:", response);
+        console.log("Total Products Count:", count);
         setProductList(value || []);
         setTotalCount(count || 0);
         setMaxPage(Math.ceil(count / itemPerPage));
@@ -60,7 +66,7 @@ export default function ShopPage() {
       }
     };
     fetchSpeakers();
-
+    console.log("Query Params:", queryParams);
   }, [queryParams, page]);
   // console.log(pathname);
 
@@ -77,10 +83,22 @@ export default function ShopPage() {
   return (
     <div className="min-h-screen bg-white px-4 sm:px-6 lg:px-8">
       <div className="mx-auto lg:max-w-7xl">
-        <Breadcrumb pathname={pathname} title="Shop" />
+        <Breadcrumb>
+          <BreadcrumbList className="text-xl">
+            <BreadcrumbItem>
+              <BreadcrumbLink href={links.home.href}>Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage className="font-semibold">Shop</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
       </div>
       <div className={`${cn(styles["category-card"])}`}>
-        <BrandCard />
+        <div className={`flex items-center gap-4 max-w-2/3 overflow-x-auto ${cn(styles["scroll-type"])}`}>
+          <BrandCard />
+        </div>
       </div>
 
       <div className="mx-auto flex max-w-2xl justify-between gap-x-6 py-16 sm:py-24 lg:max-w-7xl">
@@ -125,12 +143,15 @@ export default function ShopPage() {
                       <PaginationItem>
                         <PaginationPrevious
                           href="#"
-                          onClick={() => handlePageChange(Math.max(1, page - 1))}
+                          onClick={() =>
+                            handlePageChange(Math.max(1, page - 1))
+                          }
                           isActive={page !== 1}
-                          className={`${page === 1
-                            ? "cursor-not-allowed opacity-50"
-                            : "cursor-pointer hover:bg-gray-200"
-                            }`}
+                          className={`${
+                            page === 1
+                              ? "cursor-not-allowed opacity-50"
+                              : "cursor-pointer hover:bg-gray-200"
+                          }`}
                         />
                       </PaginationItem>
 
@@ -182,7 +203,7 @@ export default function ShopPage() {
                       )}
 
                       {/* Always show the last page if there are more than two pages */}
-                      {maxPage > 2 &&  page < maxPage &&(
+                      {maxPage > 2 && page < maxPage && (
                         <PaginationItem>
                           <PaginationLink
                             href="#"
@@ -198,12 +219,15 @@ export default function ShopPage() {
                       <PaginationItem>
                         <PaginationNext
                           href="#"
-                          onClick={() => handlePageChange(Math.min(maxPage, page + 1))}
+                          onClick={() =>
+                            handlePageChange(Math.min(maxPage, page + 1))
+                          }
                           isActive={page !== maxPage}
-                          className={`${page === maxPage
-                            ? "cursor-not-allowed opacity-50"
-                            : "cursor-pointer hover:bg-gray-200"
-                            }`}
+                          className={`${
+                            page === maxPage
+                              ? "cursor-not-allowed opacity-50"
+                              : "cursor-pointer hover:bg-gray-200"
+                          }`}
                         />
                       </PaginationItem>
                     </>
@@ -219,7 +243,6 @@ export default function ShopPage() {
                   )}
                 </PaginationContent>
               </Pagination>
-
             </div>
           </div>
         ) : loading ? (

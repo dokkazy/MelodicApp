@@ -10,7 +10,10 @@ const BrandDto = z.object({
 const ProductSchema = z.object({
   Id: z.string(),
   Name: z.string(),
-  CreateAt: z.date().transform((dateString) => new Date(dateString)).nullable(),
+  CreateAt: z
+    .date()
+    .transform((dateString) => new Date(dateString))
+    .nullable(),
   Price: z.number().positive(),
   Decription: z.string(),
   UnitInStock: z.number(),
@@ -39,3 +42,14 @@ export const ProductListRes = z.object({
 });
 
 export type ProductListResType = z.TypeOf<typeof ProductListRes>;
+export interface ProductCartType {
+  Id: string;
+  Name: string;
+  Price: number;
+  UnitInStock: number;
+  Img: string;
+  Brand: {
+    BrandId: string;
+    Name: string;
+  };
+}
