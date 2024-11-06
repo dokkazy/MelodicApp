@@ -17,7 +17,7 @@ public class Order
 
     public string Description { get; private set; }
     public OrderStatus OrderStatus { get; private set; }
-    public int? PaymentId { get; private set; }
+    public string PaymentId { get; set; }
 
     private readonly List<OrderItem> _orderItems;
 

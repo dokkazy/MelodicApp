@@ -117,7 +117,7 @@ public class BasketController(MelodicDbContext context, IUserService userService
         double UnitPrice = 0,
         double OldUnitPrice = 0);
 
-    public abstract record BasketItemRequest(Guid SpeakerId, int Quantity);
+    public record BasketItemRequest(Guid SpeakerId, int Quantity);
 
     private record BasketConfirmedItem(Guid SpeakerId, bool HasStock);
 

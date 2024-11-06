@@ -22,11 +22,10 @@ public class OrderController(
     IMediator mediator,
     PayOS payOs,
     IHttpContextAccessor httpContextAccessor,
-    IUserService userService) : ODataController
+    IUserService userService) : ControllerBase
 {
     // GET: api/Order
     [HttpGet]
-    [EnableQuery]
     [Authorize(Roles = ApplicationRole.Role_Admin)]
     public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
     {
@@ -85,7 +84,7 @@ public class OrderController(
         var createPayment = await payOs.createPaymentLink(paymentData);
 
 
-        return Created(createPayment.checkoutUrl);
+        return CreatedAtAction(nameof(GetOrder), new { id = order.Id }, createPayment);
     }
 
     // PUT: api/Order/5

@@ -9,9 +9,7 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
     public void Configure(EntityTypeBuilder<Order> builder)
     {
         builder.Property(p => p.UserId)
-            .IsRequired(false)
-            .HasColumnName("USER_ID");
-
+            .IsRequired(true);
         builder
             .OwnsOne(o => o.Address);
     }
