@@ -12,6 +12,16 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
 import DeleteProduct from '../_component/delete-product';
 import ProductCard from '@/app/components/ProductCard';
 import ProductAddForm from '../_component/product-add-form';
@@ -27,8 +37,10 @@ export default function ProductPage() {
   const [maxPage, setMaxPage] = useState(0);
 
   const pathname = usePathname();
-  const defaultQueryParams = `?$top=${itemPerPage}&$skip=${(page - 1) * itemPerPage}&$count=true&$orderby=createAt desc`;
-  const [queryParams, setQueryParams] = useState(defaultQueryParams);
+  const createQueryParams = () => {
+    return `?$top=${itemPerPage}&$skip=${(page - 1) * itemPerPage}&$count=true&$orderby=createAt desc`;
+  };
+  const [queryParams, setQueryParams] = useState(createQueryParams());
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -46,11 +58,16 @@ export default function ProductPage() {
       }
     };
     fetchProducts();
-  }, [queryParams, page]);
+  }, [queryParams]);
+
+  useEffect(() => {
+    setQueryParams(createQueryParams());
+  }, [page]);
+
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
-  };
+  }
 
 
   return (
@@ -60,41 +77,46 @@ export default function ProductPage() {
         <div className="text-center text-xl">Loading...</div>
       ) : (
         <>
-          <div>
+          <div className='mb-4'>
             <ProductAddButton />
           </div>
-          <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
-            <thead>
-              <tr className="bg-gray-200 text-gray-700">
-                <th className="border border-gray-300 p-3">ID</th>
-                <th className="border border-gray-300 p-3">Name</th>
-                <th className="border border-gray-300 p-3">Price</th>
-                <th className="border border-gray-300 p-3">Description</th>
-                <th className="border border-gray-300 p-3">Unit In Stock</th>
-                <th className="border border-gray-300 p-3">Brand</th>
-                <th className="border border-gray-300 p-3">Created At</th>
-                <th className="border border-gray-300 p-3" colSpan={2}>Action</th>
-              </tr>
-            </thead>
-            <tbody>
+          <Table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+            <TableCaption>Product List</TableCaption>
+            <TableHeader>
+              <TableRow className=" text-black font-bold">
+                <TableHead className='text-black'>ID</TableHead>
+                <TableHead className='text-black'>Name</TableHead>
+                <TableHead className='text-black'>Price</TableHead>
+                <TableHead className='text-black'>Description</TableHead>
+                <TableHead className='text-black'>Unit In Stock</TableHead>
+                <TableHead className='text-black'>Brand</TableHead>
+                <TableHead className='text-black'>Created At</TableHead>
+                <TableHead className='text-black'>Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {productList.map((product) => (
-                <tr key={product.Id} className="hover:bg-gray-100 transition-colors">
-                  <td className="border border-gray-300 p-3 text-center">{product.Id}</td>
-                  <td className="border border-gray-300 p-3">{product.Name}</td>
-                  <td className="border border-gray-300 p-3 text-center">${product.Price.toFixed(2)}</td>
-                  <td className="border border-gray-300 p-3">{product.Decription}</td>
-                  <td className="border border-gray-300 p-3 text-center">{product.UnitInStock}</td>
-                  <td className="border border-gray-300 p-3">{product.Brand.Name}</td>
-                  <td className="border border-gray-300 p-3 text-center">{new Date(product.CreateAt).toLocaleDateString()}</td>
-                  <td className="border border-gray-300 p-3 text-center col-span-2" >
-                    <ProductUpdateButton id={product.Id} />
-                    <DeleteProduct product={product} />
-                  </td>
+                <TableRow key={product.Id} className="hover:bg-gray-100 transition-colors">
+                  <TableCell className="text-center">{product.Id}</TableCell>
+                  <TableCell>{product.Name}</TableCell>
+                  <TableCell className="text-center">${product.Price.toFixed(2)}</TableCell>
+                  <TableCell>{product.Decription}</TableCell>
+                  <TableCell className="text-center">{product.UnitInStock}</TableCell>
+                  <TableCell>{product.Brand.Name}</TableCell>
+                  <TableCell className="text-center">{new Date(product.CreateAt).toLocaleDateString()}</TableCell>
+                  <TableCell className="text-center col-span-2">
 
-                </tr>
+                    <ProductUpdateButton id={product.Id} />
+
+                  </TableCell>
+                  <TableCell>
+                    <DeleteProduct product={product} />
+
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
           {/* Pagination */}
           <div className="mt-6 flex justify-center">
             <Pagination>

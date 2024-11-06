@@ -5,7 +5,7 @@ export default function ProductAddButton() {
     
     return (
       <Link href={'product/add'}>
-        <Button variant={'secondary'}>Thêm sản phẩm</Button>
+        <Button variant={'default'}  className="font-bold">Add Product</Button>
       </Link>
     )
   }

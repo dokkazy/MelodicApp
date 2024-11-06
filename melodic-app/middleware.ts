@@ -5,11 +5,11 @@ import { UserRole } from "./schemaValidations/auth.schema";
 
 const privatePath = [
   links.profile.href,
-  adminLinks.admin.href,
-  adminLinks.user.href,
-  adminLinks.product.href,
-  adminLinks.order.href,
-  adminLinks.brand.href,
+  // adminLinks.admin.href,
+  // adminLinks.user.href,
+  // adminLinks.product.href,
+  // adminLinks.order.href,
+  // adminLinks.brand.href,
 ];
 
 // This function can be marked `async` if using `await` inside

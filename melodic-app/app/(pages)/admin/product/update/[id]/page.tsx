@@ -32,7 +32,7 @@ const UpdateProductPage = ({ params }: { params: { id: string } }) => { // Acces
   return(
     <div className="container max-w-2xl mx-auto p-4">
       <h1 className="text-center font-bold">Update Speaker</h1>
-      <ProductUpdateForm product={product} />;
+      <ProductUpdateForm id={params.id} product={product} />;
     </div>
   ) 
 };
