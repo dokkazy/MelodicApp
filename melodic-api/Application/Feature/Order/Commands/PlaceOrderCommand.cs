@@ -18,6 +18,10 @@ public class PlaceOrderCommand : IRequest<Domain.Entities.Order>
 
     [Required] public string Country { get; set; }
     [Required] public string ZipCode { get; set; }
+    
+    [Required] 
+    [Phone]
+    public string PhoneNumber { get; set; }
     public List<OrderItemRequest> OrderItems { get; set; } = new();
 }
 
@@ -37,7 +41,7 @@ public class PlaceOrderCommandHandler(IApplicationDbContext context, IPublisher 
         var confirmedOrderStockItems = new List<OrderConfirmedItem>();
 
         var address = new Address(request.Street, request.City, request.State, request.Country, request.ZipCode);
-        var order = new Domain.Entities.Order(request.UserId, address, orderCode);
+        var order = new Domain.Entities.Order(request.UserId, address, orderCode, request.PhoneNumber);
 
         foreach (var item in request.OrderItems)
         {

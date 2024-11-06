@@ -12,6 +12,7 @@ public class Order
     public DateTime OrderDate { get; private set; }
 
     [Required] public Address Address { get; private set; }
+    [Required] public string PhoneNumber { get; private set; }
     public double? Tax { get; private set; }
 
     public string Description { get; private set; }
@@ -22,18 +23,16 @@ public class Order
 
     public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
 
+    public Order() {}
 
-    public Order()
-    {
-    }
-
-    public Order(string userId, Address address, int orderCode)
+    public Order(string userId, Address address, int orderCode, string phoneNumber)
     {
         UserId = userId;
         OrderStatus = OrderStatus.Submitted;
         OrderDate = DateTime.UtcNow;
         Address = address;
         OrderCode = orderCode;
+        PhoneNumber = phoneNumber;
         Description = string.Empty;
         _orderItems = new List<OrderItem>();
     }
