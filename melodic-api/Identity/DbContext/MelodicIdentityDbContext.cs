@@ -1,3 +1,4 @@
+using Domain.Entities;
 using Identity.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ public class MelodicIdentityDbContext : IdentityDbContext<ApplicationUser>
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder.Entity<BasketItem>().HasKey(c => new { c.BasketId, c.SpeakerId });
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(typeof(MelodicIdentityDbContext).Assembly);
     }

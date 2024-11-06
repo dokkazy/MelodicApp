@@ -18,6 +18,7 @@ public static class InfrastructureServiceRegistration
         });
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<ISpeakerRepository, SpeakerRepository>();
+        services.AddScoped<IApplicationDbContext, MelodicDbContext>();
         services.AddScoped<IBrandRepository, BrandRepository>();
         // services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         // services.AddScoped<IBrandRepository, BrandRepository>();

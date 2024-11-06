@@ -14,7 +14,7 @@ namespace Application.Feature.Speakers.Commands.UpdateSpeaker
         public Guid BrandId { get; set; }
         public double Price { get; set; }
         public string? Decription { get; set; }
-        public int? UnitInStock { get; set; }
+        public int UnitInStock { get; set; }
         public string? Img { get; set; }
     }
 }

@@ -29,6 +29,18 @@ public class UserService : IUserService
             Lastname = user.LastName
         };
     }
+    
+    public async Task<User> GetUser()
+    {
+        var user = await _userManager.FindByIdAsync(UserId);
+        return new User
+        {
+            Email = user.Email,
+            Id = user.Id,
+            Firstname = user.FirstName,
+            Lastname = user.LastName
+        };
+    }
 
     public string UserId { get => _httpContextAccessor.HttpContext?.User?.FindFirstValue("uid"); }
 

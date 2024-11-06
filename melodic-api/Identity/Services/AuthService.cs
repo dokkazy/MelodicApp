@@ -5,6 +5,7 @@ using System.Text;
 using Application.Exception;
 using Application.Identity;
 using Application.Models.Identity;
+using Domain.Entities;
 using Identity.Models;
 using Infrastructure.Database;
 using Microsoft.AspNetCore.Identity;
@@ -60,8 +61,8 @@ public class AuthService : IAuthService
             RefreshToken = refreshToken,
             Role = isUser ? ApplicationRole.Role_User : ApplicationRole.Role_Admin
         };
-        
-        
+
+
         return response;
     }
 
@@ -80,7 +81,16 @@ public class AuthService : IAuthService
 
         if (result.Succeeded)
         {
+            var basket = new Basket
+            {
+                UserId = user.Id,
+            };
+
             await _userManager.AddToRoleAsync(user, "User");
+
+
+            _dbContext.Baskets.Add(basket);
+            await _dbContext.SaveChangesAsync();
             return new RegistrationResponse() { UserId = user.Id };
         }
         else
@@ -118,7 +128,7 @@ public class AuthService : IAuthService
 
         var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
         var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
-        
+
         var jwtSecurity = new JwtSecurityToken(
             issuer: _jwtSettings.Issuer,
             audience: _jwtSettings.Audience,
@@ -129,7 +139,7 @@ public class AuthService : IAuthService
 
         return jwtSecurity;
     }
-    
+
     private RefreshToken GenerateRefreshToken()
     {
         var refreshToken = new RefreshToken
@@ -140,7 +150,7 @@ public class AuthService : IAuthService
         };
         return refreshToken;
     }
-    
+
     private async Task SaveRefreshToken(ApplicationUser cus, RefreshToken refreshToken)
     {
         var refreshTokenEntity = new RefreshToken

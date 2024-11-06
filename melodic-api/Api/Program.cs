@@ -1,20 +1,23 @@
 using Api.Middleware;
 using Application;
-using Application.Feature.Brand.Queries.GetAllBrands;
 using Application.Feature.Speakers.Queries.GetAllSpeakers;
+using Domain.Entities;
 using Identity;
 using Infrastructure;
 using Microsoft.AspNetCore.OData;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
-using System.Text.Json;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
+using Net.payOS;
 
 var builder = WebApplication.CreateBuilder(args);
-
-
+var configuration = builder.Configuration;
+var payOs = new PayOS(configuration["Environment:PAYOS_CLIENT_ID"] ?? throw new Exception("Cannot find environment"),
+    configuration["Environment:PAYOS_API_KEY"] ?? throw new Exception("Cannot find environment"),
+    configuration["Environment:PAYOS_CHECKSUM_KEY"] ?? throw new Exception("Cannot find environment"));
+builder.Services.AddSingleton(payOs);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
@@ -76,6 +79,7 @@ IEdmModel GetEdmModel()
 
     // Entity Sets and Model Definitions
     odataBuilder.EntitySet<SpeakerDto>("Speakers");
+    odataBuilder.EntitySet<Order>("Orders");
 
     return odataBuilder.GetEdmModel();
 }
