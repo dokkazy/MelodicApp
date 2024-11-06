@@ -7,13 +7,13 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 const nextConfig = {
     images: {
         remotePatterns: [
-            {
+          {
                 protocol: 'https',
                 hostname: '**',
                 port: '',
                 // pathname: '/**', // Uncomment if you want to restrict the path
-            },  
-        ],
+            },
+        ], 
         domains: ['localhost'],
     }
 };

@@ -73,7 +73,7 @@ public class SpeakersController : ODataController
     }
 
     [HttpPost]
-    [Authorize(Roles = ApplicationRole.Role_Admin)]
+    //[Authorize(Roles = ApplicationRole.Role_Admin)]
     public async Task<IActionResult> CreateSpeaker([FromBody] CreateSpeakerCommand command)
     {
         if (command == null)
@@ -84,7 +84,7 @@ public class SpeakersController : ODataController
     }
 
     [HttpPut("{id:guid}")]
-    [Authorize(Roles = ApplicationRole.Role_Admin)]
+    //[Authorize(Roles = ApplicationRole.Role_Admin)]
     public async Task<IActionResult> UpdateSpeaker(Guid id, [FromBody] UpdateSpeakerCommand command)
     {
         await _mediator.Send(command);
@@ -92,7 +92,7 @@ public class SpeakersController : ODataController
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Roles = ApplicationRole.Role_Admin)]
+    //[Authorize(Roles = ApplicationRole.Role_Admin)]
     public async Task<IActionResult> DeleteSpeaker(Guid id)
     {
         if (id == Guid.Empty)
