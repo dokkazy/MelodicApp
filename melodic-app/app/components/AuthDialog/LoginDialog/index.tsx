@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Eye, EyeOff, Lock, User } from "lucide-react";
+import { Lock, User } from "lucide-react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -30,9 +30,7 @@ export default function LoginDialog() {
   const { toast } = useToast();
   const { setSessionToken, setRole, setUser } = useAppContext();
   const [loading, setLoading] = React.useState(false);
-  const [isPageLoading, setIsPageLoading] = React.useState(false);
   const router = useRouter();
-  const [showPassword, setShowPassword] = React.useState(false);
   const loginForm = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -51,36 +49,31 @@ export default function LoginDialog() {
       setLoading(true);
       const response = await authApiRequest.login(data);
       console.log(response);
-      switch (response.status) {
-        case 200: {
-          const responseFromNextServer = await authApiRequest.setToken({
-            sessionToken: response.payload?.token,
-            role: response.payload?.role,
-          });
-          setUser(response.payload);
-          setSessionToken(responseFromNextServer.payload?.sessionToken);
-          setRole(responseFromNextServer.payload?.role);
-          toast({
-            title: "Login successfully",
-            description: "You have successfully logged in.",
-          });
-          if (response.payload?.role === UserRole.Admin) {
-            setTimeout(() => {
-              router.push(adminLinks.admin.href); // Chuyển hướng sau thời gian chờ
-              setIsPageLoading(false); // Tắt hiệu ứng loading
-            }, 2000);
-          }
-          break;
+      if (response.status === 200) {
+        const responseFromNextServer = await authApiRequest.setToken({
+          sessionToken: response.payload?.token,
+          role: response.payload?.role,
+        });
+        setUser(response.payload);
+        setSessionToken(responseFromNextServer.payload?.sessionToken);
+        setRole(responseFromNextServer.payload?.role);
+        toast({
+          title: "Login successfully",
+          description: "You have successfully logged in.",
+        });
+        if (response.payload?.role === UserRole.Admin) {
+          router.push(adminLinks.admin.href);
         }
-        case 404:
-        case 400: {
-          toast({
-            variant: "destructive",
-            title: `${response.payload?.title}`,
-          });
-          break;
-        }
+      } else if (response.status === 500) {
+        console.log("Server failed to respond");
+        
+      } else {
+        toast({
+          variant: "destructive",
+          title: `${response.payload?.title}`,
+        });
       }
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast({
@@ -132,17 +125,10 @@ export default function LoginDialog() {
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400" />
                   <Input
                     {...field}
-                    type={showPassword ? "text" : "password"}
+                    type={"password"}
                     placeholder="Enter your password"
                     className="pl-10"
                   />
-                  <button
-                    type="button"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 transform text-gray-400"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {password ? showPassword ? <EyeOff /> : <Eye /> : null}
-                  </button>
                 </div>
               </FormControl>
               <FormMessage />

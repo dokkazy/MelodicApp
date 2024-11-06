@@ -1,6 +1,10 @@
-.category-card{
-    @apply bg-gray-100 rounded-lg;
-    @apply flex items-center gap-4;
-    @apply mx-auto w-full max-h-max p-4 mt-4;
-    @apply sm:px-8 sm:py-8 lg:max-w-7xl;
+.category-card {
+  @apply rounded-lg bg-gray-100;
+  @apply mx-auto mt-4 max-h-max w-full p-4;
+  @apply sm:px-8 sm:py-8 lg:max-w-7xl;
+}
+
+.scroll-style::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }

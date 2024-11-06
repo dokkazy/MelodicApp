@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import * as React from "react";
 
 import images from "@/assets/pictures/heroImage";
@@ -82,7 +81,7 @@ export default function Hero() {
           </Carousel>
         </div>
       </div>
-      <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
+      {/* <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
         <div className="flex h-12 min-w-80 divide-x overflow-hidden rounded-lg border">
           <Link
             href=""
@@ -103,7 +102,7 @@ export default function Hero() {
             Speakers
           </Link>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }

@@ -1,7 +1,9 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/hooks/use-toast";
 
 export default function ContactPage() {
   return (
@@ -59,7 +61,11 @@ export default function ContactPage() {
                 <Label htmlFor="message">Message</Label>
                 <Textarea placeholder="Type your message here." id="message" />
               </div>
-              <Button className="w-full">Send Message</Button>
+              <Button onClick={() => {
+                toast({
+                  title: "Feature not implemented",
+                })
+              }} className="w-full">Send Message</Button>
             </div>
           </div>
         </div>

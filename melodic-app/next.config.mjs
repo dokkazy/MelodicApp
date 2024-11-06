@@ -1,5 +1,4 @@
 import NextBundleAnalyzer from '@next/bundle-analyzer';
-import path from 'path';
 
 const withBundleAnalyzer = NextBundleAnalyzer({
     enabled: process.env.ANALYZE === 'true',

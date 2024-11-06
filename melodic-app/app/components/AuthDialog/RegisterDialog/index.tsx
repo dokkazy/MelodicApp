@@ -2,7 +2,7 @@
 import * as React from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { Lock, Mail } from "lucide-react";
 
 import {
   Form,
@@ -25,8 +25,6 @@ import authApiRequest from "@/api/auth";
 export default function RegisterDialog() {
   const { toast } = useToast();
   const [loading, setLoading] = React.useState(false);
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
   const registerForm = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -95,7 +93,7 @@ export default function RegisterDialog() {
     <Form {...registerForm}>
       <form
         onSubmit={registerForm.handleSubmit(onSubmit)}
-        className="space-y-4 mt-2"
+        className="mt-2 space-y-4"
         noValidate
       >
         <div className="flex items-center space-x-2">
@@ -138,7 +136,7 @@ export default function RegisterDialog() {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400" />
                   <Input
                     {...field}
                     type="email"
@@ -159,20 +157,13 @@ export default function RegisterDialog() {
               <FormLabel>Password</FormLabel>
               <FormControl>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400" />
                   <Input
                     {...field}
-                    type={showPassword ? "text" : "password"}
+                    type={"password"}
                     placeholder="Create a password"
                     className="pl-10"
                   />
-                  <button
-                    type="button"
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {password ? showPassword ? <EyeOff /> : <Eye /> : null}
-                  </button>
                 </div>
               </FormControl>
               <FormMessage />
@@ -187,26 +178,13 @@ export default function RegisterDialog() {
               <FormLabel>Confirm Password</FormLabel>
               <FormControl>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 transform text-gray-400" />
                   <Input
                     {...field}
-                    type={showConfirmPassword ? "text" : "password"}
+                    type={"password"}
                     placeholder="Confirm your password"
                     className="pl-10"
                   />
-                  <button
-                    type="button"
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  >
-                    {confirmPassword ? (
-                      showConfirmPassword ? (
-                        <EyeOff />
-                      ) : (
-                        <Eye />
-                      )
-                    ) : null}
-                  </button>
                 </div>
               </FormControl>
               <FormMessage />
@@ -228,7 +206,7 @@ export default function RegisterDialog() {
         >
           {loading ? (
             <svg
-              className="animate-spin h-5 w-5 mr-3 text-white"
+              className="mr-3 h-5 w-5 animate-spin text-white"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"

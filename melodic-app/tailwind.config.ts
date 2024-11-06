@@ -17,6 +17,13 @@ const config: Config = {
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
+			  cart: {
+				bg: "#F8FAFC",
+				item: "#FFFFFF",
+				border: "#E2E8F0",
+				primary: "#2563EB",
+				secondary: "#64748B"
+			  },
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'

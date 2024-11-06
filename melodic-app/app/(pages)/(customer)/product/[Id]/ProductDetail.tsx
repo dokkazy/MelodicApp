@@ -1,48 +1,40 @@
 "use client";
 import React, { SyntheticEvent } from "react";
-import { Star, Truck } from "lucide-react";
+import { ArchiveX, Check, Star, Truck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { ProductDetailResType } from "@/schemaValidations/product.schema";
+import {
+  ProductCartType,
+  ProductDetailResType,
+} from "@/schemaValidations/product.schema";
 import ImageGallery from "@/app/components/ImageGallery";
 import speakerApiRequest from "@/api/speaker";
 import { formatPrice } from "@/app/lib/utils";
 import SkeletonLoading from "./SkeletonLoading";
 import { useCartStore } from "@/providers/CartProvider";
-import { useToast } from "@/hooks/use-toast";
-import { CartItem } from "@/stores/cartStore";
 
 export default function ProductDetail({ Id }: { Id: string }) {
   const [data, setData] = React.useState<ProductDetailResType | null>(null);
   const [loading, setLoading] = React.useState(true);
   const addItem = useCartStore((state) => state.addToCart);
   const cart = useCartStore((state) => state.cart);
-  const { toast } = useToast();
 
   React.useEffect(() => {
     console.log(cart);
   }, [cart]);
-  
+
   const handleAddToCart = (e: SyntheticEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    const cartItem: CartItem = {
-      product: {
-        Id: data?.id || "",
-        Name: data?.name || "",
-        Price: data?.price || 0,
-        Img: data?.img || "",
-        Decription: data?.decription || "",
-        Brand: data?.brand || { BrandId: "", Name: "" },
-        CreateAt: null,
-        UnitInStock: data?.unitInStock || 0,
-      },
-      quantity: 1,
+    const product: ProductCartType = {
+      Id: data?.id || "",
+      Name: data?.name || "",
+      Price: data?.price || 0,
+      Img: data?.img || "",
+      Brand: data?.brand || { BrandId: "", Name: "" },
+      UnitInStock: data?.unitInStock || 0,
     };
-    addItem(cartItem);
-    toast({
-      title: "Add successfully",
-    });
+    addItem(product);
   };
 
   React.useEffect(() => {
@@ -92,7 +84,19 @@ export default function ProductDetail({ Id }: { Id: string }) {
                   56 Ratings
                 </span>
               </div>
-
+              <div className="flex items-center gap-x-1 text-base mb-4">
+                {data.unitInStock > 0 ? (
+                  <>
+                    <Check />
+                    <p className="text-gray-700">In stock</p>
+                  </>
+                ) : (
+                  <>
+                    <ArchiveX className="text-red-500" />
+                    <p className="text-red-500">Out of stock</p>
+                  </>
+                )}
+              </div>
               <div className="mb-4">
                 <div className="flex items-end gap-2">
                   <span className="text-xl font-bold text-gray-800 md:text-2xl">
@@ -113,8 +117,15 @@ export default function ProductDetail({ Id }: { Id: string }) {
               </div>
 
               <div className="mb-6 flex gap-2.5">
-                <Button onClick={handleAddToCart}>Add To Bag</Button>
-                <Button variant="secondary">Buy Now</Button>
+                <Button
+                  disabled={data.unitInStock <= 0}
+                  onClick={handleAddToCart}
+                >
+                  Add To Bag
+                </Button>
+                <Button disabled={data.unitInStock <= 0} variant="secondary">
+                  Buy Now
+                </Button>
               </div>
 
               <p className="text-base tracking-normal text-gray-500">
