@@ -10,5 +10,4 @@ public class ApplicationUser : IdentityUser
     public string RefreshToken { get; set; } = string.Empty;
     public DateTime TokenCreated { get; set; } = DateTime.Now;
     public DateTime TokenExpired { get; set; }
-    public Basket Basket { get; set; } = new ();
 }

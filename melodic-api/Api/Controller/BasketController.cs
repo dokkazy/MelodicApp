@@ -10,7 +10,7 @@ namespace Api.Controller;
 [Route("api/[controller]")]
 [Authorize]
 [ApiController]
-public abstract class BasketController(MelodicDbContext context, IUserService userService) : ControllerBase
+public class BasketController(MelodicDbContext context, IUserService userService) : ControllerBase
 {
     // GET: api/Basket
     [HttpGet]
