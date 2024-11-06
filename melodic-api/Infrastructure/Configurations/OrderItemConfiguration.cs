@@ -18,7 +18,6 @@ public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
             .HasColumnName("ORDER_ID");
 
         builder.Property(p => p.Units)
-            .IsRequired(false)
             .HasColumnName("UNITS");
 
         builder.HasOne(p => p.Order)
