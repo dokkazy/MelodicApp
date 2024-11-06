@@ -12,11 +12,6 @@ public class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {
         var hasher = new PasswordHasher<ApplicationUser>();
 
-        builder.HasOne<Basket>()
-            .WithOne()
-            .HasForeignKey<Basket>(up => up.UserId)
-            .OnDelete(DeleteBehavior.NoAction)
-            .IsRequired();
         // builder.HasData(
         //     new ApplicationUser
         //     {
