@@ -26,7 +26,6 @@ import DeleteProduct from '../_component/delete-product';
 import ProductCard from '@/app/components/ProductCard';
 import ProductAddForm from '../_component/product-add-form';
 import ProductAddButton from '../_component/product-add-button';
-import UpdateSpeakerForm from './update/page';
 import ProductUpdateButton from '../_component/product-edit-button';
 export default function ProductPage() {
   const itemPerPage = 8;
