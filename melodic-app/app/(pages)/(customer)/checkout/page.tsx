@@ -21,23 +21,9 @@ const CheckoutSteps = () => (
 export default function CheckOutPage() {
   const router = useRouter();
   const cart = useCartStore((state) => state.cart);
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
-    province: "",
-    district: "",
-    ward: "",
-    paymentMethod: "bank",
-  });
 
 
   const handleSubmit = (values: ShippingInfoType) => {
-    setFormData(prev => ({
-      ...prev,
-      ...values
-    }));
     toast({
       title: "Order placed successfully!",
       description: "Thank you for your purchase.",
@@ -51,7 +37,7 @@ export default function CheckOutPage() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <ShippingForm
-              formData={formData}
+          
               onSubmit={handleSubmit}
               onBack={() => router.push("/cart")}
             />

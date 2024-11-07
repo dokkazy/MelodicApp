@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { CircleX } from "lucide-react";
@@ -10,19 +10,34 @@ import { checkIsImg, formatPrice } from "@/app/lib/utils";
 import images from "@/assets/pictures/heroImage";
 import { Button } from "@/components/ui/button";
 import EmptyCart from "@/app/(pages)/(customer)/cart/EmptyCart";
+import { useRouter } from "next/navigation";
+import { useAppContext } from "@/providers/AppProvider";
 
 export default function CartSheet({
   isOpenCart,
   setIsOpenCart,
+  setIsOpenLogin,
 }: {
   isOpenCart: boolean;
   setIsOpenCart: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpenLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const cart = useCartStore((state) => state.cart);
   const removeItem = useCartStore((state) => state.removeFromCart);
+  const router = useRouter();
+  const { sessionToken } = useAppContext();
 
   const handleRemoveCartItem = (id: string) => {
     removeItem(id);
+  };
+
+  const handleCheckout = () => {
+    if (sessionToken) {
+      setIsOpenCart(false);
+      router.push("/checkout");
+    } else {
+      setIsOpenLogin(true);
+    }
   };
   return (
     <Sheet open={isOpenCart} onOpenChange={() => setIsOpenCart(false)}>
@@ -86,19 +101,17 @@ export default function CartSheet({
                     onClick={() => {
                       setIsOpenCart(false);
                     }}
-                    className="w-full rounded-none bg-black p-8 text-lg hover:bg-black hover:opacity-90 mb-2"
+                    className="mb-2 w-full rounded-none bg-black p-8 text-lg hover:bg-black hover:opacity-90"
                   >
                     View cart
                   </Button>
                 </Link>
-                <Link href={"/checkout"}>
-                  <Button
-                    onClick={() => setIsOpenCart(false)}
-                    className="w-full rounded-none p-8 text-lg"
-                  >
-                    Check out
-                  </Button>
-                </Link>
+                <Button
+                  onClick={handleCheckout}
+                  className="w-full rounded-none p-8 text-lg"
+                >
+                  Check out
+                </Button>
               </div>
             </>
           )}

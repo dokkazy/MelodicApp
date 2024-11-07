@@ -3,7 +3,10 @@ export const links = {
   home: { href: "/", label: "Home" },
   shop: { href: "/shop", label: "Shop" },
   contact: { href: "/contact", label: "Contact" },
-  profile: { href: "/profile", label: "Profile" },
+  profile: { href: "user/profile", label: "Profile" },
+  orders: { href: "user/orders", label: "Orders" },
+  cart: { href: "/cart", label: "Cart" },
+  checkout: { href: "/checkout", label: "Checkout" },
 };
 export const adminLinks = {
   admin: { href: "/admin", label: "Admin" },

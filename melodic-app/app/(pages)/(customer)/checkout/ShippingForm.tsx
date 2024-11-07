@@ -1,3 +1,7 @@
+import { useForm, useWatch } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
+
 import { Input } from "@/components/ui/input";
 import {
   Form,
@@ -9,40 +13,39 @@ import {
 } from "@/components/ui/form";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FormData } from "@/app/interface";
 import {
   shippingInfoSchema,
   ShippingInfoType,
 } from "@/schemaValidations/cart.schema";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 
 interface ShippingFormProps {
-  formData: FormData;
   onSubmit: (values: ShippingInfoType) => void;
   onBack: () => void;
 }
 
-const ShippingForm = ({ formData, onSubmit, onBack }: ShippingFormProps) => {
+const ShippingForm = ({ onSubmit, onBack }: ShippingFormProps) => {
+  const [loading, setLoading] = React.useState(false);
   const form = useForm<ShippingInfoType>({
     resolver: zodResolver(shippingInfoSchema),
     defaultValues: {
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      address: formData.address,
-      province: formData.province,
-      district: formData.district,
-      ward: formData.ward,
-      paymentMethod: formData.paymentMethod,
+      street: "",
+      country: "",
+      city: "",
+      state: "",
+      zipCode: "",
     },
   });
 
+  const [street, country, city, state, zipCode] = useWatch({
+    control: form.control,
+    name: ["street", "country", "city", "state", "zipCode"],
+  });
+
   const handleSubmit = (values: ShippingInfoType) => {
-    onSubmit(values);
+   onSubmit(values);
   };
   return (
     <Form {...form}>
@@ -52,10 +55,10 @@ const ShippingForm = ({ formData, onSubmit, onBack }: ShippingFormProps) => {
           <div className="space-y-4">
             <FormField
               control={form.control}
-              name="name"
+              name="street"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Full Name</FormLabel>
+                  <FormLabel>Street</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -67,12 +70,12 @@ const ShippingForm = ({ formData, onSubmit, onBack }: ShippingFormProps) => {
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <FormField
                 control={form.control}
-                name="email"
+                name="city"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>City</FormLabel>
                     <FormControl>
-                      <Input type="email" {...field} />
+                      <Input {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -81,10 +84,10 @@ const ShippingForm = ({ formData, onSubmit, onBack }: ShippingFormProps) => {
 
               <FormField
                 control={form.control}
-                name="phone"
+                name="country"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone number</FormLabel>
+                    <FormLabel>Country</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -93,28 +96,13 @@ const ShippingForm = ({ formData, onSubmit, onBack }: ShippingFormProps) => {
                 )}
               />
             </div>
-
-            <FormField
-              control={form.control}
-              name="address"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Address</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <FormField
                 control={form.control}
-                name="province"
+                name="state"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Province/City</FormLabel>
+                    <FormLabel>State</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -125,24 +113,10 @@ const ShippingForm = ({ formData, onSubmit, onBack }: ShippingFormProps) => {
 
               <FormField
                 control={form.control}
-                name="district"
+                name="zipCode"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>District</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="ward"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Ward/commune</FormLabel>
+                    <FormLabel>Zip Code</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -156,27 +130,12 @@ const ShippingForm = ({ formData, onSubmit, onBack }: ShippingFormProps) => {
 
         <Card className="p-6">
           <h2 className="mb-4 text-xl font-semibold">Payment method</h2>
-          <FormField
-            control={form.control}
-            name="paymentMethod"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <RadioGroup
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    className="space-y-2"
-                  >
-                    <div className="flex items-center space-x-2 rounded-md border p-4">
-                      <RadioGroupItem value="bank" id="bank" />
-                      <Label htmlFor="bank">Chuyển khoản</Label>
-                    </div>
-                  </RadioGroup>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <RadioGroup defaultValue="bank" className="space-y-2">
+            <div className="flex items-center space-x-2 rounded-md border p-4">
+              <RadioGroupItem value="bank" id="bank" />
+              <Label htmlFor="bank">Chuyển khoản</Label>
+            </div>
+          </RadioGroup>
         </Card>
 
         <div className="flex justify-end space-x-4">
@@ -186,9 +145,33 @@ const ShippingForm = ({ formData, onSubmit, onBack }: ShippingFormProps) => {
           <Link href={"/"}>
             <Button
               type="submit"
+              disabled={loading|| !street || !country || !city || !state || !zipCode}
               className="bg-cart-primary hover:bg-cart-primary/90"
             >
-              Order
+              {loading ? (
+                <svg
+                  className="mr-3 h-5 w-5 animate-spin text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+              ) : (
+                "Order"
+              )}
             </Button>
           </Link>
         </div>

@@ -6,6 +6,8 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import AppProvider from "@/providers/AppProvider";
 import { CartProvider } from "@/providers/CartProvider";
+import { Suspense } from "react";
+import LoadingComponent from "./components/LoadingComponent";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -55,7 +57,16 @@ export default function RootLayout({
           initalRole={roleBase?.value}
           initalUser={userBase}
         >
-        <CartProvider>{children}</CartProvider>
+        <CartProvider>
+        <Suspense
+        fallback={
+          <div className="flex h-screen items-center justify-center">
+            <LoadingComponent />
+          </div>
+        }
+      >{children}
+      </Suspense>
+      </CartProvider>
         </AppProvider>
         <Toaster />
       </body>
