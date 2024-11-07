@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore;
 namespace Application.Feature.Order.Commands;
 
 public class PlaceOrderCommand : IRequest<Domain.Entities.Order>
-{
-    [Required] public string UserId { get; set; }
+{ 
+    public string UserId { get; set; }
     [Required] public string City { get; set; }
 
     [Required] public string Street { get; set; }
