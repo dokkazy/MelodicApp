@@ -79,7 +79,6 @@ IEdmModel GetEdmModel()
 
     // Entity Sets and Model Definitions
     odataBuilder.EntitySet<SpeakerDto>("Speakers");
-    odataBuilder.EntitySet<Order>("Orders");
 
     return odataBuilder.GetEdmModel();
 }
@@ -97,7 +96,7 @@ builder.Services.AddControllers().AddOData(options =>
 
 var app = builder.Build();
 
-app.UseMiddleware<ExceptionMiddleware>();
+// app.UseMiddleware<ExceptionMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {

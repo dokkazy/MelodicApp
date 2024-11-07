@@ -11,7 +11,7 @@ public class SpeakerConfiguration : IEntityTypeConfiguration<Speaker>
         builder
             .HasMany(e => e.OrderItems)
             .WithOne(e => e.Speaker)
-            .HasForeignKey(e => e.OrderId)
+            .HasForeignKey(e => e.SpeakerId)
             .HasPrincipalKey(e => e.Id);
     }
 }

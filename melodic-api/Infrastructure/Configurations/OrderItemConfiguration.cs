@@ -9,16 +9,6 @@ public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
     public void Configure(EntityTypeBuilder<OrderItem> builder)
     {
         builder.HasKey(e => new { e.OrderId, e.SpeakerId });
-        builder.Property(p => p.SpeakerId)
-            .IsRequired()
-            .HasColumnName("SPEAKER_ID");
-
-        builder.Property(p => p.OrderId)
-            .IsRequired()
-            .HasColumnName("ORDER_ID");
-
-        builder.Property(p => p.Units)
-            .HasColumnName("UNITS");
 
         builder.HasOne(p => p.Order)
             .WithMany(o => o.OrderItems)
@@ -26,7 +16,7 @@ public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
             .OnDelete(DeleteBehavior.NoAction);
 
         builder.HasOne(p => p.Speaker)
-            .WithMany()
+            .WithMany(o=> o.OrderItems)
             .HasForeignKey(p => p.SpeakerId)
             .OnDelete(DeleteBehavior.NoAction);
         builder.Property(x => x.UnitPrice).IsRequired().HasColumnName("UNIT_PRICE");

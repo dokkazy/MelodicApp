@@ -15,7 +15,7 @@ public class Basket
     public void AddItem(Guid speakerId,
         int units = 1)
     {
-        var existedItem = items.SingleOrDefault(x => x.BasketId == speakerId);
+        var existedItem = items.SingleOrDefault(x => x.SpeakerId == speakerId);
         if (existedItem is not null)
         {
             existedItem.AddUnits(units);
@@ -33,10 +33,17 @@ public class Basket
     public void RemoveItem(Guid speakerId,
         int units = 1)
     {
-        var existedItem = items.SingleOrDefault(x => x.BasketId == speakerId);
+        var existedItem = items.SingleOrDefault(x => x.SpeakerId == speakerId);
         if (existedItem is not null)
         {
-            existedItem.RemoveUnits(units);
+            if (existedItem.Quantity == units)
+            {
+                items.Remove(existedItem);
+            }
+            else
+            {
+                existedItem.RemoveUnits(units);
+            }
         }
     }
 

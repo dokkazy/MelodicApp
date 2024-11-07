@@ -20,4 +20,10 @@
       <ProjectReference Include="..\Application\Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="Microsoft.AspNetCore.Identity">
+        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.10\Microsoft.AspNetCore.Identity.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

@@ -121,7 +121,7 @@ public class AuthService : IAuthService
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim("uid", user.UserName)
+                new Claim("uid", user.Id)
             }
             .Union(userClaims)
             .Union(roleClaims);
