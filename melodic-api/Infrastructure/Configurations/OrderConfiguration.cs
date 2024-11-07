@@ -10,6 +10,7 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
     {
         builder.Property(p => p.UserId)
             .IsRequired(true);
+        builder.Property(p => p.PaymentId).IsRequired(false);
         builder
             .OwnsOne(o => o.Address);
     }

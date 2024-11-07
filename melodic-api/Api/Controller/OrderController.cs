@@ -29,7 +29,23 @@ public class OrderController(
     [Authorize(Roles = ApplicationRole.Role_Admin)]
     public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
     {
-        return await context.Orders.ToListAsync();
+        var orders = await context.Orders.Include(x => x.Address).ToListAsync();
+        var orderResponses = orders.Select(x => new OrderResponse()
+        {
+            Id = x.Id,
+            OrderDate = x.OrderDate,
+            OrderStatus = x.OrderStatus,
+            OrderCode = x.OrderCode,
+            PaymentId = x.PaymentId,
+            ZipCode = x.Address.ZipCode,
+            Country = x.Address.Country,
+            State = x.Address.State,
+            Street = x.Address.Street,
+            City = x.Address.City,
+            PhoneNumber = x.PhoneNumber
+        }).ToList();
+
+        return Ok(orderResponses);
     }
 
     // GET: api/Order/5
@@ -112,4 +128,36 @@ public class OrderController(
 
         return NoContent();
     }
+}
+
+public class OrderResponse
+{
+    public Guid Id { get; set; }
+    public int OrderCode { get; set; }
+    public string UserId { get; }
+    public DateTime OrderDate { get; set; }
+    public double? Tax { get; private set; }
+
+    public string Description { get; set; }
+    public OrderStatus OrderStatus { get; set; }
+    public string PaymentId { get; set; }
+
+    public string City { get; set; }
+
+    public string Street { get; set; }
+
+    public string State { get; set; }
+
+    public string Country { get; set; }
+    public string ZipCode { get; set; }
+
+    public string PhoneNumber { get; set; }
+}
+
+public class OrderItemResponse
+{
+    public string SpeakerName { get; set; }
+    public Guid SpeakerId { get; set; }
+    public int Units { get; set; }
+    public double UnitPrice { get; set; }
 }
