@@ -33,10 +33,10 @@ import { BrandListResType } from "@/schemaValidations/brand.schema";
 import brandApiRequest from "@/api/brand";
 
 const MIN = 0;
-const MAX = 20000000;
+const MAX = 100000000;
 
 export default function ShopPage() {
-  const itemPerPage = 8;
+  const itemPerPage = 1;
   const [page, setPage] = useState(1);
   const [productList, setProductList] = useState<ProductListResType["value"]>(
     [],
@@ -46,10 +46,12 @@ export default function ShopPage() {
   const [loading, setLoading] = useState(false);
   const [maxPage, setMaxPage] = useState(0);
   const [values, setValues] = useState([MIN, MAX]);
-  const defaultQueryParams = `?$top=${itemPerPage}&$skip=${
-    (page - 1) * itemPerPage
-  }&$count=true&$orderby=createAt desc`;
-  const [queryParams, setQueryParams] = useState(defaultQueryParams);
+  const [filters, setFilters] = useState("");
+
+  const createQueryParams = () => {
+    return `?$top=${itemPerPage}&$skip=${(page - 1) * itemPerPage}&$count=true&$orderby=createAt desc${filters}`;
+  };
+  const [queryParams, setQueryParams] = useState(createQueryParams());
 
   useEffect(() => {
     const fetchSpeakers = async () => {
@@ -57,8 +59,8 @@ export default function ShopPage() {
         setLoading(true);
         const response = await speakerApiRequest.getListSpeakers(queryParams);
         const { value, "@odata.count": count } = response.payload;
-        console.log("API Response:", response);
-        console.log("Total Products Count:", count);
+        // console.log("API Response:", response);
+        // console.log("Total Products Count:", count);
         setProductList(value || []);
         setTotalCount(count || 0);
         setMaxPage(Math.ceil(count / itemPerPage));
@@ -70,8 +72,14 @@ export default function ShopPage() {
     };
     fetchSpeakers();
     console.log("Query Params:", queryParams);
-  }, [queryParams, page]);
-  // console.log(pathname);
+    console.log("page", page)
+  }, [queryParams]);
+
+
+  useEffect(() => {
+    setQueryParams(createQueryParams());
+  }, [page, filters]);
+
 
   useEffect(() => {
       const fetchBrands = async () => {
@@ -88,13 +96,13 @@ export default function ShopPage() {
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
-  };
+  }
 
   const handleFilter = (min: number, max: number) => {
-    console.log("Min: ", min, "Max: ", max);
     const queryFilterPrice = `&$filter=Price ge ${min} and Price le ${max}`;
-    setQueryParams(defaultQueryParams + queryFilterPrice); // Update queryParams to include filter
+    setFilters(queryFilterPrice);
   };
+
 
   return (
     <div className="min-h-screen bg-white px-4 sm:px-6 lg:px-8">
@@ -139,6 +147,18 @@ export default function ShopPage() {
                 Lọc
               </Button>
             </div>
+            <div className="flex justify-center">
+              <Button
+                onClick={() => {
+                  setValues([MIN, MAX]);
+                  setQueryParams(createQueryParams());
+                  window.location.reload();
+                }}
+                className="bg-red-600 hover:bg-red-700 text-white"
+              >
+                Xóa bộ lọc
+              </Button>
+            </div>
           </div>
         </div>
         {productList.length > 0 ? (
@@ -163,11 +183,10 @@ export default function ShopPage() {
                             handlePageChange(Math.max(1, page - 1))
                           }
                           isActive={page !== 1}
-                          className={`${
-                            page === 1
-                              ? "cursor-not-allowed opacity-50"
-                              : "cursor-pointer hover:bg-gray-200"
-                          }`}
+                          className={`${page === 1
+                            ? "cursor-not-allowed opacity-50"
+                            : "cursor-pointer hover:bg-gray-200"
+                            }`}
                         />
                       </PaginationItem>
 
@@ -239,11 +258,10 @@ export default function ShopPage() {
                             handlePageChange(Math.min(maxPage, page + 1))
                           }
                           isActive={page !== maxPage}
-                          className={`${
-                            page === maxPage
-                              ? "cursor-not-allowed opacity-50"
-                              : "cursor-pointer hover:bg-gray-200"
-                          }`}
+                          className={`${page === maxPage
+                            ? "cursor-not-allowed opacity-50"
+                            : "cursor-pointer hover:bg-gray-200"
+                            }`}
                         />
                       </PaginationItem>
                     </>

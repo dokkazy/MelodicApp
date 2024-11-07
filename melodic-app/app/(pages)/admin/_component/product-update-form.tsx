@@ -28,7 +28,7 @@ import brandApiRequest from '@/api/brand'
 
 type Product = ProductDetailResType
 
-const ProductUpdateForm = ({ product }: { product?: Product }) => {
+const ProductUpdateForm = ({id, product }: { id?: string ,product?: Product }) => {
     const [loading, setLoading] = useState(false)
     const { toast } = useToast()
     const router = useRouter()
@@ -36,7 +36,7 @@ const ProductUpdateForm = ({ product }: { product?: Product }) => {
     const form = useForm<UpdateProductBodyType>({
         resolver: zodResolver(UpdateProductBody),
         defaultValues: {
-            id: product?.id || '',
+            id: id || '',
             name: product?.name || '',
             brandId: product?.brand?.BrandId || "",
             price: product?.price || 0,

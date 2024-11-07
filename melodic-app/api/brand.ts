@@ -12,6 +12,7 @@ import { BrandListResType } from "@/schemaValidations/brand.schema";
   const brandApiRequest = {
     getListBrand: () =>
       http.get<BrandListResType>(apiLinks.brand),
+    
   };
   
   export default brandApiRequest;

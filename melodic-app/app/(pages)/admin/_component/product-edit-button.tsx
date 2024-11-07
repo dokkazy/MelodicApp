@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function ProductUpdateButton({ id }: { id: string }) {
   return (
     <Link href={`product/update/${id}`}>
-      <Button variant="secondary">Edit</Button>
+      <Button variant="outline" className="bg-yellow-400">Edit</Button>
     </Link>
   );
 }
