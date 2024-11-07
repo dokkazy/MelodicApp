@@ -1,7 +1,9 @@
 import { formatPrice } from "@/app/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import Link from "next/link";
+import { toast } from "@/hooks/use-toast";
+import { useAppContext } from "@/providers/AppProvider";
+import { useRouter } from "next/navigation";
 
 interface CartSummaryProps {
   subtotal: number;
@@ -10,6 +12,19 @@ interface CartSummaryProps {
 }
 
 const CartSummary = ({ subtotal, tax, total }: CartSummaryProps) => {
+  const router = useRouter();
+  const {sessionToken} = useAppContext();
+
+  const handleCheckout = () => {
+    if(sessionToken){
+      router.push("/checkout");
+    }
+    toast({
+      title: "Please login to proceed",
+      description: "You need to login to proceed to checkout",
+      variant: "destructive",
+    })
+  }
   return (
     <Card className="p-6">
       <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
@@ -27,11 +42,11 @@ const CartSummary = ({ subtotal, tax, total }: CartSummaryProps) => {
           <span>Total</span>
           <span>{formatPrice(total)}</span>
         </div>
-       <Link href={'/checkout'}>
-          <Button className="w-full mt-6">
+       
+          <Button onClick={handleCheckout} className="w-full mt-6">
             Proceed to Checkout
           </Button>
-       </Link>
+       
       </div>
     </Card>
   );

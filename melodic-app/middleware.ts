@@ -5,6 +5,7 @@ import { UserRole } from "./schemaValidations/auth.schema";
 
 const privatePath = [
   links.profile.href,
+
   // adminLinks.admin.href,
   // adminLinks.user.href,
   // adminLinks.product.href,
@@ -39,6 +40,7 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     links.profile.href,
+    links.orders.href,
     adminLinks.admin.href,
     adminLinks.user.href,
     adminLinks.product.href,
