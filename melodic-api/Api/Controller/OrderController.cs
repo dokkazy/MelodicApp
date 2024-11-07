@@ -50,7 +50,7 @@ public class OrderController(
 
     // GET: api/Order/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Order>> GetOrder(Guid id)
+    public async Task<ActionResult> GetOrder(Guid id)
     {
         var order = await context.Orders.Include(x => x.OrderItems)
             .FirstOrDefaultAsync(x => x.Id == id && x.UserId == userService.UserId);
@@ -60,7 +60,31 @@ public class OrderController(
             return NotFound();
         }
 
-        return order;
+        var orderItemResponses = order.OrderItems.ToList().Select(x => new OrderItemResponse()
+        {
+            SpeakerName = x.SpeakerName,
+            SpeakerId = x.SpeakerId,
+            UnitPrice = x.UnitPrice,
+            Units = x.Units,
+        });
+        var orderResponse = new OrderResponse()
+        {
+            Id = order.Id,
+            OrderDate = order.OrderDate,
+            OrderStatus = order.OrderStatus,
+            OrderCode = order.OrderCode,
+            PaymentId = order.PaymentId,
+            ZipCode = order.Address.ZipCode,
+            Country = order.Address.Country,
+            State = order.Address.State,
+            Street = order.Address.Street,
+            City = order.Address.City,
+            PhoneNumber = order.PhoneNumber,
+            Items = orderItemResponses.ToList()
+        };
+
+
+        return Ok(orderResponse);
     }
 
     // POST: api/Order
@@ -152,6 +176,8 @@ public class OrderResponse
     public string ZipCode { get; set; }
 
     public string PhoneNumber { get; set; }
+
+    public List<OrderItemResponse> Items { get; set; } = new();
 }
 
 public class OrderItemResponse
