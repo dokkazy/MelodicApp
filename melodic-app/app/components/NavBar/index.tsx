@@ -20,6 +20,7 @@ import { useCartStore } from "@/providers/CartProvider";
 export default function NavBar() {
   const pathname = usePathname();
   const [isOpenCart, setIsOpenCart] = React.useState(false);
+  const [isOpenLogin, setIsOpenLogin] = React.useState(false);
   const { sessionToken } = useAppContext();
   const navLink = [links.home, links.shop, links.contact];
 
@@ -95,27 +96,31 @@ export default function NavBar() {
             <Badge className="absolute -right-2 -top-2">
               {useCartStore((state) => state.getQuantity())}
             </Badge>
-            <CartSheet isOpenCart={isOpenCart} setIsOpenCart={setIsOpenCart} />
+            <CartSheet isOpenCart={isOpenCart} setIsOpenCart={setIsOpenCart} setIsOpenLogin={setIsOpenLogin} />
           </div>
           {!!sessionToken ? (
             <AuthMenu />
           ) : (
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  className="flex h-10 w-10 flex-col gap-y-1.5 hover:scale-105 sm:h-12 sm:w-12 md:h-14 md:w-14"
-                  variant="outline"
-                >
-                  <CircleUser />
-                  <span className="hidden text-xs font-semibold text-gray-500 md:block">
-                    Login
-                  </span>
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <AuthDialog />
-              </DialogContent>
-            </Dialog>
+            <>
+              <Button
+                className="flex h-10 w-10 flex-col gap-y-1.5 hover:scale-105 sm:h-12 sm:w-12 md:h-14 md:w-14"
+                variant="outline"
+                onClick={() => setIsOpenLogin(true)}
+              >
+              <CircleUser />
+                <span className="hidden text-xs font-semibold text-gray-500 md:block">
+                  Login
+                </span>
+              </Button>
+              <Dialog
+                onOpenChange={() => setIsOpenLogin(!isOpenLogin)}
+                open={isOpenLogin}
+              >
+                <DialogContent className="sm:max-w-[425px]">
+                  <AuthDialog />
+                </DialogContent>
+              </Dialog>
+            </>
           )}
 
           <MobileNav navLink={navLink} />

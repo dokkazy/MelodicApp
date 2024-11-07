@@ -29,6 +29,8 @@ import SkeletonLoading from "./SkeletonLoading";
 import ProductCard from "@/app/components/ProductCard";
 import BrandCard from "@/app/components/BrandCard";
 import { links } from "@/configs/routes";
+import { BrandListResType } from "@/schemaValidations/brand.schema";
+import brandApiRequest from "@/api/brand";
 
 const MIN = 0;
 const MAX = 20000000;
@@ -39,6 +41,7 @@ export default function ShopPage() {
   const [productList, setProductList] = useState<ProductListResType["value"]>(
     [],
   );
+  const [brands, setBrands] = useState<BrandListResType[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [maxPage, setMaxPage] = useState(0);
@@ -70,6 +73,19 @@ export default function ShopPage() {
   }, [queryParams, page]);
   // console.log(pathname);
 
+  useEffect(() => {
+      const fetchBrands = async () => {
+        try {
+          const response = await brandApiRequest.getListBrand();
+          console.log("API Response brannd:", response);
+          setBrands(response.payload);
+        } catch (error) {
+          console.error("Failed to fetch brands:", error);
+        }
+      }
+      fetchBrands();
+  },[]);
+
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
   };
@@ -96,8 +112,8 @@ export default function ShopPage() {
         </Breadcrumb>
       </div>
       <div className={`${cn(styles["category-card"])}`}>
-        <div className={`flex items-center gap-4 max-w-2/3 overflow-x-auto ${cn(styles["scroll-type"])}`}>
-          <BrandCard />
+        <div className={`flex items-center gap-4 max-w-2/3 overflow-x-auto scroll-style`}>
+          <BrandCard items={brands}/>
         </div>
       </div>
 
