@@ -19,7 +19,7 @@ public class Order
     public OrderStatus OrderStatus { get; private set; }
     public string PaymentId { get; set; }
 
-    private readonly List<OrderItem> _orderItems;
+    private readonly List<OrderItem> _orderItems = new List<OrderItem>();
 
     public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
 
