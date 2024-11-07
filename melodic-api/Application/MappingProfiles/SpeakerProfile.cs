@@ -20,14 +20,14 @@ namespace Application.MappingProfiles
         public SpeakerProfile()
         {
             CreateMap<SpeakerDto, Speaker>()
-                .ForPath(x => x.Brand!.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(x => x.MainImg, opt => opt.MapFrom(src => src.Img))
                 .ReverseMap();
 
             CreateMap<CreateSpeakerCommand, Speaker>();
             CreateMap<UpdateSpeakerCommand, Speaker>();
             CreateMap<SpeakerDetailsDto, Speaker>()
-                .ForPath(x => x.Brand!.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(x => x.MainImg, opt => opt.MapFrom(src => src.Img))
                 .ReverseMap();
 
