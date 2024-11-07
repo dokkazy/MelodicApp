@@ -8,16 +8,14 @@ import {
   import { apiLinks } from "@/configs/routes";
   import http from "@/lib/http";
 import { BrandListResType, CreateBrandBodyType } from "@/schemaValidations/brand.schema";
+import { UsersListResType } from "@/schemaValidations/users.schema";
   
-  const brandApiRequest = {
-    getListBrand: () =>
-      http.get<BrandListResType>(apiLinks.brand),
-    createBrand: (body: CreateBrandBodyType) =>
-      http.post(apiLinks.brand, body),
-    deleteBrand: (id : string) =>
-      http.delete<BrandListResType>(apiLinks.brand + `/${id}`,{}),
+  const userApiRequest = {
+    getListUsers: () =>
+      http.get<UsersListResType>(apiLinks.users),
+   
 
   };
   
-  export default brandApiRequest;
+  export default userApiRequest;
   

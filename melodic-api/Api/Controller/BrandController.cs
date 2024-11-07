@@ -39,7 +39,7 @@ public class BrandController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = ApplicationRole.Role_Admin)]
+    //[Authorize(Roles = ApplicationRole.Role_Admin)]
     public async Task<IActionResult> CreateBrand([FromBody] CreateBrandCommand command)
     {
         var result = await _mediator.Send(command);
@@ -47,7 +47,7 @@ public class BrandController : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
-    [Authorize(Roles = ApplicationRole.Role_Admin)]
+    //[Authorize(Roles = ApplicationRole.Role_Admin)]
     public async Task<IActionResult> UpdateBrand(Guid id, [FromBody] UpdateBrandCommand command)
     {
         await _mediator.Send(command);
@@ -55,7 +55,7 @@ public class BrandController : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
-    [Authorize(Roles = ApplicationRole.Role_Admin)]
+    //[Authorize(Roles = ApplicationRole.Role_Admin)]
     public async Task<IActionResult> DeleteBrand(Guid id)
     {
         var result = new DeleteBrandCommand { Id = id };

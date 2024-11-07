@@ -3,7 +3,7 @@ import Link from "next/link";
 import { adminLinks } from "@/configs/routes";
 
 const AdminSidebar = () => {
-  const navLink = [adminLinks.product, adminLinks.brand, adminLinks.order];
+  const navLink = [adminLinks.product, adminLinks.brand, adminLinks.order, adminLinks.user];
 
   return (
     <div className="h-screen w-64 bg-orange-500 text-white">

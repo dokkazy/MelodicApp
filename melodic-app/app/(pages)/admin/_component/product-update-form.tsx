@@ -1,199 +1,127 @@
-'use client'
+"use client";
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { ProductDetailResType } from '@/schemaValidations/product.schema';
+import speakerApiRequest from '@/api/speaker';
+import { Button } from '@/components/ui/button';
+import { Label } from '@radix-ui/react-label';
+import { Input } from '@/components/ui/input';
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { Button } from '@/components/ui/button'
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import {
-    CreateProductBodyType,
-    ProductDetailResType,
-    UpdateProductBodyType,
-    UpdateProductBody,
-} from '@/schemaValidations/product.schema'
-import speakerApiRequest from '@/api/speaker'
-import { Textarea } from '@/components/ui/textarea'
-import { useToast } from '@/hooks/use-toast'
-import { BrandListResType } from '@/schemaValidations/brand.schema'
-import brandApiRequest from '@/api/brand'
 
-type Product = ProductDetailResType
 
-const ProductUpdateForm = ({id, product }: { id?: string ,product?: Product }) => {
-    const [loading, setLoading] = useState(false)
-    const { toast } = useToast()
-    const router = useRouter()
-    const [brandList, setBrandList] = useState<BrandListResType[]>([])
-    const form = useForm<UpdateProductBodyType>({
-        resolver: zodResolver(UpdateProductBody),
-        defaultValues: {
-            id: id || '',
-            name: product?.name || '',
-            brandId: product?.brand?.BrandId || "",
-            price: product?.price || 0,
-            decription: product?.decription || '',
-            unitInStock: product?.unitInStock || 0,
-            img: product?.img || '',
-        },
+interface UpdateProductFormProps {
+    product: ProductDetailResType;
+}
+
+const UpdateProductForm: React.FC<UpdateProductFormProps> = ({ product }) => {
+    const router = useRouter();
+    const [formData, setFormData] = useState({
+        id: product.id,
+        name: product.name || '',
+        brandId: product.brand.BrandId || '',
+        price: product.price || 0,
+        decription: product.decription || '',
+        unitInStock: product.unitInStock || 0,
+        img: product.img || '',
     });
 
-    useEffect(() => {
-        const fetchBrands = async () => {
-            try {
-                const response = await brandApiRequest.getListBrand();
-                setBrandList(response.payload);
-            } catch (error) {
-                console.error('Failed to fetch brands', error);
-            }
-        };
-        fetchBrands();
-    }, []);
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: name === 'price' || name === 'unitInStock' ? Number(value) : value,
+        }));
+    };
 
-    const updateProduct = async (id: string, values: UpdateProductBodyType) => {
-        setLoading(true);
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
         try {
-            const result = await speakerApiRequest.updateSpeaker(id, values);
-            console.log(result)
-            console.log(values)
-            toast({
-                description: result.payload.message,
-            });
-            router.push('/admin/product');
-            router.refresh();
-        } catch (error: any) {
-            console.log(error);
-        } finally {
-            setLoading(false);
+            await speakerApiRequest.updateSpeaker(formData.id, formData); 
+            router.push('/admin/product'); 
+        } catch (error) {
+            console.error('Failed to update product:', error);
         }
     };
 
-    const onSubmit = async (data: UpdateProductBodyType) => {
-        if (loading) return;
-        await updateProduct(data.id, data);
-    };
-
     return (
-        <div>
-            <Form {...form}>
-                <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className='space-y-2 flex-shrink-0 w-full'
-                    noValidate
-                >
-                    <FormField
-                        control={form.control}
-                        name='name'
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Speaker Name</FormLabel>
-                                <FormControl>
-                                    <Input placeholder='Speaker Name' type='text' {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+        <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+                <Label htmlFor="name">Name</Label>
+                <Input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
 
-                    <FormField
-                        control={form.control}
-                        name="brandId"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Brand</FormLabel>
-                                <FormControl>
-                                    <select
-                                        {...field}
-                                        className="form-select w-full border border-gray-300 rounded-md focus:border-blue-500 focus:ring-blue-500"
-                                        value={field.value || ""}  // Use the value from the form state
-                                    >
-                                        <option value="" disabled>
-                                            Select a brand...
-                                        </option>                                    
-                                        {brandList.map((brand) => (
-                                            <option key={brand.brandId} value={brand.brandId}>
-                                                {brand.name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+            <div>
+                <Label htmlFor="brandId">Brand ID</Label>
+                <Input
+                    type="text"
+                    id="brandId"
+                    name="brandId"
+                    value={formData.brandId}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
 
+            <div>
+                <Label htmlFor="price">Price</Label>
+                <Input
+                    type="number"
+                    id="price"
+                    name="price"
+                    value={formData.price}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
 
-                    <FormField
-                        control={form.control}
-                        name='price'
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Price</FormLabel>
-                                <FormControl>
-                                    <Input placeholder='Price' type='number' {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+            <div>
+                <Label htmlFor="decription">Description</Label>
+                <textarea
+                    id="decription"
+                    name="decription"
+                    value={formData.decription}
+                    onChange={handleChange}
+                    rows={4}
+                    required
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                />
+            </div>
 
-                    <FormField
-                        control={form.control}
-                        name='decription'
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Description</FormLabel>
-                                <FormControl>
-                                    <Textarea placeholder='Description' {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+            <div>
+                <Label htmlFor="unitInStock">Unit In Stock</Label>
+                <Input
+                    type="number"
+                    id="unitInStock"
+                    name="unitInStock"
+                    value={formData.unitInStock}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
 
-                    <FormField
-                        control={form.control}
-                        name='unitInStock'
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Unit in Stock</FormLabel>
-                                <FormControl>
-                                    <Input placeholder='Unit in Stock' type='number' {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+            <div>
+                <Label htmlFor="img">Image URL</Label>
+                <Input
+                    type="text"
+                    id="img"
+                    name="img"
+                    value={formData.img}
+                    onChange={handleChange}
+                />
+            </div>
 
-                    <FormField
-                        control={form.control}
-                        name='img'
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Image URL</FormLabel>
-                                <FormControl>
-                                    <Input placeholder='URL' type='url' {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+            <Button type="submit" className="w-full mt-4 bg-blue-500 hover:bg-blue-600 text-white">
+                Update Product
+            </Button>
+        </form>
+    );
+};
 
-                    <Button type='submit' className='!mt-8 w-full' disabled={loading}>
-                        Update
-                    </Button>
-                </form>
-            </Form>
-        </div>
-    )
-}
-
-export default ProductUpdateForm;
+export default UpdateProductForm;

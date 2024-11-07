@@ -20,7 +20,8 @@ export const apiLinks = {
   logout: "/api/authenticate/logout",
   speakerOData: "/odata/speakers",
   speaker: "/api/speakers",
-  brand: "/api/brand"
+  brand: "/api/brand",
+  users: "/api/user"
 
 }
  
